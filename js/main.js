@@ -1,0 +1,224 @@
+//! Panel loaded
+function onLoad() {
+
+	//! Basic variables and themes
+	var csInterface = new CSInterface();
+	var extId = csInterface.getExtensionID();
+	setTheme(csInterface.hostEnvironment.appSkinInfo);
+	csInterface.addEventListener(CSInterface.THEME_COLOR_CHANGED_EVENT, changeTheme);
+	
+	//! Make panel persistent     
+    var event = new CSEvent("com.adobe.PhotoshopPersistent", "APPLICATION");   
+    event.extensionId = extId;  
+    csInterface.dispatchEvent(event); 
+    
+    //! Load external JSX files
+    loadJSX();
+}
+//! End onLoad();
+
+
+
+//! Set the panel theme based on the Photoshop theme
+function setTheme(theme) {
+
+		var themeClass;
+		var themeColor = toHex(theme.panelBackgroundColor.color);
+		var themeFontSize = theme.baseFontSize + "px";
+		var themeFontFamily = theme.baseFontFamily;		
+		
+		//! Set background color asap
+		$('body').css('background-color', "#" + themeColor);
+		$('html').css('background-color', "#" + themeColor);
+		
+		//! Find out if light or dark theme
+        if (theme.panelBackgroundColor.color.red > 122) {
+            themeClass = 'light';
+        } else {
+	        themeClass = 'dark'
+        }
+
+		//! Set the body theme
+		$('body').removeClass("light dark").addClass(themeClass);
+		//$('body').prepend(themeFontSize);		
+		//$('head').append('<style>.current { background-color: #' + themeColor + '; }</style>');
+		
+		var style = $("<style>html { font-size: " + themeFontSize + "; } body { font-family: " + themeFontFamily + ", -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; } ul.tabs li.current { background-color: #" + themeColor + " !important; border-bottom-color: #" + themeColor + " !important; }</style>");
+		$('html > head').append(style);
+}
+
+
+
+//! If the Photoshop theme is changed, update the panel theme 
+//! From davidebarranca.com
+function changeTheme(event) {
+    var skinInfo = JSON.parse(window.__adobe_cep__.getHostEnvironment()).appSkinInfo;
+    setTheme(skinInfo);
+}
+
+
+
+//! Change the app color to something more usable
+//! From davidebarranca.com
+function toHex(color, delta) {
+        
+    function computeValue(value, delta) {
+        var computedValue = !isNaN(delta) ? value + delta : value;
+        if (computedValue < 0) {
+            computedValue = 0;
+        } else if (computedValue > 255) {
+            computedValue = 255;
+        }
+        
+        computedValue = Math.floor(computedValue);
+
+        computedValue = computedValue.toString(16);
+        return computedValue.length === 1 ? "0" + computedValue : computedValue;
+    }
+
+    var hex = "";
+    if (color) {
+        hex = computeValue(color.red, delta) + computeValue(color.green, delta) + computeValue(color.blue, delta);
+    }
+    return hex;
+}
+
+
+
+//! Load external JSX files
+function loadJSX() {
+    var csInterface = new CSInterface();
+    var extensionRoot = csInterface.getSystemPath(SystemPath.EXTENSION) + "/jsx/actions/";
+    csInterface.evalScript('$._ext.evalFiles("' + extensionRoot + '")');
+}
+
+
+
+//! Use the button ID to trigger the right script
+$(document).on("click", "button", function() {
+    var csInterface = new CSInterface();
+    csInterface.evalScript($(this).attr("data-action") + "()"); 
+});
+
+
+
+$( window ).resize(function() {
+  //$( "body" ).prepend( "<div>" + $( window ).width() + "</div>" );
+});
+
+
+$(window).on('load resize', function () {
+
+	var windowSize = $(window).width();
+	var panelSize = 'x-large';
+	
+	if ( windowSize <= 360 ) {
+		panelSize += ' large';
+	}
+	if ( windowSize <= 340 ) {
+		panelSize += ' medium-large';
+	}
+	if ( windowSize <= 320 ) {
+		panelSize += ' medium';
+	}
+	if ( windowSize <= 280 ) {
+		panelSize += ' small';
+	}
+	if ( windowSize <= 260 ) {
+		panelSize += ' x-small';
+	}
+	if ( windowSize <= 250 ) {
+		panelSize += ' xx-small';
+	}
+
+	panelSize = panelSize.trim();
+	
+    //$( "#width" ).text( $( window ).width() );
+    //$( "#panelSize" ).text( panelSize );
+    
+    $("html").removeClass().addClass(panelSize);
+    $("html").attr('data-width', windowSize);
+});
+
+
+
+$(document).ready(function(){
+	
+	$('ul.tabs li').click(function(){
+		var tab_id = $(this).attr('data-tab');
+
+		$('ul.tabs li').removeClass('current');
+		$('.tab-content').removeClass('current');
+
+		$(this).addClass('current');
+		$("#"+tab_id).addClass('current');
+	});
+	
+	
+	//! Handle web links
+	$('.external-link').click(function(e){
+		e.preventDefault();
+		var link = $(this).attr('href');
+		window.cep.util.openURLInDefaultBrowser(link);
+	});
+	
+	
+	$('button').bind('click', function(event) {
+	   if(event.ctrlKey) 
+	      alert('ctrl');
+	   if(event.altKey)
+	      alert('alt');
+	   if(event.shiftKey)
+	      alert('shift');
+	});
+	
+	
+	$(".adjustment-tools button").hover(
+		function() {
+			$("[data-js='adjustmentsHeader']").text( $(this).attr('title') );
+		}, function() {
+			$("[data-js='adjustmentsHeader']").text( $("[data-js='adjustmentsHeader']").attr('title') );
+			
+		}
+	);
+	
+	
+	
+	//! Tooltip
+	//! http://www.alessioatzeni.com/blog/simple-tooltip-with-jquery-only-text/
+	$("[data-js='tooltip']").hover(function() {
+		
+	        // Hover over code
+	        var title = $(this).attr('title');
+	        var type = $(this).attr('data-tooltip-type');
+	        $('<p data-type="'+ type +'" class="tooltip '+ type +'"></p>').delay(1500)
+	        .text(title)
+	        .appendTo('body')
+	        .hide()
+	        .fadeIn(100);
+	        $(this).dequeue();
+	}, function() {
+
+	        // Hover out code
+	        $('.tooltip').remove();
+	        
+	}).mousemove(function(e) {
+			var tooltipWidth = $('.tooltip').width();
+			var type = $('.tooltip').attr('data-type');
+			
+			//$('.tooltip').text(type);
+			
+			if (type == 'inside') {
+				var mousex = e.pageX - 2 - tooltipWidth; //Get X coordinates
+				var mousey = e.pageY + 12; //Get Y coordinates
+			} else {
+				var mousex = e.pageX - 6; //Get X coordinates
+				var mousey = e.pageY + 12; //Get Y coordinates
+			}
+			
+	        
+	        $('.tooltip')
+	        .css({ top: mousey, left: mousex })
+	});
+
+});

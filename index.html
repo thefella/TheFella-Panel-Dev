@@ -1,0 +1,235 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>TheFella Panel</title>
+
+<!-- Scripts -->
+<script src="./js/lib/CSInterface.js"></script>
+<script src="./js/lib/jquery-3.2.1.min.js"></script>
+<script src="./js/main.js"></script>
+
+<!-- CSS -->
+<link rel="stylesheet" href="./css/normalise.css">
+<link rel="stylesheet" href="./css/styles.css">
+</head>
+<body class="dark" onload="onLoad()">
+<div id="panel">
+	
+	<!--<div id="width"></div>
+	<div id="panelSize"></div>-->
+	
+	<ul class="tabs">
+		<li class="tab-link current" data-tab="tab-main">Main</li>
+		<li class="tab-link" data-tab="tab-blending">More</li>
+		<li class="tab-link" data-tab="tab-finishing">Finishing</li>
+		<li class="tab-link" data-tab="tab-about">About</li>
+		<!--<li onClick="window.location.reload()">R</li>-->
+	</ul>
+	
+	<div id="tab-main" class="tab-content current">
+		
+		<section class="adjustment-tools">
+			<h1 class="adjustments-header" data-js="adjustmentsHeader" title="Add an adjustment">Add an adjustment</h1>
+			
+			<div class="button-group">
+				<button data-action="adjBrightness" title="Brightness/Contrast"><img class="dark-theme" src="img/tools/dark_theme/brightness.png"><img class="light-theme" src="img/tools/light_theme/brightness.png"></button>
+				<button data-action="adjLevels" title="Levels"><img class="dark-theme" src="img/tools/dark_theme/levels.png"><img class="light-theme" src="img/tools/light_theme/levels.png"></button>
+				<button data-action="adjCurves" title="Curves"><img class="dark-theme" src="img/tools/dark_theme/curves.png"><img class="light-theme" src="img/tools/light_theme/curves.png"></button>
+				<button data-action="adjExposure" title="Exposure"><img class="dark-theme" src="img/tools/dark_theme/exposure.png"><img class="light-theme" src="img/tools/light_theme/exposure.png"></button>
+				<button data-action="adjVibrance" title="Vibrance"><img class="dark-theme" src="img/tools/dark_theme/vibrance.png"><img class="light-theme" src="img/tools/light_theme/vibrance.png"></button>
+				
+				<button data-action="adjHueSaturation" title="Hue/Saturation"><img class="dark-theme" src="img/tools/dark_theme/hue-saturation.png"><img class="light-theme" src="img/tools/light_theme/hue-saturation.png"></button>
+				<button data-action="adjColorBalance" title="Color Balance"><img class="dark-theme" src="img/tools/dark_theme/color-balance.png"><img class="light-theme" src="img/tools/light_theme/color-balance.png"></button>
+				<button data-action="adjGradientMap" title="Gradient Map"><img class="dark-theme" src="img/tools/dark_theme/gradient-map.png"><img class="light-theme" src="img/tools/light_theme/gradient-map.png"></button>
+			</div>
+		</section>
+		
+		
+		<section>
+			
+			<div class="button-group">
+				<button data-action="fitToScreen" data-js="tooltip" title="Fit image to screen">Fit</button>
+				<button data-action="zoom(100)" data-js="tooltip" title="Zoom into image">100</button>
+				<button data-action="mergeAllToNewLayer" data-js="tooltip" title="Stamp all visible to new layer">Stamp</button> 
+				<!--<button data-action="newLayer">New Layer</button>-->
+				<button data-action="cameraRaw" data-js="tooltip" title="Adobe Camera Raw">ACR</button>
+				<button data-action="dodgeAndBurn" data-js="tooltip" title="Dodge/Burn on 50% grey">Dodge/Burn</button>
+			</div>
+		</section>
+		
+		<section>
+			<h1>Quick Masking</h1>
+			<div class="button-group">
+				<button data-action="applyToHighlights" data-js="tooltip" title="Add layer mask for highlights">Highights</button>
+				<button data-action="applyToShadows" data-js="tooltip" title="Add layer mask for shadows">Shadows</button>
+				<button data-action="addEdgeMask" data-js="tooltip" data-tooltip-type="inside" title="Add mask to edges">Edges</button>
+				<button data-action="btnDeleteLayerMask" data-js="tooltip" data-tooltip-type="inside" title="Delete layer mask">Delete</button> 
+			</div>
+		</section>
+		
+		<section class="luminosity-masks-section end">
+			<h1>Luminosity Masks</h1>
+			
+			<div class="group big-pills">
+				<button data-action="lumAllChannels('basic')">Basic Masks</button>
+				<button data-action="lumAllChannels">Expanded Masks</button>
+			</div>
+			
+			<div class="group pills luminosity-pills luminosity-highlights">
+				<!--<p>Lights</p>-->
+				<div class="pills-group">
+					<button class="word-pill all-pill" data-action="lumAllHighlights">All Lights</button>
+					<button data-action="lumHighlights(1)">1</button>
+					<button data-action="lumHighlights(2)">2</button>
+					<button data-action="lumHighlights(3)">3</button>
+					<button data-action="lumHighlights(4)">4</button>
+					<button data-action="lumHighlights(5)">5</button>
+					<button data-action="lumHighlights(6)">6</button>
+					<button class="word-pill del-pill" data-action="lumDeleteHighlights">Del</button>
+				</div>
+			</div>
+			<div class="group pills luminosity-pills luminosity-midtones">
+				<!--<p>Midtones</p>-->
+				<div class="pills-group">
+					<button class="word-pill all-pill" data-action="lumAllMidtones">All Midtones</button>
+					<button data-action="lumMidtones(1)">1</button>
+					<button data-action="lumMidtones(2)">2</button>
+					<button data-action="lumMidtones(3)">3</button>
+					<button data-action="lumMidtones(4)">4</button>
+					<button data-action="lumMidtones(5)">5</button>
+					<button data-action="lumMidtones(6)">6</button>
+					<button class="word-pill del-pill" data-action="lumDeleteMidtones">Del</button>
+				</div>
+			</div>
+			<div class="group pills luminosity-pills luminosity-shadows">
+				<!--<p>Shadows</p>-->
+				<div class="pills-group">
+					<button class="word-pill all-pill" data-action="lumAllShadows">All Shadows</button>
+					<button data-action="lumShadows(1)">1</button>
+					<button data-action="lumShadows(2)">2</button>
+					<button data-action="lumShadows(3)">3</button>
+					<button data-action="lumShadows(4)">4</button>
+					<button data-action="lumShadows(5)">5</button>
+					<button data-action="lumShadows(6)">6</button>
+					<button class="word-pill del-pill" data-action="lumDeleteShadows">Del</button>
+				</div>
+			</div>
+			
+			<div class="button-group luminosity-delete-group right-group">
+				<p>Delete Luminosity Channels: </p>
+				<button data-action="lumDeleteHighlights">Lights</button> 
+				<button data-action="lumDeleteMidtones">Midtones</button> 
+				<button data-action="lumDeleteShadows">Shadows</button> 
+				<button data-action="lumDeleteAll">All</button>
+			</div>
+		</section>
+
+		
+	</div>
+	
+	
+	<div id="tab-blending" class="tab-content">
+		
+		<section class="adjustment-tools">
+			<h1 class="adjustments-header" data-js="adjustmentsHeader" title="Add an adjustment">Add an adjustment</h1>
+			
+			<div class="button-group">
+				<button data-action="adjBW" title="Black & White"><img class="dark-theme" src="img/tools/dark_theme/bw.png"><img class="light-theme" src="img/tools/light_theme/bw.png"></button>
+				<button data-action="adjPhotoFilter" title="Photo Filter"><img class="dark-theme" src="img/tools/dark_theme/photo-filter.png"><img class="light-theme" src="img/tools/light_theme/photo-filter.png"></button>
+				
+				<button data-action="adjChannelMixer" title="Channel Mixer"><img class="dark-theme" src="img/tools/dark_theme/channel-mixer.png"><img class="light-theme" src="img/tools/light_theme/channel-mixer.png"></button>
+				<button data-action="adjColorLookup" title="Color Lookup"><img class="dark-theme" src="img/tools/dark_theme/color-lookup.png"><img class="light-theme" src="img/tools/light_theme/olor-lookup.png"></button>
+				<button data-action="adjInvert" title="Invert"><img class="dark-theme" src="img/tools/dark_theme/invert.png"><img class="light-theme" src="img/tools/light_theme/invert.png"></button>
+				<button data-action="adjPosterize" title="Posterize"><img class="dark-theme" src="img/tools/dark_theme/posterize.png"><img class="light-theme" src="img/tools/light_theme/posterize.png"></button>
+				<button data-action="adjThreshold" title="Threshold"><img class="dark-theme" src="img/tools/dark_theme/threshold.png"><img class="light-theme" src="img/tools/light_theme/threshold.png"></button>
+				<button data-action="adjSelectiveColor" title="Selective Color"><img class="dark-theme" src="img/tools/dark_theme/selective-color.png"><img class="light-theme" src="img/tools/light_theme/selective-color.png"></button>
+			</div>
+			
+			
+		</section>
+		
+		<section>
+			<button data-action="stack">Stack</button> 
+		</section>
+		
+		<section>
+			<h1>Sharpening</h1>
+			<div class="button-group big-pills">
+				<button data-action="sharpenHighPass">High Pass</span></button>
+				<button data-action="sharpenHighPassCurves">HP Curves</button>
+				<button data-action="sharpenSurfaceBlur">Surface Blur</button>
+				<button data-action="sharpenEdgeMasked">Edge Masked</button>
+				
+			</div>
+			
+		</section>
+		
+		<section>
+			<h1>Frequency Separation</h1>
+			<div class="button-group big-pills">
+				<button data-action="frequencySeparation" data-js="tooltip" title="Auto-detects 8-bit or 16-bit">Normal</button>
+				<button data-action="frequencySeparation('smartObject')" data-js="tooltip" title="Uses a smart object for blur (low freq.)" data-tooltip-type="inside">Smart Object</button>
+			</div>
+		</section>
+	</div>
+	
+	
+	
+	<div id="tab-finishing" class="tab-content">
+
+		<section>
+			<h1>Orton Effects</h1>
+			<div class="button-group big-pills">
+				<button data-action="ortonCurves">Highlight Glow</button>
+				<button data-action="ortonApply">Apply Image</button>
+				<button data-action="ortonScreen">Screen Blur</button>
+			</div>
+			
+		</section>
+		
+		<section>
+			<h1>Vignette</h1>
+			<div class="button-group big-pills">
+				<button data-action="vignette1">Vignette 1</button>
+				<button data-action="vignette2">Vignette 2</button>
+				<button data-action="vignette3">Vignette 3</button>
+			</div>
+			
+		</section>
+		
+		<section>
+			<h1>Presets</h1>
+			<div class="button-group big-pills">
+				<button data-action="presetColourBoost1">Colour Boost 1</button>
+				<button data-action="presetColourBoost2">Colour Boost 1</button>
+				<button data-action="presetAutumn">Autumn</button>
+				<button data-action="presetGreens">Natural Greens</button>
+				<button data-action="presetMoody">Quick Moody</button>
+			</div>
+			
+		</section>
+	</div>
+	
+	
+	
+	<div id="tab-about" class="tab-content">
+		<section>
+		<h1>About TheFella Panel</h1>
+		<p>Conor MacNeill: <a class="external-link" href="https://thefella.com?ref=panel">Website</a> | <a class="external-link" href="https://www.instagram.com/thefella">Instagram</a> | <a class="external-link" href="https://twitter.com/thefella">Twitter</a></p>
+		</section>
+		<section class="right-group">
+			<button onClick="window.location.reload()">Refresh Panel</button> 
+		</section>
+		
+		<section class="right-group end">
+			<p>v0.9 alpha</p>
+		</section>
+	</div>
+	
+	
+
+	
+</div>
+</body>
+</html>
