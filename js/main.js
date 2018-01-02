@@ -14,8 +14,89 @@ function onLoad() {
     
     //! Load external JSX files
     loadJSX();
+    
+    
+    //! Listen for dialog events
+	csInterface.addEventListener("dialogEvent", function(evt) {
+	    changeButton(evt.data);
+	});
+
+	//deleteCookie('customButtons');
+
+	//! Check cookies for custom names
+	checkButtonCookies();
 }
 //! End onLoad();
+
+
+
+
+
+//! Change name of custom buttons
+function changeButton(data) {
+	
+	//! Get and set variables
+	var buttonDetails = data.split(',');
+	var buttonId = buttonDetails[0];
+	var buttonName = buttonDetails[1];
+	var button = $('#customButton'+buttonId).html(buttonName);
+	var allButtons = [];
+	
+	//! Loop through buttons and get name
+	$(".custom-buttons > .custom-button").each(function(index) {
+		allButtons[index] = $(this).html();
+	});
+	
+	//! Get JSON string to store data
+	var json_str = JSON.stringify(allButtons);
+
+	//! Set cookie to store names
+	setCookie('customButtons', json_str);
+}
+
+
+
+//! Check cookies for custom button names
+function checkButtonCookies() {
+	
+	//! If cookie exists
+	if (getCookie('customButtons')) {
+		
+		//! Get details
+		var cookieInfo = JSON.parse(getCookie('customButtons'));
+		
+		//! Loop through buttons and set name
+		$(".custom-buttons > .custom-button").each(function(index) {
+			$(this).html(cookieInfo[index]);
+		});	
+	}
+}
+
+
+
+//! Set cookie
+function setCookie(key, value) {
+    var expires = new Date();
+    expires.setTime(expires.getTime() + (10 * 365 * 24 * 60 * 60));
+    document.cookie = key + '=' + value + ';expires=' + expires.toUTCString();
+}
+
+
+
+//! Get cookie
+function getCookie(key) {
+    var keyValue = document.cookie.match('(^|;) ?' + key + '=([^;]*)(;|$)');
+    return keyValue ? keyValue[2] : null;
+}
+
+
+
+//! Delete cookie
+function deleteCookie(key) {
+    var expires = new Date();
+    expires.setTime(expires.getTime() - (10 * 365 * 24 * 60 * 60));
+    document.cookie = key + '=' + null + ';expires=' + expires.toUTCString();
+}
 
 
 
@@ -28,14 +109,14 @@ function setTheme(theme) {
 		var themeFontFamily = theme.baseFontFamily;		
 		
 		//! Set background color asap
-		$('body').css('background-color', "#" + themeColor);
 		$('html').css('background-color', "#" + themeColor);
+		$('body').css('background-color', "#" + themeColor);
 		
 		//! Find out if light or dark theme
         if (theme.panelBackgroundColor.color.red > 122) {
             themeClass = 'light';
         } else {
-	        themeClass = 'dark'
+	        themeClass = 'dark';
         }
 
 		//! Set the body theme
@@ -95,20 +176,36 @@ function loadJSX() {
 
 
 //! Use the button ID to trigger the right script
-$(document).on("click", "button", function() {
-    var csInterface = new CSInterface();
-    csInterface.evalScript($(this).attr("data-action") + "()"); 
+$(document).on("click", "button", function(event) {
+	
+	
+	if ( $(this).hasClass('custom-button') && event.shiftKey ) {
+			event.preventDefault();
+			//editButton($(this).attr('id'));
+			
+			var csInterface = new CSInterface();
+			//csInterface.evalScript("renameButton()"); 
+			csInterface.evalScript($(this).attr("data-action2") + "()"); 
+
+	} else {
+    	var csInterface = new CSInterface();
+		csInterface.evalScript($(this).attr("data-action") + "()"); 
+    } 
 });
 
 
 
-$( window ).resize(function() {
-  //$( "body" ).prepend( "<div>" + $( window ).width() + "</div>" );
-});
+
+function editButton(id) {
+	var csInterface = new CSInterface();
+	csInterface.evalScript("renameButton()"); 
+}
 
 
+
+
+//! On load and resize, check width and add class
 $(window).on('load resize', function () {
-
 	var windowSize = $(window).width();
 	var panelSize = 'x-large';
 	
@@ -130,20 +227,22 @@ $(window).on('load resize', function () {
 	if ( windowSize <= 250 ) {
 		panelSize += ' xx-small';
 	}
-
 	panelSize = panelSize.trim();
-	
-    //$( "#width" ).text( $( window ).width() );
-    //$( "#panelSize" ).text( panelSize );
-    
+
     $("html").removeClass().addClass(panelSize);
     $("html").attr('data-width', windowSize);
 });
 
 
 
+//! jQuery document ready
 $(document).ready(function(){
 	
+	//! Fade in the body
+	$('body').hide().fadeIn('slow');
+	
+	
+	//! Tabs
 	$('ul.tabs li').click(function(){
 		var tab_id = $(this).attr('data-tab');
 
@@ -163,6 +262,8 @@ $(document).ready(function(){
 	});
 	
 	
+	/*
+	//! If alt/opt, ctrl/cmd, shift keys pressed while button click
 	$('button').bind('click', function(event) {
 	   if(event.ctrlKey) 
 	      alert('ctrl');
@@ -170,9 +271,10 @@ $(document).ready(function(){
 	      alert('alt');
 	   if(event.shiftKey)
 	      alert('shift');
-	});
-	
-	
+	});*/
+
+
+	//! Change title in adjustment brush section
 	$(".adjustment-tools button").hover(
 		function() {
 			$("[data-js='adjustmentsHeader']").text( $(this).attr('title') );
@@ -183,12 +285,13 @@ $(document).ready(function(){
 	);
 	
 	
-	
+
+
 	//! Tooltip
 	//! http://www.alessioatzeni.com/blog/simple-tooltip-with-jquery-only-text/
 	$("[data-js='tooltip']").hover(function() {
 		
-	        // Hover over code
+	        //! Hover over code
 	        var title = $(this).attr('title');
 	        var type = $(this).attr('data-tooltip-type');
 	        $('<p data-type="'+ type +'" class="tooltip '+ type +'"></p>').delay(1500)
@@ -198,16 +301,13 @@ $(document).ready(function(){
 	        .fadeIn(100);
 	        $(this).dequeue();
 	}, function() {
-
-	        // Hover out code
+	        //! Hover out code
 	        $('.tooltip').remove();
-	        
 	}).mousemove(function(e) {
 			var tooltipWidth = $('.tooltip').width();
 			var type = $('.tooltip').attr('data-type');
 			
-			//$('.tooltip').text(type);
-			
+			//! Change position depending on type
 			if (type == 'inside') {
 				var mousex = e.pageX - 2 - tooltipWidth; //Get X coordinates
 				var mousey = e.pageY + 12; //Get Y coordinates
@@ -215,8 +315,8 @@ $(document).ready(function(){
 				var mousex = e.pageX - 6; //Get X coordinates
 				var mousey = e.pageY + 12; //Get Y coordinates
 			}
-			
 	        
+	        //! Add CSS
 	        $('.tooltip')
 	        .css({ top: mousey, left: mousex })
 	});

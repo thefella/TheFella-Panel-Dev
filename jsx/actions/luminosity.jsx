@@ -1,17 +1,26 @@
+/* dev-code */
 //! Variables 
 cTID = function(s) { return app.charIDToTypeID(s); };
 sTID = function(s) { return app.stringIDToTypeID(s); };
+/* end-dev-code */
 
 
 
 //! Prefix for luminosity channels
-var lumPrefix = "";
+var lumPrefix = "TFP ";
 var chnlsCount = 7; 
 
 
 
 //! Create ALL luminosity channels
 lumAllChannels = function(mode) {
+	if (mode == 'basic') {
+		app.activeDocument.suspendHistory("Create All Luminosity Channels (Basic)", "lumAllChannels_hidden('basic');" );
+	} else {
+		app.activeDocument.suspendHistory("Create All Luminosity Channels (Expanded)", "lumAllChannels_hidden();" );
+	}
+};
+lumAllChannels_hidden = function(mode) {
 	
 	//! Create all channels
 	lumAllHighlights();
@@ -34,49 +43,70 @@ lumAllChannels = function(mode) {
 
 //! Delete all of our luminosity channels
 lumDeleteAll = function() {
-	lumDeleteChannels(lumPrefix+'Highlights');
-	lumDeleteChannels(lumPrefix+'Shadows');
-	lumDeleteChannels(lumPrefix+'Midtones');
+	app.activeDocument.suspendHistory("Delete All Luminosity Channels", "lumDeleteAll_hidden();" );
+};
+lumDeleteAll_hidden = function() {
+	lumDeleteChannels('Highlights');
+	lumDeleteChannels('Shadows');
+	lumDeleteChannels('Midtones');
 }
 
 
 //! Delete highlights luminosity channels
 lumDeleteHighlights = function() {
-	lumDeleteChannels(lumPrefix+'Highlights');
+	app.activeDocument.suspendHistory("Delete All Highlights Luminosity Channels", "lumDeleteHighlights_hidden();" );
+};
+lumDeleteHighlights_hidden = function() {
+	lumDeleteChannels('Highlights');
 }
 
 
 //! Delete shadows luminosity channels
 lumDeleteShadows = function() {
-	lumDeleteChannels(lumPrefix+'Shadows');
+	app.activeDocument.suspendHistory("Delete All Shadows Luminosity Channels", "lumDeleteShadows_hidden();" );
+};
+lumDeleteShadows_hidden = function() {
+	lumDeleteChannels('Shadows');
 }
 
 
 //! Delete midtone luminosity channels
 lumDeleteMidtones = function() {
-	lumDeleteChannels(lumPrefix+'Midtones');
+	app.activeDocument.suspendHistory("Delete All Midtones Luminosity Channels", "lumDeleteMidtones_hidden();" );
+};
+lumDeleteMidtones_hidden = function() {
+	lumDeleteChannels('Midtones');
 }
 
 
 
 //! Create all highlights and delete all but one
 lumHighlights = function(ch) {
+	app.activeDocument.suspendHistory("Create Highlight "+ch+" Luminosity Channel", "lumHighlights_hidden("+ch+");" );
+};
+lumHighlights_hidden = function(ch) {
 	lumAllHighlights();
-	lumDeleteChannels(lumPrefix+'Highlights', ch);
+	lumDeleteChannels('Highlights', ch);
 }
 
 
 //! Create all shadows and delete all but one
 lumShadows = function(ch) {
+	app.activeDocument.suspendHistory("Create Shadow "+ch+" Luminosity Channel", "lumShadows_hidden("+ch+");" );
+};
+lumShadows_hidden = function(ch) {
 	lumAllShadows();
-	lumDeleteChannels(lumPrefix+'Shadows', ch);
+	lumDeleteChannels('Shadows', ch);
 }
 
 
 //! Create all midtones and delete all but one
 lumMidtones = function(ch) {
+	app.activeDocument.suspendHistory("Create Midtone "+ch+" Luminosity Channel", "lumMidtones_hidden("+ch+");" );
+};
+lumMidtones_hidden = function(ch) {
 	lumAllMidtones();
-	lumDeleteChannels(lumPrefix+'Midtones', ch);
+	lumDeleteChannels('Midtones', ch);
 }
 
 
@@ -84,12 +114,19 @@ lumMidtones = function(ch) {
 
 //! All Midtones needs Highlights and Shadows 
 lumAllMidtones = function(mode) {
+	if (mode == 'full') {
+		app.activeDocument.suspendHistory("Create All Midtones Luminosity Channels", "lumAllMidtones_hidden('full');" );
+	} else {
+		app.activeDocument.suspendHistory("Create All Midtones Luminosity Channels", "lumAllMidtones_hidden();" );
+	}
+};
+lumAllMidtones_hidden = function(mode) {
 	
 	var deleteHighlights = false;
 	var deleteShadows = false;
 	
 	//! See if highlights exists or not
-	if (fullChannelsExist('Highlights') == false) {
+	if (fullChannelsExist(lumPrefix+'Highlights') == false) {
 		
 		//alert('need to create highlights');
 		
@@ -101,7 +138,7 @@ lumAllMidtones = function(mode) {
 
 	
 	//! See if shadows exists or not
-	if (fullChannelsExist('Shadows') == false) {
+	if (fullChannelsExist(lumPrefix+'Shadows') == false) {
 		
 		//alert('need to create shadows');
 		
@@ -152,7 +189,10 @@ fullChannelsExist = function(type) {
 //
 //==================== All Lights ==============
 //
-lumAllHighlights = function() {
+lumAllHighlights = function(ch) {
+	app.activeDocument.suspendHistory("Create All Highlights Luminosity Channels", "lumAllHighlights_hidden();" );
+};
+lumAllHighlights_hidden = function() {
   // Set
   function step1(enabled, withDialog) {
     if (enabled != undefined && !enabled)
@@ -177,7 +217,7 @@ lumAllHighlights = function() {
     var ref1 = new ActionReference();
     ref1.putProperty(cTID('Chnl'), sTID("selection"));
     desc1.putReference(cTID('null'), ref1);
-    desc1.putString(cTID('Nm  '), "Highlights 1");
+    desc1.putString(cTID('Nm  '), lumPrefix+"Highlights 1");
     executeAction(cTID('Dplc'), desc1, dialogMode);
   };
 
@@ -204,7 +244,7 @@ lumAllHighlights = function() {
     ref1.putProperty(cTID('Chnl'), sTID("selection"));
     desc1.putReference(cTID('null'), ref1);
     var ref2 = new ActionReference();
-    ref2.putName(cTID('Chnl'), "Highlights 1");
+    ref2.putName(cTID('Chnl'), lumPrefix+"Highlights 1");
     desc1.putReference(cTID('T   '), ref2);
     executeAction(cTID('setd'), desc1, dialogMode);
   };
@@ -216,7 +256,7 @@ lumAllHighlights = function() {
     var dialogMode = (withDialog ? DialogModes.ALL : DialogModes.NO);
     var desc1 = new ActionDescriptor();
     var ref1 = new ActionReference();
-    ref1.putName(cTID('Chnl'), "Highlights 1");
+    ref1.putName(cTID('Chnl'), lumPrefix+"Highlights 1");
     desc1.putReference(cTID('null'), ref1);
     var ref2 = new ActionReference();
     ref2.putProperty(cTID('Chnl'), sTID("selection"));
@@ -233,7 +273,7 @@ lumAllHighlights = function() {
     var ref1 = new ActionReference();
     ref1.putProperty(cTID('Chnl'), sTID("selection"));
     desc1.putReference(cTID('null'), ref1);
-    desc1.putString(cTID('Nm  '), "Highlights 2");
+    desc1.putString(cTID('Nm  '), lumPrefix+"Highlights 2");
     executeAction(cTID('Dplc'), desc1, dialogMode);
   };
 
@@ -260,7 +300,7 @@ lumAllHighlights = function() {
     ref1.putProperty(cTID('Chnl'), sTID("selection"));
     desc1.putReference(cTID('null'), ref1);
     var ref2 = new ActionReference();
-    ref2.putName(cTID('Chnl'), "Highlights 2");
+    ref2.putName(cTID('Chnl'), lumPrefix+"Highlights 2");
     desc1.putReference(cTID('T   '), ref2);
     executeAction(cTID('setd'), desc1, dialogMode);
   };
@@ -272,7 +312,7 @@ lumAllHighlights = function() {
     var dialogMode = (withDialog ? DialogModes.ALL : DialogModes.NO);
     var desc1 = new ActionDescriptor();
     var ref1 = new ActionReference();
-    ref1.putName(cTID('Chnl'), "Highlights 2");
+    ref1.putName(cTID('Chnl'), lumPrefix+"Highlights 2");
     desc1.putReference(cTID('null'), ref1);
     var ref2 = new ActionReference();
     ref2.putProperty(cTID('Chnl'), sTID("selection"));
@@ -289,7 +329,7 @@ lumAllHighlights = function() {
     var ref1 = new ActionReference();
     ref1.putProperty(cTID('Chnl'), sTID("selection"));
     desc1.putReference(cTID('null'), ref1);
-    desc1.putString(cTID('Nm  '), "Highlights 3");
+    desc1.putString(cTID('Nm  '), lumPrefix+"Highlights 3");
     executeAction(cTID('Dplc'), desc1, dialogMode);
   };
 
@@ -316,7 +356,7 @@ lumAllHighlights = function() {
     ref1.putProperty(cTID('Chnl'), sTID("selection"));
     desc1.putReference(cTID('null'), ref1);
     var ref2 = new ActionReference();
-    ref2.putName(cTID('Chnl'), "Highlights 3");
+    ref2.putName(cTID('Chnl'), lumPrefix+"Highlights 3");
     desc1.putReference(cTID('T   '), ref2);
     executeAction(cTID('setd'), desc1, dialogMode);
   };
@@ -328,7 +368,7 @@ lumAllHighlights = function() {
     var dialogMode = (withDialog ? DialogModes.ALL : DialogModes.NO);
     var desc1 = new ActionDescriptor();
     var ref1 = new ActionReference();
-    ref1.putName(cTID('Chnl'), "Highlights 3");
+    ref1.putName(cTID('Chnl'), lumPrefix+"Highlights 3");
     desc1.putReference(cTID('null'), ref1);
     var ref2 = new ActionReference();
     ref2.putProperty(cTID('Chnl'), sTID("selection"));
@@ -345,7 +385,7 @@ lumAllHighlights = function() {
     var ref1 = new ActionReference();
     ref1.putProperty(cTID('Chnl'), sTID("selection"));
     desc1.putReference(cTID('null'), ref1);
-    desc1.putString(cTID('Nm  '), "Highlights 4");
+    desc1.putString(cTID('Nm  '), lumPrefix+"Highlights 4");
     executeAction(cTID('Dplc'), desc1, dialogMode);
   };
 
@@ -372,7 +412,7 @@ lumAllHighlights = function() {
     ref1.putProperty(cTID('Chnl'), sTID("selection"));
     desc1.putReference(cTID('null'), ref1);
     var ref2 = new ActionReference();
-    ref2.putName(cTID('Chnl'), "Highlights 4");
+    ref2.putName(cTID('Chnl'), lumPrefix+"Highlights 4");
     desc1.putReference(cTID('T   '), ref2);
     executeAction(cTID('setd'), desc1, dialogMode);
   };
@@ -384,7 +424,7 @@ lumAllHighlights = function() {
     var dialogMode = (withDialog ? DialogModes.ALL : DialogModes.NO);
     var desc1 = new ActionDescriptor();
     var ref1 = new ActionReference();
-    ref1.putName(cTID('Chnl'), "Highlights 4");
+    ref1.putName(cTID('Chnl'), lumPrefix+"Highlights 4");
     desc1.putReference(cTID('null'), ref1);
     var ref2 = new ActionReference();
     ref2.putProperty(cTID('Chnl'), sTID("selection"));
@@ -401,7 +441,7 @@ lumAllHighlights = function() {
     var ref1 = new ActionReference();
     ref1.putProperty(cTID('Chnl'), sTID("selection"));
     desc1.putReference(cTID('null'), ref1);
-    desc1.putString(cTID('Nm  '), "Highlights 5");
+    desc1.putString(cTID('Nm  '), lumPrefix+"Highlights 5");
     executeAction(cTID('Dplc'), desc1, dialogMode);
   };
 
@@ -428,7 +468,7 @@ lumAllHighlights = function() {
     ref1.putProperty(cTID('Chnl'), sTID("selection"));
     desc1.putReference(cTID('null'), ref1);
     var ref2 = new ActionReference();
-    ref2.putName(cTID('Chnl'), "Highlights 5");
+    ref2.putName(cTID('Chnl'), lumPrefix+"Highlights 5");
     desc1.putReference(cTID('T   '), ref2);
     executeAction(cTID('setd'), desc1, dialogMode);
   };
@@ -440,7 +480,7 @@ lumAllHighlights = function() {
     var dialogMode = (withDialog ? DialogModes.ALL : DialogModes.NO);
     var desc1 = new ActionDescriptor();
     var ref1 = new ActionReference();
-    ref1.putName(cTID('Chnl'), "Highlights 5");
+    ref1.putName(cTID('Chnl'), lumPrefix+"Highlights 5");
     desc1.putReference(cTID('null'), ref1);
     var ref2 = new ActionReference();
     ref2.putProperty(cTID('Chnl'), sTID("selection"));
@@ -457,7 +497,7 @@ lumAllHighlights = function() {
     var ref1 = new ActionReference();
     ref1.putProperty(cTID('Chnl'), sTID("selection"));
     desc1.putReference(cTID('null'), ref1);
-    desc1.putString(cTID('Nm  '), "Highlights 6");
+    desc1.putString(cTID('Nm  '), lumPrefix+"Highlights 6");
     executeAction(cTID('Dplc'), desc1, dialogMode);
   };
 
@@ -504,7 +544,10 @@ lumAllHighlights = function() {
 //
 //==================== All Shadows ==============
 //
-lumAllShadows = function() {
+lumAllShadows = function(ch) {
+	app.activeDocument.suspendHistory("Create All Shadows Luminosity Channels", "lumAllShadows_hidden();" );
+};
+lumAllShadows_hidden = function() {
   // Set
   function step1(enabled, withDialog) {
     if (enabled != undefined && !enabled)
@@ -537,7 +580,7 @@ lumAllShadows = function() {
     var ref1 = new ActionReference();
     ref1.putProperty(cTID('Chnl'), sTID("selection"));
     desc1.putReference(cTID('null'), ref1);
-    desc1.putString(cTID('Nm  '), "Shadows 1");
+    desc1.putString(cTID('Nm  '), lumPrefix+"Shadows 1");
     executeAction(cTID('Dplc'), desc1, dialogMode);
   };
 
@@ -564,7 +607,7 @@ lumAllShadows = function() {
     ref1.putProperty(cTID('Chnl'), sTID("selection"));
     desc1.putReference(cTID('null'), ref1);
     var ref2 = new ActionReference();
-    ref2.putName(cTID('Chnl'), "Shadows 1");
+    ref2.putName(cTID('Chnl'), lumPrefix+"Shadows 1");
     desc1.putReference(cTID('T   '), ref2);
     executeAction(cTID('setd'), desc1, dialogMode);
   };
@@ -576,7 +619,7 @@ lumAllShadows = function() {
     var dialogMode = (withDialog ? DialogModes.ALL : DialogModes.NO);
     var desc1 = new ActionDescriptor();
     var ref1 = new ActionReference();
-    ref1.putName(cTID('Chnl'), "Shadows 1");
+    ref1.putName(cTID('Chnl'), lumPrefix+"Shadows 1");
     desc1.putReference(cTID('null'), ref1);
     var ref2 = new ActionReference();
     ref2.putProperty(cTID('Chnl'), sTID("selection"));
@@ -593,7 +636,7 @@ lumAllShadows = function() {
     var ref1 = new ActionReference();
     ref1.putProperty(cTID('Chnl'), sTID("selection"));
     desc1.putReference(cTID('null'), ref1);
-    desc1.putString(cTID('Nm  '), "Shadows 2");
+    desc1.putString(cTID('Nm  '), lumPrefix+"Shadows 2");
     executeAction(cTID('Dplc'), desc1, dialogMode);
   };
 
@@ -620,7 +663,7 @@ lumAllShadows = function() {
     ref1.putProperty(cTID('Chnl'), sTID("selection"));
     desc1.putReference(cTID('null'), ref1);
     var ref2 = new ActionReference();
-    ref2.putName(cTID('Chnl'), "Shadows 2");
+    ref2.putName(cTID('Chnl'), lumPrefix+"Shadows 2");
     desc1.putReference(cTID('T   '), ref2);
     executeAction(cTID('setd'), desc1, dialogMode);
   };
@@ -632,7 +675,7 @@ lumAllShadows = function() {
     var dialogMode = (withDialog ? DialogModes.ALL : DialogModes.NO);
     var desc1 = new ActionDescriptor();
     var ref1 = new ActionReference();
-    ref1.putName(cTID('Chnl'), "Shadows 2");
+    ref1.putName(cTID('Chnl'), lumPrefix+"Shadows 2");
     desc1.putReference(cTID('null'), ref1);
     var ref2 = new ActionReference();
     ref2.putProperty(cTID('Chnl'), sTID("selection"));
@@ -649,7 +692,7 @@ lumAllShadows = function() {
     var ref1 = new ActionReference();
     ref1.putProperty(cTID('Chnl'), sTID("selection"));
     desc1.putReference(cTID('null'), ref1);
-    desc1.putString(cTID('Nm  '), "Shadows 3");
+    desc1.putString(cTID('Nm  '), lumPrefix+"Shadows 3");
     executeAction(cTID('Dplc'), desc1, dialogMode);
   };
 
@@ -676,7 +719,7 @@ lumAllShadows = function() {
     ref1.putProperty(cTID('Chnl'), sTID("selection"));
     desc1.putReference(cTID('null'), ref1);
     var ref2 = new ActionReference();
-    ref2.putName(cTID('Chnl'), "Shadows 3");
+    ref2.putName(cTID('Chnl'), lumPrefix+"Shadows 3");
     desc1.putReference(cTID('T   '), ref2);
     executeAction(cTID('setd'), desc1, dialogMode);
   };
@@ -688,7 +731,7 @@ lumAllShadows = function() {
     var dialogMode = (withDialog ? DialogModes.ALL : DialogModes.NO);
     var desc1 = new ActionDescriptor();
     var ref1 = new ActionReference();
-    ref1.putName(cTID('Chnl'), "Shadows 3");
+    ref1.putName(cTID('Chnl'), lumPrefix+"Shadows 3");
     desc1.putReference(cTID('null'), ref1);
     var ref2 = new ActionReference();
     ref2.putProperty(cTID('Chnl'), sTID("selection"));
@@ -705,7 +748,7 @@ lumAllShadows = function() {
     var ref1 = new ActionReference();
     ref1.putProperty(cTID('Chnl'), sTID("selection"));
     desc1.putReference(cTID('null'), ref1);
-    desc1.putString(cTID('Nm  '), "Shadows 4");
+    desc1.putString(cTID('Nm  '), lumPrefix+"Shadows 4");
     executeAction(cTID('Dplc'), desc1, dialogMode);
   };
 
@@ -732,7 +775,7 @@ lumAllShadows = function() {
     ref1.putProperty(cTID('Chnl'), sTID("selection"));
     desc1.putReference(cTID('null'), ref1);
     var ref2 = new ActionReference();
-    ref2.putName(cTID('Chnl'), "Shadows 4");
+    ref2.putName(cTID('Chnl'), lumPrefix+"Shadows 4");
     desc1.putReference(cTID('T   '), ref2);
     executeAction(cTID('setd'), desc1, dialogMode);
   };
@@ -744,7 +787,7 @@ lumAllShadows = function() {
     var dialogMode = (withDialog ? DialogModes.ALL : DialogModes.NO);
     var desc1 = new ActionDescriptor();
     var ref1 = new ActionReference();
-    ref1.putName(cTID('Chnl'), "Shadows 4");
+    ref1.putName(cTID('Chnl'), lumPrefix+"Shadows 4");
     desc1.putReference(cTID('null'), ref1);
     var ref2 = new ActionReference();
     ref2.putProperty(cTID('Chnl'), sTID("selection"));
@@ -761,7 +804,7 @@ lumAllShadows = function() {
     var ref1 = new ActionReference();
     ref1.putProperty(cTID('Chnl'), sTID("selection"));
     desc1.putReference(cTID('null'), ref1);
-    desc1.putString(cTID('Nm  '), "Shadows 5");
+    desc1.putString(cTID('Nm  '), lumPrefix+"Shadows 5");
     executeAction(cTID('Dplc'), desc1, dialogMode);
   };
 
@@ -788,7 +831,7 @@ lumAllShadows = function() {
     ref1.putProperty(cTID('Chnl'), sTID("selection"));
     desc1.putReference(cTID('null'), ref1);
     var ref2 = new ActionReference();
-    ref2.putName(cTID('Chnl'), "Shadows 5");
+    ref2.putName(cTID('Chnl'), lumPrefix+"Shadows 5");
     desc1.putReference(cTID('T   '), ref2);
     executeAction(cTID('setd'), desc1, dialogMode);
   };
@@ -800,7 +843,7 @@ lumAllShadows = function() {
     var dialogMode = (withDialog ? DialogModes.ALL : DialogModes.NO);
     var desc1 = new ActionDescriptor();
     var ref1 = new ActionReference();
-    ref1.putName(cTID('Chnl'), "Shadows 5");
+    ref1.putName(cTID('Chnl'), lumPrefix+"Shadows 5");
     desc1.putReference(cTID('null'), ref1);
     var ref2 = new ActionReference();
     ref2.putProperty(cTID('Chnl'), sTID("selection"));
@@ -817,7 +860,7 @@ lumAllShadows = function() {
     var ref1 = new ActionReference();
     ref1.putProperty(cTID('Chnl'), sTID("selection"));
     desc1.putReference(cTID('null'), ref1);
-    desc1.putString(cTID('Nm  '), "Shadows 6");
+    desc1.putString(cTID('Nm  '), lumPrefix+"Shadows 6");
     executeAction(cTID('Dplc'), desc1, dialogMode);
   };
 
@@ -865,7 +908,10 @@ lumAllShadows = function() {
 //
 //==================== All Midtones ==============
 //
-allMidtones = function() {
+allMidtones = function(ch) {
+	app.activeDocument.suspendHistory("Create All Midtones Luminosity Channels", "allMidtones_hidden();" );
+};
+allMidtones_hidden = function() {
   // Set
   function step1(enabled, withDialog) {
     if (enabled != undefined && !enabled)
@@ -886,7 +932,7 @@ allMidtones = function() {
     var dialogMode = (withDialog ? DialogModes.ALL : DialogModes.NO);
     var desc1 = new ActionDescriptor();
     var ref1 = new ActionReference();
-    ref1.putName(cTID('Chnl'), "Highlights 1");
+    ref1.putName(cTID('Chnl'), lumPrefix+"Highlights 1");
     desc1.putReference(cTID('null'), ref1);
     var ref2 = new ActionReference();
     ref2.putProperty(cTID('Chnl'), sTID("selection"));
@@ -901,7 +947,7 @@ allMidtones = function() {
     var dialogMode = (withDialog ? DialogModes.ALL : DialogModes.NO);
     var desc1 = new ActionDescriptor();
     var ref1 = new ActionReference();
-    ref1.putName(cTID('Chnl'), "Shadows 1");
+    ref1.putName(cTID('Chnl'), lumPrefix+"Shadows 1");
     desc1.putReference(cTID('null'), ref1);
     var ref2 = new ActionReference();
     ref2.putProperty(cTID('Chnl'), sTID("selection"));
@@ -918,7 +964,7 @@ allMidtones = function() {
     var ref1 = new ActionReference();
     ref1.putProperty(cTID('Chnl'), sTID("selection"));
     desc1.putReference(cTID('null'), ref1);
-    desc1.putString(cTID('Nm  '), "Midtones 1");
+    desc1.putString(cTID('Nm  '), lumPrefix+"Midtones 1");
     executeAction(cTID('Dplc'), desc1, dialogMode);
   };
 
@@ -955,7 +1001,7 @@ allMidtones = function() {
     var dialogMode = (withDialog ? DialogModes.ALL : DialogModes.NO);
     var desc1 = new ActionDescriptor();
     var ref1 = new ActionReference();
-    ref1.putName(cTID('Chnl'), "Highlights 2");
+    ref1.putName(cTID('Chnl'), lumPrefix+"Highlights 2");
     desc1.putReference(cTID('null'), ref1);
     var ref2 = new ActionReference();
     ref2.putProperty(cTID('Chnl'), sTID("selection"));
@@ -970,7 +1016,7 @@ allMidtones = function() {
     var dialogMode = (withDialog ? DialogModes.ALL : DialogModes.NO);
     var desc1 = new ActionDescriptor();
     var ref1 = new ActionReference();
-    ref1.putName(cTID('Chnl'), "Shadows 2");
+    ref1.putName(cTID('Chnl'), lumPrefix+"Shadows 2");
     desc1.putReference(cTID('null'), ref1);
     var ref2 = new ActionReference();
     ref2.putProperty(cTID('Chnl'), sTID("selection"));
@@ -987,7 +1033,7 @@ allMidtones = function() {
     var ref1 = new ActionReference();
     ref1.putProperty(cTID('Chnl'), sTID("selection"));
     desc1.putReference(cTID('null'), ref1);
-    desc1.putString(cTID('Nm  '), "Midtones 2");
+    desc1.putString(cTID('Nm  '), lumPrefix+"Midtones 2");
     executeAction(cTID('Dplc'), desc1, dialogMode);
   };
 
@@ -1024,7 +1070,7 @@ allMidtones = function() {
     var dialogMode = (withDialog ? DialogModes.ALL : DialogModes.NO);
     var desc1 = new ActionDescriptor();
     var ref1 = new ActionReference();
-    ref1.putName(cTID('Chnl'), "Highlights 3");
+    ref1.putName(cTID('Chnl'), lumPrefix+"Highlights 3");
     desc1.putReference(cTID('null'), ref1);
     var ref2 = new ActionReference();
     ref2.putProperty(cTID('Chnl'), sTID("selection"));
@@ -1039,7 +1085,7 @@ allMidtones = function() {
     var dialogMode = (withDialog ? DialogModes.ALL : DialogModes.NO);
     var desc1 = new ActionDescriptor();
     var ref1 = new ActionReference();
-    ref1.putName(cTID('Chnl'), "Shadows 3");
+    ref1.putName(cTID('Chnl'), lumPrefix+"Shadows 3");
     desc1.putReference(cTID('null'), ref1);
     var ref2 = new ActionReference();
     ref2.putProperty(cTID('Chnl'), sTID("selection"));
@@ -1056,7 +1102,7 @@ allMidtones = function() {
     var ref1 = new ActionReference();
     ref1.putProperty(cTID('Chnl'), sTID("selection"));
     desc1.putReference(cTID('null'), ref1);
-    desc1.putString(cTID('Nm  '), "Midtones 3");
+    desc1.putString(cTID('Nm  '), lumPrefix+"Midtones 3");
     executeAction(cTID('Dplc'), desc1, dialogMode);
   };
 
@@ -1093,7 +1139,7 @@ allMidtones = function() {
     var dialogMode = (withDialog ? DialogModes.ALL : DialogModes.NO);
     var desc1 = new ActionDescriptor();
     var ref1 = new ActionReference();
-    ref1.putName(cTID('Chnl'), "Highlights 4");
+    ref1.putName(cTID('Chnl'), lumPrefix+"Highlights 4");
     desc1.putReference(cTID('null'), ref1);
     var ref2 = new ActionReference();
     ref2.putProperty(cTID('Chnl'), sTID("selection"));
@@ -1108,7 +1154,7 @@ allMidtones = function() {
     var dialogMode = (withDialog ? DialogModes.ALL : DialogModes.NO);
     var desc1 = new ActionDescriptor();
     var ref1 = new ActionReference();
-    ref1.putName(cTID('Chnl'), "Shadows 4");
+    ref1.putName(cTID('Chnl'), lumPrefix+"Shadows 4");
     desc1.putReference(cTID('null'), ref1);
     var ref2 = new ActionReference();
     ref2.putProperty(cTID('Chnl'), sTID("selection"));
@@ -1125,7 +1171,7 @@ allMidtones = function() {
     var ref1 = new ActionReference();
     ref1.putProperty(cTID('Chnl'), sTID("selection"));
     desc1.putReference(cTID('null'), ref1);
-    desc1.putString(cTID('Nm  '), "Midtones 4");
+    desc1.putString(cTID('Nm  '), lumPrefix+"Midtones 4");
     executeAction(cTID('Dplc'), desc1, dialogMode);
   };
 
@@ -1162,7 +1208,7 @@ allMidtones = function() {
     var dialogMode = (withDialog ? DialogModes.ALL : DialogModes.NO);
     var desc1 = new ActionDescriptor();
     var ref1 = new ActionReference();
-    ref1.putName(cTID('Chnl'), "Highlights 5");
+    ref1.putName(cTID('Chnl'), lumPrefix+"Highlights 5");
     desc1.putReference(cTID('null'), ref1);
     var ref2 = new ActionReference();
     ref2.putProperty(cTID('Chnl'), sTID("selection"));
@@ -1177,7 +1223,7 @@ allMidtones = function() {
     var dialogMode = (withDialog ? DialogModes.ALL : DialogModes.NO);
     var desc1 = new ActionDescriptor();
     var ref1 = new ActionReference();
-    ref1.putName(cTID('Chnl'), "Shadows 5");
+    ref1.putName(cTID('Chnl'), lumPrefix+"Shadows 5");
     desc1.putReference(cTID('null'), ref1);
     var ref2 = new ActionReference();
     ref2.putProperty(cTID('Chnl'), sTID("selection"));
@@ -1194,7 +1240,7 @@ allMidtones = function() {
     var ref1 = new ActionReference();
     ref1.putProperty(cTID('Chnl'), sTID("selection"));
     desc1.putReference(cTID('null'), ref1);
-    desc1.putString(cTID('Nm  '), "Midtones 5");
+    desc1.putString(cTID('Nm  '), lumPrefix+"Midtones 5");
     executeAction(cTID('Dplc'), desc1, dialogMode);
   };
 
@@ -1231,7 +1277,7 @@ allMidtones = function() {
     var dialogMode = (withDialog ? DialogModes.ALL : DialogModes.NO);
     var desc1 = new ActionDescriptor();
     var ref1 = new ActionReference();
-    ref1.putName(cTID('Chnl'), "Highlights 6");
+    ref1.putName(cTID('Chnl'), lumPrefix+"Highlights 6");
     desc1.putReference(cTID('null'), ref1);
     var ref2 = new ActionReference();
     ref2.putProperty(cTID('Chnl'), sTID("selection"));
@@ -1246,7 +1292,7 @@ allMidtones = function() {
     var dialogMode = (withDialog ? DialogModes.ALL : DialogModes.NO);
     var desc1 = new ActionDescriptor();
     var ref1 = new ActionReference();
-    ref1.putName(cTID('Chnl'), "Shadows 6");
+    ref1.putName(cTID('Chnl'), lumPrefix+"Shadows 6");
     desc1.putReference(cTID('null'), ref1);
     var ref2 = new ActionReference();
     ref2.putProperty(cTID('Chnl'), sTID("selection"));
@@ -1263,7 +1309,7 @@ allMidtones = function() {
     var ref1 = new ActionReference();
     ref1.putProperty(cTID('Chnl'), sTID("selection"));
     desc1.putReference(cTID('null'), ref1);
-    desc1.putString(cTID('Nm  '), "Midtones 6");
+    desc1.putString(cTID('Nm  '), lumPrefix+"Midtones 6");
     executeAction(cTID('Dplc'), desc1, dialogMode);
   };
 

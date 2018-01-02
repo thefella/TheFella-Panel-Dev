@@ -1,6 +1,9 @@
+/* dev-code */
 //! Variables
 var cTID = function(s) { return app.charIDToTypeID(s); };
 var sTID = function(s) { return app.stringIDToTypeID(s); };
+/* end-dev-code */
+
 
 
 //
@@ -9,8 +12,9 @@ var sTID = function(s) { return app.stringIDToTypeID(s); };
 adjBrightness = function() {
   // Make
   function step1(enabled, withDialog) {
-    if (enabled != undefined && !enabled)
+    if (enabled != undefined && !enabled) {
       return;
+    }
     var dialogMode = (withDialog ? DialogModes.ALL : DialogModes.NO);
     var desc1 = new ActionDescriptor();
     var ref1 = new ActionReference();
@@ -22,7 +26,7 @@ adjBrightness = function() {
     desc2.putObject(cTID('Type'), cTID('BrgC'), desc3);
     desc1.putObject(cTID('Usng'), cTID('AdjL'), desc2);
     executeAction(cTID('Mk  '), desc1, dialogMode);
-  };
+  }
 
   step1();      // Make
 };
@@ -35,8 +39,9 @@ adjBrightness = function() {
 adjLevels = function() {
   // Make
   function step1(enabled, withDialog) {
-    if (enabled != undefined && !enabled)
+    if (enabled != undefined && !enabled) {
       return;
+    }
     var dialogMode = (withDialog ? DialogModes.ALL : DialogModes.NO);
     var desc1 = new ActionDescriptor();
     var ref1 = new ActionReference();
@@ -48,7 +53,7 @@ adjLevels = function() {
     desc2.putObject(cTID('Type'), cTID('Lvls'), desc3);
     desc1.putObject(cTID('Usng'), cTID('AdjL'), desc2);
     executeAction(cTID('Mk  '), desc1, dialogMode);
-  };
+  }
 
   step1();      // Make
 };
@@ -61,8 +66,9 @@ adjLevels = function() {
 adjBW = function() {
   // Make
   function step1(enabled, withDialog) {
-    if (enabled != undefined && !enabled)
+    if (enabled != undefined && !enabled) {
       return;
+    }
     var dialogMode = (withDialog ? DialogModes.ALL : DialogModes.NO);
     var desc1 = new ActionDescriptor();
     var ref1 = new ActionReference();
@@ -86,7 +92,7 @@ adjBW = function() {
     desc2.putObject(cTID('Type'), cTID('BanW'), desc3);
     desc1.putObject(cTID('Usng'), cTID('AdjL'), desc2);
     executeAction(cTID('Mk  '), desc1, dialogMode);
-  };
+  }
 
   step1();      // Make
 };
@@ -99,8 +105,9 @@ adjBW = function() {
 adjColorBalance = function() {
   // Make
   function step1(enabled, withDialog) {
-    if (enabled != undefined && !enabled)
+    if (enabled != undefined && !enabled) {
       return;
+    }
     var dialogMode = (withDialog ? DialogModes.ALL : DialogModes.NO);
     var desc1 = new ActionDescriptor();
     var ref1 = new ActionReference();
@@ -127,7 +134,7 @@ adjColorBalance = function() {
     desc2.putObject(cTID('Type'), cTID('ClrB'), desc3);
     desc1.putObject(cTID('Usng'), cTID('AdjL'), desc2);
     executeAction(cTID('Mk  '), desc1, dialogMode);
-  };
+  }
 
   step1();      // Make
 };
@@ -140,8 +147,9 @@ adjColorBalance = function() {
 adjExposure = function() {
   // Make
   function step1(enabled, withDialog) {
-    if (enabled != undefined && !enabled)
+    if (enabled != undefined && !enabled) {
       return;
+    }
     var dialogMode = (withDialog ? DialogModes.ALL : DialogModes.NO);
     var desc1 = new ActionDescriptor();
     var ref1 = new ActionReference();
@@ -156,7 +164,7 @@ adjExposure = function() {
     desc2.putObject(cTID('Type'), cTID('Exps'), desc3);
     desc1.putObject(cTID('Usng'), cTID('AdjL'), desc2);
     executeAction(cTID('Mk  '), desc1, dialogMode);
-  };
+  }
 
   step1();      // Make
 };
@@ -169,8 +177,9 @@ adjExposure = function() {
 adjCurves = function() {
   // Make
   function step1(enabled, withDialog) {
-    if (enabled != undefined && !enabled)
+    if (enabled != undefined && !enabled) {
       return;
+    }
     var dialogMode = (withDialog ? DialogModes.ALL : DialogModes.NO);
     var desc1 = new ActionDescriptor();
     var ref1 = new ActionReference();
@@ -182,7 +191,7 @@ adjCurves = function() {
     desc2.putObject(cTID('Type'), cTID('Crvs'), desc3);
     desc1.putObject(cTID('Usng'), cTID('AdjL'), desc2);
     executeAction(cTID('Mk  '), desc1, dialogMode);
-  };
+  }
 
   step1();      // Make
 };
@@ -195,8 +204,9 @@ adjCurves = function() {
 adjGradientMap = function() {
   // Make
   function step1(enabled, withDialog) {
-    if (enabled != undefined && !enabled)
+    if (enabled != undefined && !enabled) {
       return;
+    }
     var dialogMode = (withDialog ? DialogModes.ALL : DialogModes.NO);
     var desc1 = new ActionDescriptor();
     var ref1 = new ActionReference();
@@ -207,22 +217,24 @@ adjGradientMap = function() {
     desc1.putReference(cTID('From'), ref2);
     desc1.putEnumerated(cTID('Usng'), cTID('HstS'), cTID('FllD'));
     executeAction(cTID('Mk  '), desc1, dialogMode);
-  };
+  }
 
   // Convert Mode
   function step2(enabled, withDialog) {
-    if (enabled != undefined && !enabled)
+    if (enabled != undefined && !enabled) {
       return;
+    }
     var dialogMode = (withDialog ? DialogModes.ALL : DialogModes.NO);
     var desc1 = new ActionDescriptor();
     desc1.putClass(cTID('T   '), sTID("RGBColorMode"));
     executeAction(sTID('convertMode'), desc1, dialogMode);
-  };
+  }
 
   // Make
   function step3(enabled, withDialog) {
-    if (enabled != undefined && !enabled)
+    if (enabled != undefined && !enabled) {
       return;
+    }
     var dialogMode = (withDialog ? DialogModes.ALL : DialogModes.NO);
     var desc1 = new ActionDescriptor();
     var ref1 = new ActionReference();
@@ -283,12 +295,13 @@ adjGradientMap = function() {
     desc2.putObject(cTID('Type'), cTID('GdMp'), desc3);
     desc1.putObject(cTID('Usng'), cTID('AdjL'), desc2);
     executeAction(cTID('Mk  '), desc1, dialogMode);
-  };
+  }
 
   // Set
   function step4(enabled, withDialog) {
-    if (enabled != undefined && !enabled)
+    if (enabled != undefined && !enabled) {
       return;
+    }
     var dialogMode = (withDialog ? DialogModes.ALL : DialogModes.NO);
     var desc1 = new ActionDescriptor();
     var ref1 = new ActionReference();
@@ -298,7 +311,7 @@ adjGradientMap = function() {
     desc2.putEnumerated(cTID('Md  '), cTID('BlnM'), cTID('Ovrl'));
     desc1.putObject(cTID('T   '), cTID('Lyr '), desc2);
     executeAction(cTID('setd'), desc1, dialogMode);
-  };
+  }
 
   step1();      // Make
   step2();      // Convert Mode
@@ -314,8 +327,9 @@ adjGradientMap = function() {
 adjHueSaturation = function() {
   // Make
   function step1(enabled, withDialog) {
-    if (enabled != undefined && !enabled)
+    if (enabled != undefined && !enabled) {
       return;
+    }
     var dialogMode = (withDialog ? DialogModes.ALL : DialogModes.NO);
     var desc1 = new ActionDescriptor();
     var ref1 = new ActionReference();
@@ -328,12 +342,13 @@ adjHueSaturation = function() {
     desc2.putObject(cTID('Type'), cTID('HStr'), desc3);
     desc1.putObject(cTID('Usng'), cTID('AdjL'), desc2);
     executeAction(cTID('Mk  '), desc1, dialogMode);
-  };
+  }
 
   // Set
   function step2(enabled, withDialog) {
-    if (enabled != undefined && !enabled)
+    if (enabled != undefined && !enabled) {
       return;
+    }
     var dialogMode = (withDialog ? DialogModes.ALL : DialogModes.NO);
     var desc1 = new ActionDescriptor();
     var ref1 = new ActionReference();
@@ -343,7 +358,7 @@ adjHueSaturation = function() {
     desc2.putEnumerated(cTID('Md  '), cTID('BlnM'), cTID('Clr '));
     desc1.putObject(cTID('T   '), cTID('Lyr '), desc2);
     executeAction(cTID('setd'), desc1, dialogMode);
-  };
+  }
 
   step1();      // Make
   step2();      // Set
@@ -357,8 +372,9 @@ adjHueSaturation = function() {
 adjPhotoFilter = function() {
   // Make
   function step1(enabled, withDialog) {
-    if (enabled != undefined && !enabled)
+    if (enabled != undefined && !enabled) {
       return;
+    }
     var dialogMode = (withDialog ? DialogModes.ALL : DialogModes.NO);
     var desc1 = new ActionDescriptor();
     var ref1 = new ActionReference();
@@ -376,7 +392,7 @@ adjPhotoFilter = function() {
     desc2.putObject(cTID('Type'), sTID("photoFilter"), desc3);
     desc1.putObject(cTID('Usng'), cTID('AdjL'), desc2);
     executeAction(cTID('Mk  '), desc1, dialogMode);
-  };
+  }
 
   step1();      // Make
 };
@@ -389,8 +405,9 @@ adjPhotoFilter = function() {
 adjVibrance = function() {
   // Make
   function step1(enabled, withDialog) {
-    if (enabled != undefined && !enabled)
+    if (enabled != undefined && !enabled) {
       return;
+    }
     var dialogMode = (withDialog ? DialogModes.ALL : DialogModes.NO);
     var desc1 = new ActionDescriptor();
     var ref1 = new ActionReference();
@@ -400,7 +417,7 @@ adjVibrance = function() {
     desc2.putClass(cTID('Type'), sTID("vibrance"));
     desc1.putObject(cTID('Usng'), cTID('AdjL'), desc2);
     executeAction(cTID('Mk  '), desc1, dialogMode);
-  };
+  }
 
   step1();      // Make
 };
@@ -413,8 +430,9 @@ adjVibrance = function() {
 adjChannelMixer = function() {
   // Make
   function step1(enabled, withDialog) {
-    if (enabled != undefined && !enabled)
+    if (enabled != undefined && !enabled) {
       return;
+    }
     var dialogMode = (withDialog ? DialogModes.ALL : DialogModes.NO);
     var desc1 = new ActionDescriptor();
     var ref1 = new ActionReference();
@@ -435,7 +453,7 @@ adjChannelMixer = function() {
     desc2.putObject(cTID('Type'), cTID('ChnM'), desc3);
     desc1.putObject(cTID('Usng'), cTID('AdjL'), desc2);
     executeAction(cTID('Mk  '), desc1, dialogMode);
-  };
+  }
 
   step1();      // Make
 };
@@ -448,8 +466,9 @@ adjChannelMixer = function() {
 adjColorLookup = function() {
   // Make
   function step1(enabled, withDialog) {
-    if (enabled != undefined && !enabled)
+    if (enabled != undefined && !enabled) {
       return;
+    }
     var dialogMode = (withDialog ? DialogModes.ALL : DialogModes.NO);
     var desc1 = new ActionDescriptor();
     var ref1 = new ActionReference();
@@ -459,7 +478,7 @@ adjColorLookup = function() {
     desc2.putClass(cTID('Type'), sTID("colorLookup"));
     desc1.putObject(cTID('Usng'), cTID('AdjL'), desc2);
     executeAction(cTID('Mk  '), desc1, dialogMode);
-  };
+  }
 
   step1();      // Make
 };
@@ -472,8 +491,9 @@ adjColorLookup = function() {
 adjInvert = function() {
   // Make
   function step1(enabled, withDialog) {
-    if (enabled != undefined && !enabled)
+    if (enabled != undefined && !enabled) {
       return;
+    }
     var dialogMode = (withDialog ? DialogModes.ALL : DialogModes.NO);
     var desc1 = new ActionDescriptor();
     var ref1 = new ActionReference();
@@ -483,7 +503,7 @@ adjInvert = function() {
     desc2.putClass(cTID('Type'), cTID('Invr'));
     desc1.putObject(cTID('Usng'), cTID('AdjL'), desc2);
     executeAction(cTID('Mk  '), desc1, dialogMode);
-  };
+  }
 
   step1();      // Make
 };
@@ -496,8 +516,9 @@ adjInvert = function() {
 adjPosterize = function() {
   // Make
   function step1(enabled, withDialog) {
-    if (enabled != undefined && !enabled)
+    if (enabled != undefined && !enabled) {
       return;
+    }
     var dialogMode = (withDialog ? DialogModes.ALL : DialogModes.NO);
     var desc1 = new ActionDescriptor();
     var ref1 = new ActionReference();
@@ -509,7 +530,7 @@ adjPosterize = function() {
     desc2.putObject(cTID('Type'), cTID('Pstr'), desc3);
     desc1.putObject(cTID('Usng'), cTID('AdjL'), desc2);
     executeAction(cTID('Mk  '), desc1, dialogMode);
-  };
+  }
 
   step1();      // Make
 };
@@ -522,8 +543,9 @@ adjPosterize = function() {
 adjSelectiveColor = function() {
   // Make
   function step1(enabled, withDialog) {
-    if (enabled != undefined && !enabled)
+    if (enabled != undefined && !enabled) {
       return;
+    }
     var dialogMode = (withDialog ? DialogModes.ALL : DialogModes.NO);
     var desc1 = new ActionDescriptor();
     var ref1 = new ActionReference();
@@ -535,7 +557,7 @@ adjSelectiveColor = function() {
     desc2.putObject(cTID('Type'), cTID('SlcC'), desc3);
     desc1.putObject(cTID('Usng'), cTID('AdjL'), desc2);
     executeAction(cTID('Mk  '), desc1, dialogMode);
-  };
+  }
 
   step1();      // Make
 };
@@ -548,8 +570,9 @@ adjSelectiveColor = function() {
 adjThreshold = function() {
   // Make
   function step1(enabled, withDialog) {
-    if (enabled != undefined && !enabled)
+    if (enabled != undefined && !enabled) {
       return;
+    }
     var dialogMode = (withDialog ? DialogModes.ALL : DialogModes.NO);
     var desc1 = new ActionDescriptor();
     var ref1 = new ActionReference();
@@ -561,7 +584,7 @@ adjThreshold = function() {
     desc2.putObject(cTID('Type'), cTID('Thrs'), desc3);
     desc1.putObject(cTID('Usng'), cTID('AdjL'), desc2);
     executeAction(cTID('Mk  '), desc1, dialogMode);
-  };
+  }
 
   step1();      // Make
 };

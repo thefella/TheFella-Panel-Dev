@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ExtensionManifest Version="4.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ExtensionBundleId="com.thefella.panel" ExtensionBundleVersion="1.0" ExtensionBundleName="TheFella Panel">
 	<Author><![CDATA[Conor MacNeill]]></Author>
-	<Abstract><![CDATA[Test Panel]]></Abstract>
-
+	<Abstract><![CDATA[An Adobe Photoshop Panel to help photographers with their workflow.]]></Abstract>
     <ExtensionList>
         <Extension Id="com.thefella.panel" Version="1.0" />
     </ExtensionList>
     <ExecutionEnvironment>
         <HostList>
-            <Host Name="PHSP" Version="14.0" />
-            <Host Name="PHXS" Version="14.0" />
+            <Host Name="PHSP" Version="15.0" />
+            <Host Name="PHXS" Version="15.0" />
         </HostList>
         <LocaleList>
                     <Locale Code="All" />
@@ -23,7 +22,6 @@
             <DispatchInfo >
                 <Resources>
                     <MainPath>./index.html</MainPath>
-                    <!--<ScriptPath>./jsxbin/init.jsxbin</ScriptPath>-->
                     <ScriptPath>./jsx/init.jsx</ScriptPath>
                 </Resources>
                 <Lifecycle>
@@ -34,11 +32,11 @@
                     <Menu>TheFella Panel</Menu>
                     <Geometry>
                         <Size>
-                            <Height>440</Height>
+                            <Height>444</Height>
                             <Width>300</Width>
                         </Size>
                         <MinSize>
-                            <Height>420</Height>
+                            <Height>414</Height>
                             <Width>252</Width>
                         </MinSize>
                         <MaxSize>

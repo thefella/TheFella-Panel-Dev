@@ -1,0 +1,17 @@
+{
+  "name": "TheFella_Panel",
+  "version": "0.9",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-clean": "^0.3.2",
+    "gulp-clean-css": "^3.9.2",
+    "gulp-concat": "^2.6.1",
+    "gulp-htmlmin": "^4.0.0",
+    "gulp-javascript-obfuscator": "^1.1.4",
+    "gulp-strip-code": "^0.1.4",
+    "gulp-uglify": "^3.0.0",
+    "gulp-util": "^3.0.8",
+    "jsxbin": "^1.5.1",
+    "run-sequence": "^2.2.0"
+  }
+}

@@ -6,25 +6,31 @@ var sTID = function(s) { return app.stringIDToTypeID(s); };
 
 //! Stack all open documents into one
 stack = function() {
+	app.activeDocument.suspendHistory("Combine All Open Documents", "stack_hidden();" );
+};
+stack_hidden = function() {
+	//! If only one document open
 	if (app.documents.length==1) {
-		alert("You can't stack images with only one document open.");
+		alert("Only One Image Open \r\nYou can't stack images together with only one document open.");
 	}
-
-	while (app.documents.length>1) {  
+	
+	//! Loop through all open documents
+	var layerName;
+	while (app.documents.length>1) {
 		app.activeDocument = app.documents[1];  
-		var layerName = decodeURI(activeDocument.name).replace(/\....$/,'');  
+		layerName = decodeURI(activeDocument.name).replace(/\....$/,'');
 		activeDocument.activeLayer.duplicate(documents[0]);  
 		app.activeDocument.close(SaveOptions.DONOTSAVECHANGES);  
 		activeDocument.activeLayer.name = layerName;
-	};  
-}
+	}
+};
 
 
 
 //! Fit image to screen
 fitToScreen = function() {
 	runMenuItem(app.charIDToTypeID("FtOn")); 
-}
+};
 
 
 
@@ -42,7 +48,7 @@ zoom = function(zoom) {
 	desc.putReference( charIDToTypeID( "null" ), ref ); 
 	executeAction( charIDToTypeID( "slct" ), desc, DialogModes.NO ); 
 	activeDocument.resizeImage( undefined, undefined, docRes, ResampleMethod.NONE ); 
-}
+};
 
 
 
@@ -51,12 +57,15 @@ newLayer = function() {
 	var layerRef = app.activeDocument.artLayers.add();
 	layerRef.name = "New Layer";
 	layerRef.blendMode = BlendMode.NORMAL;
-}
+};
 
 
 
 //! Dodge and burn layer using 50% gray
 dodgeAndBurn = function() {
+	app.activeDocument.suspendHistory("Create Dodge & Burn Layer", "dodgeAndBurn_hidden();" );
+};
+dodgeAndBurn_hidden = function() {
 	var layerRef = app.activeDocument.artLayers.add();
     layerRef.name = "Dodge / Burn";  
     layerRef.blendMode = BlendMode.SOFTLIGHT;
@@ -66,12 +75,12 @@ dodgeAndBurn = function() {
     myColor.rgb.blue = 128;  
     activeDocument.selection.fill(myColor);
     blackAndWhiteColors();
-}
+};
 
 
 
 //! Change foreground/background colours to white/black
-function blackAndWhiteColors() {
+blackAndWhiteColors = function() {
 	var bgColor = app.backgroundColor;
 	bgColor.rgb.red = 255;
 	bgColor.rgb.green = 255;
@@ -83,10 +92,10 @@ function blackAndWhiteColors() {
 	fgColor.rgb.green = 0;
 	fgColor.rgb.blue = 0;
 	app.foregroundColor = fgColor;
-}
+};
 
 
-
+/*
 layerHasLayerMask = function() {
 	//var thisLayer = activeDocument.activeLayer;
 	if (hasLayerMask() ) {
@@ -96,7 +105,7 @@ layerHasLayerMask = function() {
 	{
 		alert('ulster says no');
 	}
-}
+};*/
 
 
 
@@ -106,14 +115,15 @@ layerHasLayerMask = function() {
 cameraRaw = function() {
   // Camera Raw Filter
   function step1(enabled, withDialog) {
-    if (enabled != undefined && !enabled)
-      return;
+    if (enabled != undefined && !enabled) {
+      return; 
+    }
     var dialogMode = (withDialog ? DialogModes.ALL : DialogModes.NO);
     var desc1 = new ActionDescriptor();
     desc1.putString(cTID('CMod'), "Filter");
     desc1.putEnumerated(cTID('Sett'), cTID('Sett'), cTID('Defa'));
     executeAction(sTID('Adobe Camera Raw Filter'), desc1, dialogMode);
-  };
+  }
 
   step1(true, true);      // Camera Raw Filter
 };
@@ -126,8 +136,9 @@ cameraRaw = function() {
 hueSaturation = function() {
   // Make
   function step1(enabled, withDialog) {
-    if (enabled != undefined && !enabled)
-      return;
+    if (enabled != undefined && !enabled) {
+      return; 
+    }
     var dialogMode = (withDialog ? DialogModes.ALL : DialogModes.NO);
     var desc1 = new ActionDescriptor();
     var ref1 = new ActionReference();
@@ -140,12 +151,13 @@ hueSaturation = function() {
     desc2.putObject(cTID('Type'), cTID('HStr'), desc3);
     desc1.putObject(cTID('Usng'), cTID('AdjL'), desc2);
     executeAction(cTID('Mk  '), desc1, dialogMode);
-  };
+  }
 
   // Set
   function step2(enabled, withDialog) {
-    if (enabled != undefined && !enabled)
-      return;
+    if (enabled != undefined && !enabled) {
+      return; 
+    }
     var dialogMode = (withDialog ? DialogModes.ALL : DialogModes.NO);
     var desc1 = new ActionDescriptor();
     var ref1 = new ActionReference();
@@ -155,7 +167,7 @@ hueSaturation = function() {
     desc2.putEnumerated(cTID('Md  '), cTID('BlnM'), cTID('Clr '));
     desc1.putObject(cTID('T   '), cTID('Lyr '), desc2);
     executeAction(cTID('setd'), desc1, dialogMode);
-  };
+  }
 
   step1();      // Make
   step2();      // Set
@@ -167,10 +179,14 @@ hueSaturation = function() {
 //==================== Merge All Always ==============
 //
 mergeAllToNewLayer = function() {
+	app.activeDocument.suspendHistory("Stamp Visible To New Layer", "mergeAllToNewLayer_hidden();" );
+};
+mergeAllToNewLayer_hidden = function() {
   // Make
   function step1(enabled, withDialog) {
-    if (enabled != undefined && !enabled)
-      return;
+    if (enabled != undefined && !enabled) {
+      return; 
+    }
     var dialogMode = (withDialog ? DialogModes.ALL : DialogModes.NO);
     var desc1 = new ActionDescriptor();
     var ref1 = new ActionReference();
@@ -178,22 +194,24 @@ mergeAllToNewLayer = function() {
     desc1.putReference(cTID('null'), ref1);
     desc1.putInteger(cTID('LyrI'), 70);
     executeAction(cTID('Mk  '), desc1, dialogMode);
-  };
+  }
 
   // Merge Visible
   function step2(enabled, withDialog) {
-    if (enabled != undefined && !enabled)
-      return;
+    if (enabled != undefined && !enabled) {
+      return; 
+    }
     var dialogMode = (withDialog ? DialogModes.ALL : DialogModes.NO);
     var desc1 = new ActionDescriptor();
     desc1.putBoolean(cTID('Dplc'), true);
     executeAction(sTID('mergeVisible'), desc1, dialogMode);
-  };
+  }
 
   // Move
   function step3(enabled, withDialog) {
-    if (enabled != undefined && !enabled)
-      return;
+    if (enabled != undefined && !enabled) {
+      return; 
+    }
     var dialogMode = (withDialog ? DialogModes.ALL : DialogModes.NO);
     var desc1 = new ActionDescriptor();
     var ref1 = new ActionReference();
@@ -203,12 +221,13 @@ mergeAllToNewLayer = function() {
     ref2.putEnumerated(cTID('Lyr '), cTID('Ordn'), cTID('Frnt'));
     desc1.putReference(cTID('T   '), ref2);
     executeAction(cTID('move'), desc1, dialogMode);
-  };
+  }
   
   // Set
   function step4(enabled, withDialog) {
-    if (enabled != undefined && !enabled)
-      return;
+    if (enabled != undefined && !enabled) {
+      return; 
+    }
     var dialogMode = (withDialog ? DialogModes.ALL : DialogModes.NO);
     var desc1 = new ActionDescriptor();
     var ref1 = new ActionReference();
@@ -218,7 +237,7 @@ mergeAllToNewLayer = function() {
     desc2.putString(cTID('Nm  '), "Merged");
     desc1.putObject(cTID('T   '), cTID('Lyr '), desc2);
     executeAction(cTID('setd'), desc1, dialogMode);
-  };
+  }
 
   step1();      // Make
   step2();      // Merge Visible
@@ -227,31 +246,31 @@ mergeAllToNewLayer = function() {
 };
 
 
-
 btnDeleteLayerMask = function() {
 	if (hasLayerMask()) {
 		DeleteLayerMask();
 	} else {
 		alert('No layer mask to delete');
 	}
-}
+};
 
 
 //
 //==================== Delete Layer Mask ==============
 //
-function DeleteLayerMask() {
+DeleteLayerMask = function() {
   // Delete
   function step1(enabled, withDialog) {
-    if (enabled != undefined && !enabled)
-      return;
+    if (enabled != undefined && !enabled) {
+      return; 
+    }
     var dialogMode = (withDialog ? DialogModes.ALL : DialogModes.NO);
     var desc1 = new ActionDescriptor();
     var ref1 = new ActionReference();
     ref1.putEnumerated(cTID('Chnl'), cTID('Ordn'), cTID('Trgt'));
     desc1.putReference(cTID('null'), ref1);
     executeAction(cTID('Dlt '), desc1, dialogMode);
-  };
+  }
 
   step1();      // Delete
 };
@@ -274,4 +293,4 @@ hasLayerMask = function() {
 		hasLayerMask = false;   
 	}   
 	return hasLayerMask;   
-}
+};
