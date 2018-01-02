@@ -170,6 +170,17 @@ gulp.task('default', function(){
 });
 
 
+/*
+gulp.task('manifest', function() {
+  var users1 = ["existing_value1", "existing_value2", "existing_value3"];
+  var users2 = ["new_value1", "new_value2", "new_value3"];
+
+  var stream = gulp.src(['idmap/*.xml']);
+  users1.forEach(function(u, i) {
+    stream = stream.pipe(replace(users1[i], users2[i]));
+  });
+  return stream.pipe(gulp.dest('build/'));
+});*/
 
 
 

@@ -24,6 +24,13 @@ html {
 	font-size: 10px; 
 }*/
 
+
+@media screen and (min-width: 320px) {
+	body {
+		opacity: 0.5;
+	}
+}
+
 html,
 body {
 	cursor: default;
@@ -32,15 +39,22 @@ body {
 	overflow-x: hidden;
 	overflow-y: hidden;
 	padding: 0;
+	position: relative;
 	width: 100%;
 	user-select: none;
+	-ms-user-select: none;
 	-webkit-user-select: none;
+	user-drag: none;
+	-ms-user-drag: none;
+	-webkit-user-drag: none;
+   
 	/* Font-size is set with the theme: 
 		tiny = 9px
 		small = 10px
 		medium = 11px 
 		large = 12px
 	*/
+	transform: translateZ(0);
 }
 
 body {
@@ -118,6 +132,10 @@ h1.tab-title {
 	margin-bottom: 0.75em;
 	margin-top: 0.25em;
 	word-spacing: 0.01em;
+}
+
+h1.headless-group {
+	display: none;
 }
 
 p {
@@ -226,6 +244,7 @@ button:target {
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
 	grid-gap: 4px;
+	width: 100%;
 }
 
 	.four.big-pills {
@@ -279,6 +298,7 @@ button:target {
 	display: grid;
 	grid-template-columns: repeat(8, 1fr);
 	grid-gap: 5px;
+	width: 100%;
 }
 	
 	.medium .luminosity-pills .pills-group {

@@ -11,11 +11,7 @@ function onLoad() {
     var event = new CSEvent("com.adobe.PhotoshopPersistent", "APPLICATION");   
     event.extensionId = extId;  
     csInterface.dispatchEvent(event); 
-    
-    //! Load external JSX files
-    loadJSX();
-    
-    
+
     //! Listen for dialog events
 	csInterface.addEventListener("dialogEvent", function(evt) {
 	    changeButton(evt.data);
@@ -25,6 +21,12 @@ function onLoad() {
 
 	//! Check cookies for custom names
 	checkButtonCookies();
+
+	//! Load external JSX files
+    loadJSX();
+    
+    //! Stop context menu, e.g. View Source
+    document.addEventListener('contextmenu', event => event.preventDefault());
 }
 //! End onLoad();
 
@@ -43,7 +45,7 @@ function changeButton(data) {
 	var allButtons = [];
 	
 	//! Loop through buttons and get name
-	$(".custom-buttons > .custom-button").each(function(index) {
+	$("#custom-buttons-group > button.custom-button").each(function(index) {
 		allButtons[index] = $(this).html();
 	});
 	
@@ -66,7 +68,8 @@ function checkButtonCookies() {
 		var cookieInfo = JSON.parse(getCookie('customButtons'));
 		
 		//! Loop through buttons and set name
-		$(".custom-buttons > .custom-button").each(function(index) {
+		//$(".custom-buttons > .custom-button").each(function(index) {
+		$("#custom-buttons-group > button.custom-button").each(function(index) {
 			$(this).html(cookieInfo[index]);
 		});	
 	}
@@ -104,13 +107,20 @@ function deleteCookie(key) {
 function setTheme(theme) {
 
 		var themeClass;
-		var themeColor = toHex(theme.panelBackgroundColor.color);
+		//var themeColor = toHex(theme.panelBackgroundColor.color);
+		var themeColor = "rgb("+theme.panelBackgroundColor.color.red+","+theme.panelBackgroundColor.color.green+","+theme.panelBackgroundColor.color.blue+")";
 		var themeFontSize = theme.baseFontSize + "px";
 		var themeFontFamily = theme.baseFontFamily;		
 		
 		//! Set background color asap
-		$('html').css('background-color', "#" + themeColor);
-		$('body').css('background-color', "#" + themeColor);
+		//$('html').css('background-color', "#" + themeColor);
+		//$('body').css('background-color', "#" + themeColor);
+		
+		//$(document.documentElement).css('background-color', "#" + themeColor);
+		//$(document.body).css('background-color', "#" + themeColor);
+		
+		document.documentElement.style.backgroundColor = themeColor;
+		document.body.style.backgroundColor = themeColor;
 		
 		//! Find out if light or dark theme
         if (theme.panelBackgroundColor.color.red > 122) {
@@ -120,12 +130,20 @@ function setTheme(theme) {
         }
 
 		//! Set the body theme
-		$('body').removeClass("light dark").addClass(themeClass);
+		//$('body').removeClass("light dark").addClass(themeClass);
+		$(document.body).removeClass("light dark").addClass(themeClass);
 		//$('body').prepend(themeFontSize);		
 		//$('head').append('<style>.current { background-color: #' + themeColor + '; }</style>');
-		
-		var style = $("<style>html { font-size: " + themeFontSize + "; } body { font-family: " + themeFontFamily + ", -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; } ul.tabs li.current { background-color: #" + themeColor + " !important; border-bottom-color: #" + themeColor + " !important; }</style>");
-		$('html > head').append(style);
+		/*
+		var dynamicCSS = "html { font-size: " + themeFontSize + "; } body { font-family: " + themeFontFamily + ", -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; } ul.tabs li.current { background-color: #" + themeColor + " !important; border-bottom-color: #" + themeColor + " !important; }";
+		var styleElement = document.createElement('style');
+		//styleElement.styleSheet.cssText = dynamicCSS;
+		styleElement.appendChild(document.createTextNode(dynamicCSS));
+		document.head.appendChild(styleElement);
+		*/
+		var style = $("<style rel=\"stylesheet\">html{ font-size:"+themeFontSize+";} body{ font-family:"+themeFontFamily+",-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif; } ul.tabs>li.current{ background-color:"+themeColor+" !important;}</style>");
+		//$('html > head').append(style);
+		$(document.head).append(style);
 }
 
 
@@ -138,7 +156,7 @@ function changeTheme(event) {
 }
 
 
-
+/*
 //! Change the app color to something more usable
 //! From davidebarranca.com
 function toHex(color, delta) {
@@ -163,7 +181,7 @@ function toHex(color, delta) {
     }
     return hex;
 }
-
+*/
 
 
 //! Load external JSX files
@@ -178,15 +196,11 @@ function loadJSX() {
 //! Use the button ID to trigger the right script
 $(document).on("click", "button", function(event) {
 	
-	
+	//! If a shift click
 	if ( $(this).hasClass('custom-button') && event.shiftKey ) {
 			event.preventDefault();
-			//editButton($(this).attr('id'));
-			
-			var csInterface = new CSInterface();
-			//csInterface.evalScript("renameButton()"); 
+			var csInterface = new CSInterface(); 
 			csInterface.evalScript($(this).attr("data-action2") + "()"); 
-
 	} else {
     	var csInterface = new CSInterface();
 		csInterface.evalScript($(this).attr("data-action") + "()"); 
@@ -195,19 +209,20 @@ $(document).on("click", "button", function(event) {
 
 
 
-
 function editButton(id) {
 	var csInterface = new CSInterface();
-	csInterface.evalScript("renameButton()"); 
+	csInterface.evalScript("renameButton()");
 }
 
 
 
-
+/*
 //! On load and resize, check width and add class
 $(window).on('load resize', function () {
 	var windowSize = $(window).width();
 	var panelSize = 'x-large';
+	
+	//document.documentElement.style.width = windowSize+"px";
 	
 	if ( windowSize <= 360 ) {
 		panelSize += ' large';
@@ -229,25 +244,28 @@ $(window).on('load resize', function () {
 	}
 	panelSize = panelSize.trim();
 
-    $("html").removeClass().addClass(panelSize);
-    $("html").attr('data-width', windowSize);
+    //$("html").removeClass().addClass(panelSize);
+    $(document.documentElement).removeClass().addClass(panelSize);
+    //$("html").attr('data-width', windowSize);
 });
-
+*/
 
 
 //! jQuery document ready
 $(document).ready(function(){
 	
 	//! Fade in the body
-	$('body').hide().fadeIn('slow');
+	$(document.body).hide().fadeIn('slow');
 	
 	
 	//! Tabs
-	$('ul.tabs li').click(function(){
+	//$('ul.tabs li').click(function(){
+	$('#tab-menu > li').click(function() {
 		var tab_id = $(this).attr('data-tab');
 
-		$('ul.tabs li').removeClass('current');
-		$('.tab-content').removeClass('current');
+		//$('ul.tabs li').removeClass('current');
+		$('#tab-menu > li').removeClass('current');
+		$('#panel > div.tab-content').removeClass('current');
 
 		$(this).addClass('current');
 		$("#"+tab_id).addClass('current');
@@ -255,7 +273,7 @@ $(document).ready(function(){
 	
 	
 	//! Handle web links
-	$('.external-link').click(function(e){
+	$('a.external-link').click(function(e){
 		e.preventDefault();
 		var link = $(this).attr('href');
 		window.cep.util.openURLInDefaultBrowser(link);
@@ -275,7 +293,8 @@ $(document).ready(function(){
 
 
 	//! Change title in adjustment brush section
-	$(".adjustment-tools button").hover(
+	//$(".adjustment-tools button").hover(
+	$("section.adjustment-tools > div.button-group>button").hover(
 		function() {
 			$("[data-js='adjustmentsHeader']").text( $(this).attr('title') );
 		}, function() {
@@ -302,10 +321,10 @@ $(document).ready(function(){
 	        $(this).dequeue();
 	}, function() {
 	        //! Hover out code
-	        $('.tooltip').remove();
+	        $('p.tooltip').remove();
 	}).mousemove(function(e) {
-			var tooltipWidth = $('.tooltip').width();
-			var type = $('.tooltip').attr('data-type');
+			var tooltipWidth = $('p.tooltip').width();
+			var type = $('p.tooltip').attr('data-type');
 			
 			//! Change position depending on type
 			if (type == 'inside') {
@@ -317,7 +336,7 @@ $(document).ready(function(){
 			}
 	        
 	        //! Add CSS
-	        $('.tooltip')
+	        $('p.tooltip')
 	        .css({ top: mousey, left: mousex })
 	});
 

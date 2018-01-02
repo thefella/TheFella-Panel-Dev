@@ -1,11 +1,18 @@
 <!doctype html>
-<html>
+<html id="com.thefella.panel">
 <head>
 <meta charset="utf-8">
 <title>TheFella Panel</title>
 
 <!-- Scripts -->
 <script src="./js/lib/CSInterface.js"></script>
+<script>
+	//! Set BG color ASAP
+	var csInterface = new CSInterface();
+	var themeColor = csInterface.hostEnvironment.appSkinInfo.panelBackgroundColor.color;
+	var themeRGB = "rgb("+themeColor.red+","+themeColor.green+","+themeColor.blue+")";
+	document.documentElement.style.backgroundColor = themeRGB;
+</script>
 <script src="./js/lib/jquery-3.2.1.min.js"></script>
 <script src="./js/main.js"></script>
 
@@ -15,10 +22,7 @@
 <body style="display:none" class="dark" onload="onLoad()">
 <div id="panel">
 	
-	<!--<div id="width"></div>
-	<div id="panelSize"></div>-->
-	
-	<ul class="tabs">
+	<ul id="tab-menu" class="tabs">
 		<!--<li class="tasb-link" onClick="window.location.reload()">R</li>-->
 		<li class="tab-link current" data-tab="tab-main">Main</li>
 		<li class="tab-link" data-tab="tab-more">More</li>
@@ -32,20 +36,20 @@
 			<h1 class="adjustments-header" data-js="adjustmentsHeader" title="Add an adjustment">Add an adjustment</h1>
 			
 			<div class="button-group">
-				<button data-action="adjBrightness" title="Brightness/Contrast"><img class="dark-theme" src="img/tools/dark_theme/brightness.png"><img class="light-theme" src="img/tools/light_theme/brightness.png"></button>
-				<button data-action="adjLevels" title="Levels"><img class="dark-theme" src="img/tools/dark_theme/levels.png"><img class="light-theme" src="img/tools/light_theme/levels.png"></button>
-				<button data-action="adjCurves" title="Curves"><img class="dark-theme" src="img/tools/dark_theme/curves.png"><img class="light-theme" src="img/tools/light_theme/curves.png"></button>
-				<button data-action="adjExposure" title="Exposure"><img class="dark-theme" src="img/tools/dark_theme/exposure.png"><img class="light-theme" src="img/tools/light_theme/exposure.png"></button>
-				<button data-action="adjVibrance" title="Vibrance"><img class="dark-theme" src="img/tools/dark_theme/vibrance.png"><img class="light-theme" src="img/tools/light_theme/vibrance.png"></button>
-				
-				<button data-action="adjHueSaturation" title="Hue/Saturation"><img class="dark-theme" src="img/tools/dark_theme/hue-saturation.png"><img class="light-theme" src="img/tools/light_theme/hue-saturation.png"></button>
-				<button data-action="adjColorBalance" title="Color Balance"><img class="dark-theme" src="img/tools/dark_theme/color-balance.png"><img class="light-theme" src="img/tools/light_theme/color-balance.png"></button>
-				<button data-action="adjGradientMap" title="Gradient Map"><img class="dark-theme" src="img/tools/dark_theme/gradient-map.png"><img class="light-theme" src="img/tools/light_theme/gradient-map.png"></button>
+				<button data-action="adjBrightness" title="Brightness/Contrast"><img alt="Brightness" class="dark-theme" src="img/tools/dark_theme/brightness.png"><img alt="Brightness" class="light-theme" src="img/tools/light_theme/brightness.png"></button>
+				<button data-action="adjLevels" title="Levels"><img alt="Levels" class="dark-theme" src="img/tools/dark_theme/levels.png"><img alt="Levels" class="light-theme" src="img/tools/light_theme/levels.png"></button>
+				<button data-action="adjCurves" title="Curves"><img alt="Curves" class="dark-theme" src="img/tools/dark_theme/curves.png"><img alt="Curves" class="light-theme" src="img/tools/light_theme/curves.png"></button>
+				<button data-action="adjExposure" title="Exposure"><img alt="Exposure" class="dark-theme" src="img/tools/dark_theme/exposure.png"><img alt="Exposure" class="light-theme" src="img/tools/light_theme/exposure.png"></button>
+				<button data-action="adjVibrance" title="Vibrance"><img alt="Vibrance" class="dark-theme" src="img/tools/dark_theme/vibrance.png"><img alt="Vibrance" class="light-theme" src="img/tools/light_theme/vibrance.png"></button>
+				<button data-action="adjHueSaturation" title="Hue/Saturation"><img alt="Hue/Saturation" class="dark-theme" src="img/tools/dark_theme/hue-saturation.png"><img alt="Hue/Saturation" class="light-theme" src="img/tools/light_theme/hue-saturation.png"></button>
+				<button data-action="adjColorBalance" title="Color Balance"><img alt="Color Balance" class="dark-theme" src="img/tools/dark_theme/color-balance.png"><img alt="Color Balance" class="light-theme" src="img/tools/light_theme/color-balance.png"></button>
+				<button data-action="adjGradientMap" title="Gradient Map"><img alt="Gradient Map" class="dark-theme" src="img/tools/dark_theme/gradient-map.png"><img alt="Gradient Map" class="light-theme" src="img/tools/light_theme/gradient-map.png"></button>
 			</div>
 		</section>
 		
 		
 		<section>
+			<h1 class="headless-group">Quick Access</h1>
 			<div class="button-group">
 				<button data-action="fitToScreen" data-js="tooltip" title="Fit image to screen">Fit</button>
 				<!--<button data-action="zoom(100)" data-js="tooltip" title="Zoom into image">100</button>-->
@@ -60,7 +64,7 @@
 		<section>
 			<h1>Quick Masking</h1>
 			<div class="button-group">
-				<button data-action="applyToHighlights" data-js="tooltip" title="Add layer mask for highlights">Highights</button>
+				<button data-action="applyToHighlights" data-js="tooltip" title="Add layer mask for highlights">Lights</button>
 				<button data-action="applyToShadows" data-js="tooltip" title="Add layer mask for shadows">Shadows</button>
 				<button data-action="addEdgeMask" data-js="tooltip" data-tooltip-type="inside" title="Add mask to edges">Edges</button>
 				<button data-action="btnDeleteLayerMask" data-js="tooltip" data-tooltip-type="inside" title="Delete layer mask">Delete</button> 
@@ -130,19 +134,20 @@
 			<h1 class="adjustments-header" data-js="adjustmentsHeader" title="Add an adjustment">Add an adjustment</h1>
 			
 			<div class="button-group">
-				<button data-action="adjBW" title="Black & White"><img class="dark-theme" src="img/tools/dark_theme/bw.png"><img class="light-theme" src="img/tools/light_theme/bw.png"></button>
-				<button data-action="adjPhotoFilter" title="Photo Filter"><img class="dark-theme" src="img/tools/dark_theme/photo-filter.png"><img class="light-theme" src="img/tools/light_theme/photo-filter.png"></button>
-				<button data-action="adjChannelMixer" title="Channel Mixer"><img class="dark-theme" src="img/tools/dark_theme/channel-mixer.png"><img class="light-theme" src="img/tools/light_theme/channel-mixer.png"></button>
-				<button data-action="adjColorLookup" title="Color Lookup"><img class="dark-theme" src="img/tools/dark_theme/color-lookup.png"><img class="light-theme" src="img/tools/light_theme/color-lookup.png"></button>
-				<button data-action="adjInvert" title="Invert"><img class="dark-theme" src="img/tools/dark_theme/invert.png"><img class="light-theme" src="img/tools/light_theme/invert.png"></button>
-				<button data-action="adjPosterize" title="Posterize"><img class="dark-theme" src="img/tools/dark_theme/posterize.png"><img class="light-theme" src="img/tools/light_theme/posterize.png"></button>
-				<button data-action="adjThreshold" title="Threshold"><img class="dark-theme" src="img/tools/dark_theme/threshold.png"><img class="light-theme" src="img/tools/light_theme/threshold.png"></button>
-				<button data-action="adjSelectiveColor" title="Selective Color"><img class="dark-theme" src="img/tools/dark_theme/selective-color.png"><img class="light-theme" src="img/tools/light_theme/selective-color.png"></button>
+				<button data-action="adjBW" title="Black & White"><img alt="Black & White" class="dark-theme" src="img/tools/dark_theme/bw.png"><img alt="Black & White" class="light-theme" src="img/tools/light_theme/bw.png"></button>
+				<button data-action="adjPhotoFilter" title="Photo Filter"><img alt="Photo Filter" class="dark-theme" src="img/tools/dark_theme/photo-filter.png"><img alt="Photo Filter" class="light-theme" src="img/tools/light_theme/photo-filter.png"></button>
+				<button data-action="adjChannelMixer" title="Channel Mixer"><img alt="Channel Mixer" class="dark-theme" src="img/tools/dark_theme/channel-mixer.png"><img alt="Channel Mixer" class="light-theme" src="img/tools/light_theme/channel-mixer.png"></button>
+				<button data-action="adjColorLookup" title="Color Lookup"><img alt="Color Lookup" class="dark-theme" src="img/tools/dark_theme/color-lookup.png"><img alt="Color Lookup" class="light-theme" src="img/tools/light_theme/color-lookup.png"></button>
+				<button data-action="adjInvert" title="Invert"><img alt="Invert" class="dark-theme" src="img/tools/dark_theme/invert.png"><img alt="Invert" class="light-theme" src="img/tools/light_theme/invert.png"></button>
+				<button data-action="adjPosterize" title="Posterize"><img alt="Posterize" class="dark-theme" src="img/tools/dark_theme/posterize.png"><img alt="Posterize" class="light-theme" src="img/tools/light_theme/posterize.png"></button>
+				<button data-action="adjThreshold" title="Threshold"><img alt="Threshold" class="dark-theme" src="img/tools/dark_theme/threshold.png"><img alt="Threshold" class="light-theme" src="img/tools/light_theme/threshold.png"></button>
+				<button data-action="adjSelectiveColor" title="Selective Color"><img alt="Selective Color" class="dark-theme" src="img/tools/dark_theme/selective-color.png"><img alt="Selective Color" class="light-theme" src="img/tools/light_theme/selective-color.png"></button>
 			</div>
 		</section>
 		
 		
 		<section>
+			<h1 class="headless-group">Useful Actions</h1>
 			<button data-action="stack" data-js="tooltip" title="Stack all open documents/images together">Stack</button> 
 			<button data-action="toneMatching" data-js="tooltip" title="Uses colour channels to make blending images together more seamless">Match Tones</button>
 		</section>
@@ -151,7 +156,7 @@
 		<section>
 			<h1>Sharpening</h1>
 			<div class="button-group big-pills four">
-				<button data-action="sharpenHighPass" data-js="tooltip" title="Uses the classic high pass filter">High Pass</span></button>
+				<button data-action="sharpenHighPass" data-js="tooltip" title="Uses the classic high pass filter">High Pass</button>
 				<button data-action="sharpenHighPassCurves" data-js="tooltip" data-tooltip-type="inside" title="Uses high pass controlled by curves">HP Curves</button>
 				<button data-action="sharpenSurfaceBlur" data-js="tooltip" title="Might take a while depending on your image size">Surface Blur</button>
 				<button data-action="sharpenEdgeMasked" data-js="tooltip" data-tooltip-type="inside" title="Uses unsharp, but masks out the edges">No Edges</button>
@@ -170,10 +175,10 @@
 		
 		<section class="end">
 			<h1>Custom <span class="hint">Shift-click to change names</span></h1>
-			<div class="button-group big-pills four custom-buttons">
+			<div id="custom-buttons-group" class="button-group big-pills four custom-buttons">
 				<button id="customButton1" class="custom-button" data-action="customAction(1)" data-action2="renameButton(1)" data-js="tooltip" title="Action Set: TFP Custom. Action Name: Custom 1">Custom 1</button>
 				<button id="customButton2" class="custom-button" data-action="customAction(2)" data-action2="renameButton(2)" data-js="tooltip" data-tooltip-type="inside" title="Action Set: TFP Custom. Action Name: Custom 2">Custom 2</button>
-				<button id="customButton3" class="custom-button" data-action="customAction(3)" data-action2="renameButton(3)" data-js="tooltip" title="Action Set: TFP Custom. Action Name: Custom 3" editable>Custom 3</button>
+				<button id="customButton3" class="custom-button" data-action="customAction(3)" data-action2="renameButton(3)" data-js="tooltip" title="Action Set: TFP Custom. Action Name: Custom 3">Custom 3</button>
 				<button id="customButton4" class="custom-button" data-action="customAction(4)" data-action2="renameButton(4)" data-js="tooltip" data-tooltip-type="inside" title="Action Set: TFP Custom. Action Name: Custom 4">Custom 4</button>
 			</div>
 		</section>
@@ -200,8 +205,8 @@
 			<div class="button-group big-pills four">
 				<button data-action="vignetteACR" data-js="tooltip" title="Vignette using Adobe Camera Raw">Quick ACR</button>
 				<button data-action="vignetteACRSmartObject" data-js="tooltip" data-tooltip-type="inside" title="Vignette using Adobe Camera Raw on a smart object layer">Smart ACR</button>
-				<button data-action="vignetteLensCorrection" data-js="tooltip" title="Vignette using the lens correction filter &#013;&#010;(May take a second)">Lens Corr<span class="big-restricted">ection</span></button>
-				<button data-action="vignetteOverlay"data-js="tooltip" data-tooltip-type="inside" title="Vignette using overlay layer style">Overlay</button>
+				<button data-action="vignetteLensCorrection" data-js="tooltip" title="Vignette using the lens correction filter &#010;(May take a second)">Lens Corr<span class="big-restricted">ection</span></button>
+				<button data-action="vignetteOverlay" data-js="tooltip" data-tooltip-type="inside" title="Vignette using overlay layer style">Overlay</button>
 				
 			</div>
 		</section>
@@ -230,10 +235,12 @@
 		</section>
 		
 		<section class="right-group">
+			<h1 class="headless-group">Reload Panel</h1>
 			<button onClick="window.location.reload()" data-js="tooltip" data-tooltip-type="inside" title="Refresh the panel in case of an error">Refresh Panel</button> 
 		</section>
 		
 		<section class="right-group end">
+			<h1 class="headless-group">Version</h1>
 			<p>v1.0 beta</p>
 		</section>
 		

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ExtensionManifest Version="4.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ExtensionBundleId="com.thefella.panel" ExtensionBundleVersion="1.0" ExtensionBundleName="TheFella Panel">
+<ExtensionManifest Version="5.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ExtensionBundleId="com.thefella.panel" ExtensionBundleVersion="1.0" ExtensionBundleName="TheFella Panel">
 	<Author><![CDATA[Conor MacNeill]]></Author>
-	<Abstract><![CDATA[An Adobe Photoshop Panel to help photographers with their workflow.]]></Abstract>
+	<Abstract><![CDATA[An Adobe Photoshop Panel to help photographers, especially landscape photographers, with their workflow.]]></Abstract>
     <ExtensionList>
         <Extension Id="com.thefella.panel" Version="1.0" />
     </ExtensionList>
@@ -14,7 +14,7 @@
                     <Locale Code="All" />
         </LocaleList>
         <RequiredRuntimeList>
-            <RequiredRuntime Name="CSXS" Version="4.0" />
+            <RequiredRuntime Name="CSXS" Version="5.0" />
         </RequiredRuntimeList>
     </ExecutionEnvironment>
     <DispatchInfoList>
