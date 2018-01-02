@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ExtensionManifest Version="5.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ExtensionBundleId="com.thefella.panel" ExtensionBundleVersion="1.0" ExtensionBundleName="TheFella Panel">
+<ExtensionManifest Version="5.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ExtensionBundleId="com.thefella.devpanel" ExtensionBundleVersion="1.0" ExtensionBundleName="TheFella Panel Dev">
 	<Author><![CDATA[Conor MacNeill]]></Author>
 	<Abstract><![CDATA[An Adobe Photoshop Panel to help photographers, especially landscape photographers, with their workflow.]]></Abstract>
     <ExtensionList>
-        <Extension Id="com.thefella.panel" Version="1.0" />
+        <Extension Id="com.thefella.devpanel" Version="1.0" />
     </ExtensionList>
     <ExecutionEnvironment>
         <HostList>
@@ -18,7 +18,7 @@
         </RequiredRuntimeList>
     </ExecutionEnvironment>
     <DispatchInfoList>
-        <Extension Id="com.thefella.panel">
+        <Extension Id="com.thefella.devpanel">
             <DispatchInfo >
                 <Resources>
                     <MainPath>./index.html</MainPath>
@@ -29,14 +29,14 @@
                 </Lifecycle>
                 <UI>
                     <Type>Panel</Type>
-                    <Menu>TheFella Panel</Menu>
+                    <Menu>TheFella Panel Dev</Menu>
                     <Geometry>
                         <Size>
-                            <Height>444</Height>
+                            <Height>480</Height>
                             <Width>300</Width>
                         </Size>
                         <MinSize>
-                            <Height>414</Height>
+                            <Height>415</Height>
                             <Width>252</Width>
                         </MinSize>
                         <MaxSize>

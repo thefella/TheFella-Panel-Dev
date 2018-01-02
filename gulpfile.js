@@ -14,6 +14,7 @@ var clean 		= require('gulp-clean');
 var jsObfus 	= require('gulp-javascript-obfuscator');
 var cleanCSS 	= require('gulp-clean-css');
 var htmlmin 	= require('gulp-htmlmin');
+var replace 	= require('gulp-replace');
 
 
 //! Clear out the src folder
@@ -148,6 +149,19 @@ gulp.task('jsxbin', function() {
 });
 
 
+//! Set manifest to production version
+gulp.task('manifest', function() {
+  var existingValues = ["com.thefella.devpanel", "TheFella Panel Dev"];
+  var newValues = ["com.thefella.panel", "TheFella Panel"];
+
+  var stream = gulp.src(['build/CSXS/manifest.xml']);
+  newValues.forEach(function(u, i) {
+    stream = stream.pipe(replace(existingValues[i], newValues[i]));
+  });
+  return stream.pipe(gulp.dest('build/CSXS'));
+});
+
+
 //! Generate a self-signed certificate
 gulp.task('certificate', function (cb) {
 	exec('./ZXPSignCmd -selfSignedCert UK NI TheFella "Conor MacNeill" RC2FMCYSCwL4Py selfsigned.p12', function (err, stdout, stderr) {
@@ -159,28 +173,23 @@ gulp.task('certificate', function (cb) {
 
 
 //! Pack the panel into a ZXP file
-gulp.task('pack', function () {
+gulp.task('pack-extension', function () {
 	exec('./ZXPSignCmd -sign build build/TheFellaPanel.zxp selfsigned.p12 RC2FMCYSCwL4Py -tsa http://sha256timestamp.ws.symantec.com/sha256/timestamp')
 });
 
 
-//! Default Task
-gulp.task('default', function(){
-	return runSequence('clean-src', 'copy-src', 'jsx', ['stripcode', 'certificate'], 'clean', 'copy', ['scripts', 'minify-css','html']);
+//! Copy files to build folder
+gulp.task('copy-zxp', function() {
+    gulp.src(['*.zxp'])
+        .pipe(gulp.dest('build/'))
 });
 
 
-/*
-gulp.task('manifest', function() {
-  var users1 = ["existing_value1", "existing_value2", "existing_value3"];
-  var users2 = ["new_value1", "new_value2", "new_value3"];
 
-  var stream = gulp.src(['idmap/*.xml']);
-  users1.forEach(function(u, i) {
-    stream = stream.pipe(replace(users1[i], users2[i]));
-  });
-  return stream.pipe(gulp.dest('build/'));
-});*/
+//! Default Task
+gulp.task('default', function(){
+	return runSequence('clean-src', 'copy-src', 'jsx', ['stripcode', 'certificate'], 'clean', 'copy', ['scripts', 'minify-css', 'html', 'manifest'], 'pack-extension', 'copy-zxp');
+});
 
 
 
