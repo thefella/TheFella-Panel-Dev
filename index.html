@@ -31,19 +31,20 @@
 		<li class="tab-link" data-tab="tab-about">About</li>
 	</ul>
 	
+	
 	<div id="tab-main" class="tab-content current">
 		
 		<section class="adjustment-tools">
 			<h1 class="adjustments-header" data-js="adjustmentsHeader" title="Add an adjustment">Add an adjustment</h1>
 			
 			<div class="button-group">
-				<button data-action="adjBrightness" title="Brightness/Contrast"><img alt="Brightness" class="dark-theme" src="img/tools/dark_theme/brightness.png"><img alt="Brightness" class="light-theme" src="img/tools/light_theme/brightness.png"></button>
-				<button data-action="adjLevels" title="Levels"><img alt="Levels" class="dark-theme" src="img/tools/dark_theme/levels.png"><img alt="Levels" class="light-theme" src="img/tools/light_theme/levels.png"></button>
 				<button data-action="adjCurves" title="Curves"><img alt="Curves" class="dark-theme" src="img/tools/dark_theme/curves.png"><img alt="Curves" class="light-theme" src="img/tools/light_theme/curves.png"></button>
-				<button data-action="adjExposure" title="Exposure"><img alt="Exposure" class="dark-theme" src="img/tools/dark_theme/exposure.png"><img alt="Exposure" class="light-theme" src="img/tools/light_theme/exposure.png"></button>
-				<button data-action="adjVibrance" title="Vibrance"><img alt="Vibrance" class="dark-theme" src="img/tools/dark_theme/vibrance.png"><img alt="Vibrance" class="light-theme" src="img/tools/light_theme/vibrance.png"></button>
 				<button data-action="adjHueSaturation" title="Hue/Saturation"><img alt="Hue/Saturation" class="dark-theme" src="img/tools/dark_theme/hue-saturation.png"><img alt="Hue/Saturation" class="light-theme" src="img/tools/light_theme/hue-saturation.png"></button>
 				<button data-action="adjColorBalance" title="Color Balance"><img alt="Color Balance" class="dark-theme" src="img/tools/dark_theme/color-balance.png"><img alt="Color Balance" class="light-theme" src="img/tools/light_theme/color-balance.png"></button>
+				<button data-action="adjVibrance" title="Vibrance"><img alt="Vibrance" class="dark-theme" src="img/tools/dark_theme/vibrance.png"><img alt="Vibrance" class="light-theme" src="img/tools/light_theme/vibrance.png"></button>
+				<button data-action="adjLevels" title="Levels"><img alt="Levels" class="dark-theme" src="img/tools/dark_theme/levels.png"><img alt="Levels" class="light-theme" src="img/tools/light_theme/levels.png"></button>
+				<button data-action="adjBrightness" title="Brightness/Contrast"><img alt="Brightness" class="dark-theme" src="img/tools/dark_theme/brightness.png"><img alt="Brightness" class="light-theme" src="img/tools/light_theme/brightness.png"></button>
+				<button data-action="adjExposure" title="Exposure"><img alt="Exposure" class="dark-theme" src="img/tools/dark_theme/exposure.png"><img alt="Exposure" class="light-theme" src="img/tools/light_theme/exposure.png"></button>
 				<button data-action="adjGradientMap" title="Gradient Map"><img alt="Gradient Map" class="dark-theme" src="img/tools/dark_theme/gradient-map.png"><img alt="Gradient Map" class="light-theme" src="img/tools/light_theme/gradient-map.png"></button>
 			</div>
 		</section>
@@ -122,11 +123,9 @@
 				<button class="pill-del-all" data-action="lumDeleteAll" data-js="tooltip" data-tooltip-type="inside" title="Delete ALL masks">Delete All</button>
 			</div>
 		</section>
-
 		
 	</div><!-- End main tab -->
-	
-	
+
 	
 	
 	<div id="tab-more" class="tab-content">
@@ -243,14 +242,16 @@
 			</ul>
 		</section>
 		
+		<!--removeIf(production)-->
 		<section class="right-group">
 			<h1 class="headless-group">Reload Panel</h1>
 			<button onClick="window.location.reload()" data-js="tooltip" data-tooltip-type="inside" title="Refresh the panel in case of an error">Refresh Panel</button> 
 		</section>
+		<!--endRemoveIf(production)-->
 		
 		<section class="right-group end">
 			<h1 class="headless-group">Version</h1>
-			<p>v1.0 beta</p>
+			<p class="version-code">v1.0 beta</p>
 		</section>
 		
 	</div><!-- End about tab -->

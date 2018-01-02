@@ -1,3 +1,5 @@
+"use strict";
+
 //! Panel loaded
 function onLoad() {
 
@@ -26,11 +28,9 @@ function onLoad() {
     loadJSX();
     
     //! Stop context menu, e.g. View Source
-    document.addEventListener('contextmenu', event => event.preventDefault());
-}
+    window.addEventListener("contextmenu", function(e) { e.preventDefault(); }, false);
+};
 //! End onLoad();
-
-
 
 
 
@@ -38,10 +38,10 @@ function onLoad() {
 function changeButton(data) {
 	
 	//! Get and set variables
-	var buttonDetails = data.split(',');
+	var buttonDetails = data.split(",");
 	var buttonId = buttonDetails[0];
 	var buttonName = buttonDetails[1];
-	var button = $('#customButton'+buttonId).html(buttonName);
+	var button = $("#customButton"+buttonId).html(buttonName);
 	var allButtons = [];
 	
 	//! Loop through buttons and get name
@@ -53,8 +53,8 @@ function changeButton(data) {
 	var json_str = JSON.stringify(allButtons);
 
 	//! Set cookie to store names
-	setCookie('customButtons', json_str);
-}
+	setCookie("customButtons", json_str);
+};
 
 
 
@@ -62,18 +62,17 @@ function changeButton(data) {
 function checkButtonCookies() {
 	
 	//! If cookie exists
-	if (getCookie('customButtons')) {
+	if (getCookie("customButtons")) {
 		
 		//! Get details
-		var cookieInfo = JSON.parse(getCookie('customButtons'));
+		var cookieInfo = JSON.parse(getCookie("customButtons"));
 		
 		//! Loop through buttons and set name
-		//$(".custom-buttons > .custom-button").each(function(index) {
 		$("#custom-buttons-group > button.custom-button").each(function(index) {
 			$(this).html(cookieInfo[index]);
 		});	
 	}
-}
+};
 
 
 
@@ -81,16 +80,17 @@ function checkButtonCookies() {
 function setCookie(key, value) {
     var expires = new Date();
     expires.setTime(expires.getTime() + (10 * 365 * 24 * 60 * 60));
-    document.cookie = key + '=' + value + ';expires=' + expires.toUTCString();
-}
+    document.cookie = key + "=" + value + ";expires=" + expires.toUTCString();
+};
 
 
 
 //! Get cookie
 function getCookie(key) {
-    var keyValue = document.cookie.match('(^|;) ?' + key + '=([^;]*)(;|$)');
+    //var keyValue = document.cookie.match('(^|;) ?' + key + '=([^;]*)(;|$)');
+    var keyValue = document.cookie.match("(^|;) ?" + key + "=([^;]*)(;|$)");
     return keyValue ? keyValue[2] : null;
-}
+};
 
 
 
@@ -98,8 +98,8 @@ function getCookie(key) {
 function deleteCookie(key) {
     var expires = new Date();
     expires.setTime(expires.getTime() - (10 * 365 * 24 * 60 * 60));
-    document.cookie = key + '=' + null + ';expires=' + expires.toUTCString();
-}
+    document.cookie = key + "=" + null + ";expires=" + expires.toUTCString();
+};
 
 
 
@@ -107,44 +107,26 @@ function deleteCookie(key) {
 function setTheme(theme) {
 
 		var themeClass;
-		//var themeColor = toHex(theme.panelBackgroundColor.color);
 		var themeColor = "rgb("+theme.panelBackgroundColor.color.red+","+theme.panelBackgroundColor.color.green+","+theme.panelBackgroundColor.color.blue+")";
 		var themeFontSize = theme.baseFontSize + "px";
 		var themeFontFamily = theme.baseFontFamily;		
 		
 		//! Set background color asap
-		//$('html').css('background-color', "#" + themeColor);
-		//$('body').css('background-color', "#" + themeColor);
-		
-		//$(document.documentElement).css('background-color', "#" + themeColor);
-		//$(document.body).css('background-color', "#" + themeColor);
-		
 		document.documentElement.style.backgroundColor = themeColor;
 		document.body.style.backgroundColor = themeColor;
 		
 		//! Find out if light or dark theme
         if (theme.panelBackgroundColor.color.red > 122) {
-            themeClass = 'light';
+            themeClass = "light";
         } else {
-	        themeClass = 'dark';
+	        themeClass = "dark";
         }
 
 		//! Set the body theme
-		//$('body').removeClass("light dark").addClass(themeClass);
 		$(document.body).removeClass("light dark").addClass(themeClass);
-		//$('body').prepend(themeFontSize);		
-		//$('head').append('<style>.current { background-color: #' + themeColor + '; }</style>');
-		/*
-		var dynamicCSS = "html { font-size: " + themeFontSize + "; } body { font-family: " + themeFontFamily + ", -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; } ul.tabs li.current { background-color: #" + themeColor + " !important; border-bottom-color: #" + themeColor + " !important; }";
-		var styleElement = document.createElement('style');
-		//styleElement.styleSheet.cssText = dynamicCSS;
-		styleElement.appendChild(document.createTextNode(dynamicCSS));
-		document.head.appendChild(styleElement);
-		*/
 		var style = $("<style rel=\"stylesheet\">html{ font-size:"+themeFontSize+";} body{ font-family:"+themeFontFamily+",-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif; } ul.tabs>li.current{ background-color:"+themeColor+" !important;}</style>");
-		//$('html > head').append(style);
 		$(document.head).append(style);
-}
+};
 
 
 
@@ -153,51 +135,25 @@ function setTheme(theme) {
 function changeTheme(event) {
     var skinInfo = JSON.parse(window.__adobe_cep__.getHostEnvironment()).appSkinInfo;
     setTheme(skinInfo);
-}
+};
 
-
-/*
-//! Change the app color to something more usable
-//! From davidebarranca.com
-function toHex(color, delta) {
-        
-    function computeValue(value, delta) {
-        var computedValue = !isNaN(delta) ? value + delta : value;
-        if (computedValue < 0) {
-            computedValue = 0;
-        } else if (computedValue > 255) {
-            computedValue = 255;
-        }
-        
-        computedValue = Math.floor(computedValue);
-
-        computedValue = computedValue.toString(16);
-        return computedValue.length === 1 ? "0" + computedValue : computedValue;
-    }
-
-    var hex = "";
-    if (color) {
-        hex = computeValue(color.red, delta) + computeValue(color.green, delta) + computeValue(color.blue, delta);
-    }
-    return hex;
-}
-*/
 
 
 //! Load external JSX files
 function loadJSX() {
     var csInterface = new CSInterface();
     var extensionRoot = csInterface.getSystemPath(SystemPath.EXTENSION) + "/jsx/actions/";
-    csInterface.evalScript('$._ext.evalFiles("' + extensionRoot + '")');
-}
+    //csInterface.evalScript('$._ext.evalFiles("' + extensionRoot + '")');
+    csInterface.evalScript("$._ext.evalFiles(\"" + extensionRoot + "\")");
+};
 
 
 
 //! Use the button ID to trigger the right script
 $(document).on("click", "button", function(event) {
 	
-	//! If a shift click
-	if ( $(this).hasClass('custom-button') && event.shiftKey ) {
+	//! If a shift click / also can have ctrlKey and altKey
+	if ( $(this).hasClass("custom-button") && event.shiftKey ) {
 			event.preventDefault();
 			var csInterface = new CSInterface(); 
 			csInterface.evalScript($(this).attr("data-action2") + "()"); 
@@ -212,122 +168,69 @@ $(document).on("click", "button", function(event) {
 function editButton(id) {
 	var csInterface = new CSInterface();
 	csInterface.evalScript("renameButton()");
-}
+};
 
-
-
-/*
-//! On load and resize, check width and add class
-$(window).on('load resize', function () {
-	var windowSize = $(window).width();
-	var panelSize = 'x-large';
-	
-	//document.documentElement.style.width = windowSize+"px";
-	
-	if ( windowSize <= 360 ) {
-		panelSize += ' large';
-	}
-	if ( windowSize <= 340 ) {
-		panelSize += ' medium-large';
-	}
-	if ( windowSize <= 320 ) {
-		panelSize += ' medium';
-	}
-	if ( windowSize <= 280 ) {
-		panelSize += ' small';
-	}
-	if ( windowSize <= 260 ) {
-		panelSize += ' x-small';
-	}
-	if ( windowSize <= 250 ) {
-		panelSize += ' xx-small';
-	}
-	panelSize = panelSize.trim();
-
-    //$("html").removeClass().addClass(panelSize);
-    $(document.documentElement).removeClass().addClass(panelSize);
-    //$("html").attr('data-width', windowSize);
-});
-*/
 
 
 //! jQuery document ready
-$(document).ready(function(){
+$(document).ready(function() {
 	
 	//! Fade in the body
-	$(document.body).hide().fadeIn('slow');
-	
-	
+	$(document.body).hide().fadeIn("slow");
+
 	//! Tabs
-	//$('ul.tabs li').click(function(){
-	$('#tab-menu > li').click(function() {
-		var tab_id = $(this).attr('data-tab');
+	$("#tab-menu > li").click(function() {
+		var tab_id = $(this).attr("data-tab");
 
-		//$('ul.tabs li').removeClass('current');
-		$('#tab-menu > li').removeClass('current');
-		$('#panel > div.tab-content').removeClass('current');
+		$("#tab-menu > li").removeClass("current");
+		$("#panel > div.tab-content").removeClass("current");
 
-		$(this).addClass('current');
-		$("#"+tab_id).addClass('current');
+		$(this).addClass("current");
+		$("#"+tab_id).addClass("current");
 	});
 	
 	
 	//! Handle web links
-	$('a.external-link').click(function(e){
+	$("a.external-link").click(function(e) {
 		e.preventDefault();
-		var link = $(this).attr('href');
+		var link = $(this).attr("href");
 		window.cep.util.openURLInDefaultBrowser(link);
 	});
-	
-	
-	/*
-	//! If alt/opt, ctrl/cmd, shift keys pressed while button click
-	$('button').bind('click', function(event) {
-	   if(event.ctrlKey) 
-	      alert('ctrl');
-	   if(event.altKey)
-	      alert('alt');
-	   if(event.shiftKey)
-	      alert('shift');
-	});*/
 
 
 	//! Change title in adjustment brush section
-	//$(".adjustment-tools button").hover(
 	$("section.adjustment-tools > div.button-group>button").hover(
-		function() {
-			$("[data-js='adjustmentsHeader']").text( $(this).attr('title') );
-		}, function() {
-			$("[data-js='adjustmentsHeader']").text( $("[data-js='adjustmentsHeader']").attr('title') );
+		function adjHoverOver() {
+			$("[data-js='adjustmentsHeader']").text( $(this).attr("title") );
+		}, function adjHoverOut() {
+			$("[data-js='adjustmentsHeader']").text( $("[data-js='adjustmentsHeader']").attr("title") );
 			
 		}
 	);
-	
-	
 
 
 	//! Tooltip
 	//! http://www.alessioatzeni.com/blog/simple-tooltip-with-jquery-only-text/
-	$("[data-js='tooltip']").hover(function() {
+	$("[data-js='tooltip']").hover(function toolTipHover() {
 		
 	        //! Hover over code
-	        var title = $(this).attr('title');
-	        var type = $(this).attr('data-tooltip-type');
-	        $('<p data-type="'+ type +'" class="tooltip '+ type +'"></p>').delay(1500)
+	        var title = $(this).attr("title");
+	        var type = $(this).attr("data-tooltip-type");
+	        $("<p data-type=\""+ type +"\" class=\"tooltip "+ type +"\"></p>").delay(1500)
 	        .text(title)
-	        .appendTo('body')
+	        .appendTo("body")
 	        .hide()
 	        .fadeIn(100);
 	        $(this).dequeue();
 	}, function() {
 	        //! Hover out code
-	        $('p.tooltip').remove();
+	        $("p.tooltip").remove();
 	}).mousemove(function(e) {
-			var tooltipWidth = $('p.tooltip').width();
-			var type = $('p.tooltip').attr('data-type');
+			var tooltipWidth = $("p.tooltip").width();
+			var type = $("p.tooltip").attr("data-type");
 			
 			//! Change position depending on type
-			if (type == 'inside') {
+			if (type == "inside") {
 				var mousex = e.pageX - 2 - tooltipWidth; //Get X coordinates
 				var mousey = e.pageY + 12; //Get Y coordinates
 			} else {
@@ -336,8 +239,7 @@ $(document).ready(function(){
 			}
 	        
 	        //! Add CSS
-	        $('p.tooltip')
-	        .css({ top: mousey, left: mousex })
+	        $("p.tooltip").css({ top: mousey, left: mousex });
 	});
 
 });

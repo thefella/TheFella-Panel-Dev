@@ -217,6 +217,10 @@ p.copy {
 	margin-bottom: 1.5em;
 	opacity: 0.9;
 }
+	
+	p.versionl-code {
+		opacity: 0.6;
+	}
 
 	.light p.copy {
 		line-height: 1.35;

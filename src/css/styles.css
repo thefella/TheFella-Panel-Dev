@@ -21,20 +21,72 @@ html {
 	background-color: #535353;
 	background-color: #b8b8b8;
 	background-color: #f0f0f0;
-	font-size: 10px; 
+	
+	x-large
+	large 			<= 360
+	medium-large 	<= 340
+	medium 			<= 320
+	small 			<= 280
+	x-small 		<= 260
+	xx-small 		<= 250
 }*/
 
+body::before {
+	background-color: black;
+	color: white;
+	display: inline-block;
+	padding: 2px;
+	position:absolute;
+	display: none;
+}
 
-@media screen and (min-width: 320px) {
-	body {
-		opacity: 0.5;
+/* Large */
+@media screen and (max-width: 360px) {
+	body::before {
+		content: "Large";
 	}
 }
+
+/* Medium-Large */
+@media screen and (max-width: 340px) {
+	body::before {
+		content: "Medium-Large";
+	}
+}
+
+/* Medium */
+@media screen and (max-width: 320px) {
+	body::before {
+		content: "Medium";
+	}
+}
+
+/* Small */
+@media screen and (max-width: 280px) {
+	body::before {
+		content: "Small";
+	}
+}
+
+/* X-Small */
+@media screen and (max-width: 260px) {
+	body::before {
+		content: "X-Small";
+	}
+}
+
+/* XX-Small */
+@media screen and (max-width: 250px) {
+	body::before {
+		content: "XX-Small";
+	}
+}
+
+
 
 html,
 body {
 	cursor: default;
-	height: 500px;
 	margin: 0;
 	overflow-x: hidden;
 	overflow-y: hidden;
@@ -59,11 +111,9 @@ body {
 
 body {
 	font-size: 100%;
+	min-height: 414px;
 }
 
-	.medium body {
-		sfont-size: 100%;
-	}
 
 body, 
 body.dark,  /* dark theme */
@@ -87,9 +137,23 @@ section {
 	padding: 12px 10px;
 }
 
-	.small section {
-		padding: 10px 7px;
+	/* Small */
+	@media screen and (max-width: 280px) {
+		section {
+			padding: 10px 7px;
+		}
 	}
+	
+	/* XX-Small */
+	@media screen and (max-width: 250px) {
+		section {
+			padding: 9px 5px;
+		}
+	}
+	
+#tab-about section {
+	padding: 12px 10px;
+}
 
 section.start {
 	border-top: none;
@@ -126,17 +190,21 @@ h1 {
 	padding: 0 0 10px 0;
 }
 
-h1.tab-title {
-	font-size: 1.1em;
-	font-weight: bold;
-	margin-bottom: 0.75em;
-	margin-top: 0.25em;
-	word-spacing: 0.01em;
-}
+	h1.tab-title {
+		font-size: 1.1em;
+		font-weight: bold;
+		margin-bottom: 0.75em;
+		margin-top: 0.25em;
+		word-spacing: 0.01em;
+	}
 
-h1.headless-group {
-	display: none;
-}
+	h1.headless-group {
+		display: none;
+	}
+	
+	h1.adjustments-header {
+		margin-bottom: 0.1em;
+	}
 
 p {
 	padding: 0;
@@ -149,6 +217,10 @@ p.copy {
 	margin-bottom: 1.5em;
 	opacity: 0.9;
 }
+	
+	p.versionl-code {
+		opacity: 0.6;
+	}
 
 	.light p.copy {
 		line-height: 1.35;
@@ -191,6 +263,28 @@ a {
 	max-width: 11.5em;
 }
 
+
+
+/* IMAGES */
+body.dark img.light-theme {
+	display: none;
+}
+	
+body.light img.dark-theme {
+	display: none;
+}
+
+
+/* LISTS */
+ul.external-links {
+	margin: 0;
+	opacity: 0.9;
+	padding: 0;
+}
+
+ul.external-links li {
+	line-height: 1.8;
+}
 
 
 
@@ -251,8 +345,11 @@ button:target {
 		grid-template-columns: repeat(4, 1fr);
 	}
 	
-	.medium .four.big-pills {
-		grid-template-columns: repeat(2, 1fr);
+	/* Medium */
+	@media screen and (max-width: 320px) {
+		.four.big-pills {
+			grid-template-columns: repeat(2, 1fr);
+		}
 	}
 	
 
@@ -279,6 +376,18 @@ button:target {
 	.medium .big-restricted::before {
 		display: none;
 	}
+	
+	/* Medium */
+	@media screen and (max-width: 320px) {
+		.big-restricted {
+			position: relative;
+			visibility: visible;
+		}
+		
+		.big-restricted::before {
+			display: none;
+		}
+	}
 
 
 
@@ -294,23 +403,32 @@ button:target {
 	width: 100px;
 }
 
-.luminosity-pills .pills-group {
+.luminosity-pills > .pills-group {
 	display: grid;
 	grid-template-columns: repeat(8, 1fr);
 	grid-gap: 5px;
 	width: 100%;
 }
 	
-	.medium .luminosity-pills .pills-group {
-		grid-gap: 4px;
+	/* Medium */
+	@media screen and (max-width: 320px) {
+		s.luminosity-pills > .pills-group {
+			grid-gap: 4px;
+		}
 	}
 	
-	.small .luminosity-pills .pills-group {
-		grid-gap: 2px;
+	/* Small */
+	@media screen and (max-width: 280px) {
+		.luminosity-pills > .pills-group {
+			grid-gap: 4px;
+		}
 	}
 	
-	.x-small .luminosity-pills .pills-group {
-		grid-gap: 1px;
+	/* X-Small */
+	@media screen and (max-width: 260px) {
+		.luminosity-pills > .pills-group {
+			grid-gap: 3px;
+		}
 	}
 
 
@@ -331,6 +449,8 @@ button:target {
 	width: auto;
 }
 
+	
+
 .luminosity-pills .all-pill {
 	margin-right: 2px;
 	padding-left: 2px;
@@ -338,24 +458,55 @@ button:target {
 	width: 75px;
 }
 
-	/* SMALL PANEL */
-	.medium .restricted-room {
-		display: none;
+	/* Small */
+	@media screen and (max-width: 280px) {
+		.luminosity-pills .all-pill .very-restricted-room {
+			display: none;
+		}
+	}
+
+.luminosity-pills .del-pill {
+	padding: 0 2px 0;
+	text-align: center;
+}
+
+.luminosity-pills .del-pill img {
+	position: relative;
+	top: 1px;
+	width: 16px;
+}
+
+	/* Medium */
+	@media screen and (max-width: 320px) {
+		.restricted-room {
+			display: none;
+		}
+		
+		.luminosity-pills .all-pill {
+			width: 52px;
+		}
 	}
 	
-	.medium .luminosity-pills .all-pill {
-		width: 52px;
+	/* Small */
+	@media screen and (max-width: 280px) {
+		.luminosity-pills .all-pill {
+			font-size: 0.95em;
+			margin-right: 1px;
+			width: 48px;
+		}
+		
+		.luminosity-pills .del-pill img {
+			width: 15px;
+		}
 	}
 	
-	.small .luminosity-pills .all-pill {
-		font-size: 0.95em;
-		margin-right: 1px;
+	/* XX-Small */
+	@media screen and (max-width: 250px) {
+		.luminosity-pills .del-pill img {
+			width: 14px;
+		}
 	}
-	
-	.small .del-pill {
-		padding-left: 5px;
-		padding-right: 5px;
-	}
+
 	
 .pill-del-all {
 	padding-left: 15px;
@@ -371,20 +522,20 @@ button:target {
 .luminosity-highlights button:nth-child(7) { background-color: rgb(250,250,250); color:rgba(0,0,0,0.55); }
 /*.luminosity-highlights > button:nth-child(8) { background-color: rgb(255,255,255); color:rgba(0,0,0,0.5); }*/
 
-.luminosity-shadows button:nth-child(2) { background-color: rgb(96,96,96); }
-.luminosity-shadows button:nth-child(3) { background-color: rgb(80,80,80); }
-.luminosity-shadows button:nth-child(4) { background-color: rgb(64,64,64); }
-.luminosity-shadows button:nth-child(5) { background-color: rgb(48,48,48); }
-.luminosity-shadows button:nth-child(6) { background-color: rgb(32,32,32); }
-.luminosity-shadows button:nth-child(7) { background-color: rgb(16,16,16); }
+.luminosity-shadows button:nth-child(2) { background-color: rgb(96,96,96); color: rgba(255,255,255,0.9); }
+.luminosity-shadows button:nth-child(3) { background-color: rgb(80,80,80); color: rgba(255,255,255,0.9); }
+.luminosity-shadows button:nth-child(4) { background-color: rgb(64,64,64); color: rgba(255,255,255,0.9); }
+.luminosity-shadows button:nth-child(5) { background-color: rgb(48,48,48); color: rgba(255,255,255,0.9); }
+.luminosity-shadows button:nth-child(6) { background-color: rgb(32,32,32); color: rgba(255,255,255,0.9); }
+.luminosity-shadows button:nth-child(7) { background-color: rgb(16,16,16); color: rgba(255,255,255,0.9); }
 /*.luminosity-shadows > button:nth-child(8) { background-color: rgb(0,0,0); }*/
 
 .luminosity-midtones button:nth-child(2) { background-color: rgb(152,152,152); }
-.luminosity-midtones button:nth-child(3) { background-color: rgb(144,144,144); }
-.luminosity-midtones button:nth-child(4) { background-color: rgb(136,136,136); }
-.luminosity-midtones button:nth-child(5) { background-color: rgb(128,128,128); }
-.luminosity-midtones button:nth-child(6) { background-color: rgb(120,120,120); }
-.luminosity-midtones button:nth-child(7) { background-color: rgb(112,112,112); }
+.luminosity-midtones button:nth-child(3) { background-color: rgb(144,144,144); color:rgba(0,0,0,0.8); }
+.luminosity-midtones button:nth-child(4) { background-color: rgb(136,136,136); color:rgba(255,255,255,0.55); }
+.luminosity-midtones button:nth-child(5) { background-color: rgb(128,128,128); color:rgba(255,255,255,0.6); }
+.luminosity-midtones button:nth-child(6) { background-color: rgb(120,120,120); color:rgba(255,255,255,0.7); }
+.luminosity-midtones button:nth-child(7) { background-color: rgb(112,112,112); color:rgba(255,255,255,0.8); }
 /*.luminosity-midtones > button:nth-child(8) { background-color: rgb(105,105,105); }*/
 
 
@@ -423,10 +574,7 @@ ul.tabs li {
 	.light ul.tabs li:hover {
 		color: rgba(0,0,0,0.9);
 	}
-	
-	.small ul.tabs li {
-		/* smaller tabs */
-	}
+
 
 .tab-content {
 	display: none;
@@ -449,14 +597,6 @@ ul.tabs li {
 	height: var(--toolsize);
 	width: var(--toolsize);
 }
-
-	.dark .adjustment-tools img.light-theme {
-		display: none;
-	}
-	
-	.light .adjustment-tools img.dark-theme {
-		display: none;
-	}
 
 .adjustment-tools button {
 	background-color: transparent;
