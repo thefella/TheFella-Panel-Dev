@@ -87,7 +87,6 @@ function setCookie(key, value) {
 
 //! Get cookie
 function getCookie(key) {
-    //var keyValue = document.cookie.match('(^|;) ?' + key + '=([^;]*)(;|$)');
     var keyValue = document.cookie.match("(^|;) ?" + key + "=([^;]*)(;|$)");
     return keyValue ? keyValue[2] : null;
 };
@@ -107,6 +106,7 @@ function deleteCookie(key) {
 function setTheme(theme) {
 
 		var themeClass;
+		var themeName;
 		var themeColor = "rgb("+theme.panelBackgroundColor.color.red+","+theme.panelBackgroundColor.color.green+","+theme.panelBackgroundColor.color.blue+")";
 		var themeFontSize = theme.baseFontSize + "px";
 		var themeFontFamily = theme.baseFontFamily;		
@@ -121,11 +121,42 @@ function setTheme(theme) {
         } else {
 	        themeClass = "dark";
         }
+        
+        //! Find out which theme is being used and give it a name (based on uiBrightnessLevel names)        
+        switch (theme.panelBackgroundColor.color.red) {
+		    case 50:
+		        themeName = "dark-grey";
+		        break;
+		    case 83:
+		        themeName = "medium-grey";
+		        break;
+		    case 184:
+		        themeName = "light-grey";
+		        break;
+		    case 240:
+		        themeName = "original";
+		        break;
+		    default:
+		        themeName = "unknown-theme";
+		}
 
 		//! Set the body theme
-		$(document.body).removeClass("light dark").addClass(themeClass);
-		var style = $("<style rel=\"stylesheet\">html{ font-size:"+themeFontSize+";} body{ font-family:"+themeFontFamily+",-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif; } ul.tabs>li.current{ background-color:"+themeColor+" !important;}</style>");
+		$(document.body).removeClass("light dark original light-grey medium-grey dark-grey").addClass(themeClass).addClass(themeName);
+		var style = $("<style rel=\"stylesheet\">html{ font-size:"+themeFontSize+";} body.test{ font-family:"+themeFontFamily+",-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif; } ul.tabs>li.current{ background-color:"+themeColor+" !important;}</style>");
 		$(document.head).append(style);
+		
+		//! Set class based on font-size
+		var uiFontSize = "font-unknown";
+		if (theme.baseFontSize == 9) {
+			uiFontSize = "tiny"; 
+		} else if (theme.baseFontSize == 10) {
+			uiFontSize = "small";
+		} else if (theme.baseFontSize == 11) {
+			uiFontSize = "medium";
+		} else if (theme.baseFontSize == 12) {
+			uiFontSize = "large";
+		}
+		$(document.body).addClass("font-"+uiFontSize);
 };
 
 
@@ -143,7 +174,6 @@ function changeTheme(event) {
 function loadJSX() {
     var csInterface = new CSInterface();
     var extensionRoot = csInterface.getSystemPath(SystemPath.EXTENSION) + "/jsx/actions/";
-    //csInterface.evalScript('$._ext.evalFiles("' + extensionRoot + '")');
     csInterface.evalScript("$._ext.evalFiles(\"" + extensionRoot + "\")");
 };
 

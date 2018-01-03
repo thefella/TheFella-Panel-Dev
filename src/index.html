@@ -14,27 +14,30 @@
 	var themeRGB = "rgb("+themeColor.red+","+themeColor.green+","+themeColor.blue+")";
 	document.documentElement.style.backgroundColor = themeRGB;
 </script>
-<script src="./js/lib/jquery-3.2.1.min.js"></script>
-<script src="./js/main.js"></script>
 
 <!-- CSS -->
 <link rel="stylesheet" href="./css/styles.css">
+
+<!-- More Scripts -->
+<script src="./js/lib/jquery-3.2.1.min.js"></script>
+<script src="./js/main.js"></script>
 </head>
 <body style="display:none" class="dark" onload="onLoad()">
 <div id="panel">
 	
-	<ul id="tab-menu" class="tabs">
-		<!--<li class="tasb-link" onClick="window.location.reload()">R</li>-->
-		<li class="tab-link current" data-tab="tab-main">Main</li>
-		<li class="tab-link" data-tab="tab-more">More</li>
-		<li class="tab-link" data-tab="tab-finishing">Finishing</li>
-		<li class="tab-link" data-tab="tab-about">About</li>
-	</ul>
-	
+	<nav  id="main-nav" role="navigation">
+		<ul id="tab-menu" class="tabs">
+			<!--<li class="tasb-link" onClick="window.location.reload()">R</li>-->
+			<li class="tab-link current" data-tab="tab-main">Main</li>
+			<li class="tab-link" data-tab="tab-more">More</li>
+			<li class="tab-link" data-tab="tab-enhance">Enhance</li>
+			<li class="tab-link" data-tab="tab-about">About</li>
+		</ul>
+	</nav>
 	
 	<div id="tab-main" class="tab-content current">
 		
-		<section class="adjustment-tools">
+		<section id="section-adjustment" class="adjustment-tools">
 			<h1 class="adjustments-header" data-js="adjustmentsHeader" title="Add an adjustment">Add an adjustment</h1>
 			
 			<div class="button-group">
@@ -50,31 +53,31 @@
 		</section>
 		
 		
-		<section>
+		<section id="section-quick-access">
 			<h1 class="headless-group">Quick Access</h1>
 			<div class="button-group">
-				<button data-action="fitToScreen" data-js="tooltip" title="Fit image to screen">Fit</button>
-				<!--<button data-action="zoom(100)" data-js="tooltip" title="Zoom into image">100</button>-->
+				<button data-action="fitToScreen" data-js="tooltip" title="Fit image to screen">Fit</button> 
 				<button data-action="mergeAllToNewLayer" data-js="tooltip" title="Stamp all visible to new layer">Stamp</button> 
-				<!--<button data-action="newLayer">New Layer</button>-->
-				<button data-action="cameraRaw" data-js="tooltip" title="Adobe Camera Raw">ACR</button>
-				<button data-action="dodgeAndBurn" data-js="tooltip" data-tooltip-type="inside" title="Dodge/Burn on 50% grey">Dodge/Burn</button>
+				<button data-action="cameraRaw" data-js="tooltip" title="Adobe Camera Raw">ACR</button> 
+				<button data-action="dodgeAndBurn" data-js="tooltip" data-tooltip-type="inside" title="Dodge/Burn on 50% grey">Dodge/Burn</button> 
+				<!--<button data-action="newLayer">New Layer</button>
+					<button data-action="zoom(100)" data-js="tooltip" title="Zoom into image">100</button>-->
 			</div>
 		</section>
 		
 		
-		<section>
+		<section id="section-masking">
 			<h1>Quick Masking</h1>
 			<div class="button-group">
 				<button data-action="applyToHighlights" data-js="tooltip" title="Add layer mask for highlights">Lights</button>
 				<button data-action="applyToShadows" data-js="tooltip" title="Add layer mask for shadows">Shadows</button>
 				<button data-action="addEdgeMask" data-js="tooltip" data-tooltip-type="inside" title="Add mask to edges">Edges</button>
-				<button data-action="btnDeleteLayerMask" data-js="tooltip" data-tooltip-type="inside" title="Delete layer mask">Delete</button> 
+				<button data-action="btnDeleteLayerMask" data-js="tooltip" data-tooltip-type="inside" title="Delete layer mask">Remove</button> 
 			</div>
 		</section>
 		
 		
-		<section class="luminosity-masks-section end">
+		<section id="section-luminosity" class="luminosity-masks-section end">
 			<h1>Luminosity Masks</h1>
 			
 			<div class="group big-pills">
@@ -96,7 +99,7 @@
 			</div>
 			<div class="group pills luminosity-pills luminosity-midtones">
 				<div class="pills-group">
-					<button class="word-pill all-pill" data-action="lumAllMidtones" data-js="tooltip" title="Add all midtones masks"><span class="restricted-room">All </span>Mid<span class="very-restricted-room">tone</span>s</button>
+					<button class="word-pill all-pill" data-action="lumAllMidtones" data-js="tooltip" title="Add all midtones masks"><span class="restricted-room">All </span>Mid<span class="semi-restricted-room">tone</span>s</button>
 					<button data-action="lumMidtones(1)">1</button>
 					<button data-action="lumMidtones(2)">2</button>
 					<button data-action="lumMidtones(3)">3</button>
@@ -108,19 +111,19 @@
 			</div>
 			<div class="group pills luminosity-pills luminosity-shadows">
 				<div class="pills-group">
-					<button class="word-pill all-pill" data-action="lumAllShadows" data-js="tooltip" title="Add all shadows masks"><span class="restricted-room">All </span>Shadow<span class="very-restricted-room">s</span></button>
+					<button class="word-pill all-pill" data-action="lumAllShadows" data-js="tooltip" title="Add all darks masks"><span class="restricted-room">All </span>Darks</button>
 					<button data-action="lumShadows(1)">1</button>
 					<button data-action="lumShadows(2)">2</button>
 					<button data-action="lumShadows(3)">3</button>
 					<button data-action="lumShadows(4)">4</button>
 					<button data-action="lumShadows(5)">5</button>
 					<button data-action="lumShadows(6)">6</button>
-					<button class="word-pill del-pill" data-action="lumDeleteShadows" data-js="tooltip" data-tooltip-type="inside" title="Delete all shadows masks"><img alt="Delete" class="dark-theme" src="img/tools/dark_theme/bin.png"><img alt="Delete" class="light-theme" src="img/tools/light_theme/bin.png"></button>
+					<button class="word-pill del-pill" data-action="lumDeleteShadows" data-js="tooltip" data-tooltip-type="inside" title="Delete all darks masks"><img alt="Delete" class="dark-theme" src="img/tools/dark_theme/bin.png"><img alt="Delete" class="light-theme" src="img/tools/light_theme/bin.png"></button>
 				</div>
 			</div>
 			
 			<div class="button-group luminosity-delete-group right-group"> 
-				<button class="pill-del-all" data-action="lumDeleteAll" data-js="tooltip" data-tooltip-type="inside" title="Delete ALL masks">Delete All</button>
+				<button class="pill-del-all" data-action="lumDeleteAll" data-js="tooltip" data-tooltip-type="inside" title="Delete ALL luminosity masks">Delete All</button>
 			</div>
 		</section>
 		
@@ -130,7 +133,7 @@
 	
 	<div id="tab-more" class="tab-content">
 		
-		<section class="adjustment-tools">
+		<section id="section-more-adjustment" class="adjustment-tools">
 			<h1 class="adjustments-header" data-js="adjustmentsHeader" title="Add an adjustment">Add an adjustment</h1>
 			
 			<div class="button-group">
@@ -146,14 +149,15 @@
 		</section>
 		
 		
-		<section>
+		<section id="section-useful">
 			<h1 class="headless-group">Useful Actions</h1>
 			<button data-action="stack" data-js="tooltip" title="Stack all open documents/images together">Stack</button> 
+			<button data-action="focusStack" data-js="tooltip" title="Focus stacks layers">Focus Stack</button> 
 			<button data-action="toneMatching" data-js="tooltip" title="Uses colour channels to make blending images together more seamless">Match Tones</button>
 		</section>
 		
 		
-		<section>
+		<section id="section-sharpening">
 			<h1>Sharpening</h1>
 			<div class="button-group big-pills four">
 				<button data-action="sharpenHighPass" data-js="tooltip" title="Uses the classic high pass filter">High Pass</button>
@@ -164,7 +168,7 @@
 		</section>
 		
 		
-		<section>
+		<section id="section-fs">
 			<h1>Frequency Separation</h1>
 			<div class="button-group big-pills">
 				<button data-action="frequencySeparation" data-js="tooltip" title="Auto-detects 8-bit or 16-bit">Normal</button>
@@ -173,7 +177,7 @@
 		</section>
 		
 		
-		<section class="end">
+		<section id="section-custom" class="end">
 			<h1>Custom <span class="hint">Shift-click to change names</span></h1>
 			<div id="custom-buttons-group" class="button-group big-pills four custom-buttons">
 				<button id="customButton1" class="custom-button" data-action="customAction(1)" data-action2="renameButton(1)" data-js="tooltip" title="Action Set: TFP Custom. Action Name: Custom 1">Custom 1</button>
@@ -187,9 +191,9 @@
 	
 	
 	
-	<div id="tab-finishing" class="tab-content">
+	<div id="tab-enhance" class="tab-content">
 
-		<section>
+		<section id="section-orton">
 			<h1>Orton Effects</h1>
 			<div class="button-group big-pills four">
 				<button data-action="ortonCurves" data-js="tooltip" title="Orton effect using curves">Highlights</button>
@@ -200,7 +204,7 @@
 		</section>
 		
 		
-		<section>
+		<section id="section-vignette">
 			<h1>Vignette</h1>
 			<div class="button-group big-pills four">
 				<button data-action="vignetteACR" data-js="tooltip" title="Vignette using Adobe Camera Raw">Quick ACR</button>
@@ -212,7 +216,7 @@
 		</section>
 		
 		
-		<section class="end">
+		<section id="section-presets" class="end">
 			<h1>Presets</h1>
 			<div class="button-group big-pills">
 				<button data-action="presetColourBoost1">Colour Boost 1</button>
@@ -223,18 +227,18 @@
 			</div>
 		</section>
 		
-	</div><!-- End finishing section -->
+	</div><!-- End enhance section -->
 	
 	
 	
 	<div id="tab-about" class="tab-content">
-		<section>
+		<section id="section-thefella">
 			<h1 class="tab-title">About TheFella Panel</h1>
 			<p class="copy">Conor MacNeill is a professional travel &amp; landscape photographer and former web developer.</p>
 			<p class="links thefella-links"><a class="external-link" href="https://thefella.com?ref=panel">Website</a> | <a class="external-link" href="https://f8workshops.com">Workshops</a> | <a class="external-link" href="https://www.instagram.com/thefella">Instagram</a> | <a class="external-link" href="https://twitter.com/thefella">Twitter</a></p>
 		</section>
 		
-		<section>
+		<section id="section-tutorials">
 			<h1>Useful Tutorials</h1>
 			<ul class="external-links">
 				<li>Dave Morrow Photography: <a class="external-link" href="https://www.youtube.com/user/TheDmorrow32">YouTube</a></li>
@@ -249,7 +253,7 @@
 		</section>
 		<!--endRemoveIf(production)-->
 		
-		<section class="right-group end">
+		<section id="section-version" class="right-group end">
 			<h1 class="headless-group">Version</h1>
 			<p class="version-code">v1.0 beta</p>
 		</section>

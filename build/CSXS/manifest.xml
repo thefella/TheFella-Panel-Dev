@@ -36,17 +36,19 @@
                             <Width>300</Width>
                         </Size>
                         <MinSize>
-                            <Height>415</Height>
+                            <Height>444</Height>
                             <Width>252</Width>
                         </MinSize>
                         <MaxSize>
-                            <Height>480</Height>
+                            <Height>500</Height>
                             <Width>350</Width>
                         </MaxSize>
                     </Geometry>
 					<Icons>
 						<Icon Type="Normal">./img/icon-light-theme.png</Icon>
 						<Icon Type="DarkNormal">./img/icon-dark-theme.png</Icon>
+						<Icon Type="Rollover">./img/icon-light-theme.png</Icon>
+						<Icon Type="DarkRollover">./img/icon-dark-theme.png</Icon>
 					</Icons>
 				</UI>
 			</DispatchInfo>

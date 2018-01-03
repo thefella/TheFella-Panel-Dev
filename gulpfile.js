@@ -16,6 +16,7 @@ var cleanCSS 	= require('gulp-clean-css');
 var htmlmin 	= require('gulp-htmlmin');
 var replace 	= require('gulp-replace');
 var removeCode 	= require('gulp-remove-code');
+var inlineImg 	= require('gulp-inline-images');
 
 
 //! Clear out the src folder
@@ -129,8 +130,8 @@ gulp.task('copy', function() {
         .pipe(gulp.dest('build/CSXS/'))
     gulp.src(['img/*.png'])
         .pipe(gulp.dest('build/img/'))
-    gulp.src(['img/tools/**/'])
-        .pipe(gulp.dest('build/img/tools'))
+    //gulp.src(['img/tools/**/'])
+    //    .pipe(gulp.dest('build/img/tools'))
     gulp.src(['js/*.js'])
         .pipe(gulp.dest('build/js/'))
     gulp.src(['js/lib/*.js'])
@@ -166,6 +167,7 @@ gulp.task('scripts', function() {
 //! CSS files
 gulp.task('minify-css', function() {
 	return gulp.src('css/styles.css')
+		.pipe(removeCode({ production: true }))
 	    .pipe( cleanCSS() )
 	    .pipe(gulp.dest('build/css/'));
 });
@@ -177,8 +179,15 @@ gulp.task('html', function() {
 	return gulp.src('*.html')
 		.pipe(removeCode({ production: true }))
 		.pipe(htmlmin({collapseWhitespace:true, removeComments:true, minifyJS:true}))
+		.pipe(inlineImg({/* options */}))
 		.pipe(gulp.dest('build/'));
 });
+
+
+//gulp.task('default', function () {
+//  gulp.src('src/**/*.html')
+ //   .pipe(inlineimg('src'))  // takes in the directory to use as the root when looking for images
+//    .pipe(gulp.dest('dest/'));
 
 /*
 // Convert to JSXBIN file - NOT WORKING 

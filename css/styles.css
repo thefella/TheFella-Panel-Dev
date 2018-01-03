@@ -31,6 +31,8 @@ html {
 	xx-small 		<= 250
 }*/
 
+
+/*removeIf(production)*/
 body::before {
 	background-color: black;
 	color: white;
@@ -81,7 +83,7 @@ body::before {
 		content: "XX-Small";
 	}
 }
-
+/*endRemoveIf(production)*/
 
 
 html,
@@ -127,7 +129,9 @@ body.dark a {
 		color: rgb(var(--dark-color));
 	}
 
-
+	body.font-large #panel {
+		font-size: 0.95em;
+	}
 
 
 /* LAYOUT */
@@ -136,6 +140,15 @@ section {
 	border-color: rgba(0,0,0,0.2);
 	padding: 12px 10px;
 }
+
+	/* Medium */ 
+	@media screen and (max-width: 320px) {
+		body.font-large section,
+		body.font-medium section {
+			padding-left: 8px;
+			padding-right: 8px;
+		}
+	}
 
 	/* Small */
 	@media screen and (max-width: 280px) {
@@ -150,6 +163,29 @@ section {
 			padding: 9px 5px;
 		}
 	}
+	
+	/* Large Font */
+	body.font-large section {
+		padding-bottom: 10px;
+		padding-top: 10px;
+	}
+	
+	/* Small + Large Font */
+	@media screen and (max-width: 280px) {
+		body.font-large section {
+			padding-bottom: 8px;
+			padding-top: 8px;
+		}
+	}
+	
+	/* XX-Small + Large Font */
+	@media screen and (max-width: 250px) {
+		body.font-large section {
+			padding-bottom: 5px;
+			padding-top: 5px;
+		}
+	}
+	
 	
 #tab-about section {
 	padding: 12px 10px;
@@ -179,7 +215,7 @@ section.end {
 
 
 /* TYPOGRAPHY */
-html, body, h1, h2, h3, p, ul, ol, button {
+html, body, h1, h2, h3, p, ul, ol, button, * {
 	font-family: -apple-system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
@@ -190,11 +226,21 @@ h1 {
 	padding: 0 0 10px 0;
 }
 
+	@media screen and (max-width: 250px) {
+		h1 {
+			padding-bottom: 9px;
+		}
+	}
+
 	h1.tab-title {
-		font-size: 1.1em;
-		font-weight: bold;
 		margin-bottom: 0.75em;
 		margin-top: 0.25em;
+	}
+	
+	h1.tab-title, 
+	#section-tutorials h1 {
+		font-size: 1.1em;
+		font-weight: bold;
 		word-spacing: 0.01em;
 	}
 
@@ -217,13 +263,24 @@ p.copy {
 	margin-bottom: 1.5em;
 	opacity: 0.9;
 }
+
+	p.version-code {
+		font-size: 9px;
+		font-style: italic;
+		opacity: 0.4;
+	}
 	
-	p.versionl-code {
-		opacity: 0.6;
+	p.thefella-links {
+		line-height: 1.4;
 	}
 
 	.light p.copy {
 		line-height: 1.35;
+	}
+	
+	body.font-tiny p.copy,
+	body.font-tiny p.thefella-links {
+		font-size: 1.1em;
 	}
 
 a {
@@ -244,6 +301,89 @@ a {
 		float: right;
 		text-align: right;
 	}
+
+
+
+
+
+/* TABS */
+ul.tabs {
+	background-color: rgba(0,0,0,0.2);
+	display: flex;
+	list-style: none;
+	margin: 0;
+}
+
+	/* light theme */
+	body.light ul.tabs {
+		background-color: rgba(0,0,0,0.1);
+	}
+
+
+
+ul.tabs > li {
+	border-color: transparent;
+	border-style: solid;
+	border-width: 1px;
+	display: block;
+	opacity: 0.7;
+	padding: 8px 14px 7px 14px;
+}
+
+	ul.tabs > li:hover {
+		background-color: rgba(255,255,255,0.05);
+		border-width: 0;
+		margin: 1px;
+	}
+	
+	body.medium-grey ul.tabs > li:hover {
+		background-color: rgba(255,255,255,0.1);
+	}
+	
+	ul.tabs > li.current {
+		color: rgb(255,255,255);
+		opacity: 1;
+	}
+	
+	ul.tabs > li.current:hover {
+		border-width: 1px;
+		margin: 0;
+	}
+	
+	/* Light themes */
+	body.light ul.tabs > li:hover {
+		background-color: rgba(255,255,255,0.65);
+	}
+	
+	body.light-grey ul.tabs > li:hover {
+		background-color: rgba(255,255,255,0.25);
+	}
+	
+	body.light ul.tabs > li.current {
+		color: rgba(0,0,0,0.85);
+	}
+
+	
+	/* X-Small */
+	@media screen and (max-width: 260px) {
+		.font-large ul.tabs > li {
+			padding-left: 11px;
+			padding-right: 11px;
+		}
+	}
+
+.tab-content {
+	display: none;
+}
+
+.tab-content.current {
+	display: inherit;
+}
+
+
+
+
+
 
 /* TOOLTIPS */
 .tooltip {
@@ -275,6 +415,7 @@ body.light img.dark-theme {
 }
 
 
+
 /* LISTS */
 ul.external-links {
 	margin: 0;
@@ -285,6 +426,10 @@ ul.external-links {
 ul.external-links li {
 	line-height: 1.8;
 }
+
+	body.font-tiny ul.external-links {
+		font-size: 1.1em;
+	}
 
 
 
@@ -299,12 +444,12 @@ button {
 	line-height: 1.2;
 	margin: 0 0 2px 0;
 	padding: 5px 8px;
+	position: static;
 	outline: none;
-	transition: background-color 0.1s ease-in, border-color 0.1s ease-in;
+	transition: background-color 0.1s ease-in-out, border-color 0.1s ease-in-out;
 }
 
-button:hover,
-button:focus {
+button:hover {
 	background-color: rgba(0,0,0,0.35);
 	border-color: rgba(255,255,255,0.3);
 }
@@ -367,15 +512,6 @@ button:target {
 		top: 0;
 		visibility: visible;
 	}
-
-	.medium .big-restricted {
-		position: relative;
-		visibility: visible;
-	}
-	
-	.medium .big-restricted::before {
-		display: none;
-	}
 	
 	/* Medium */
 	@media screen and (max-width: 320px) {
@@ -397,11 +533,10 @@ button:target {
 	align-items: center;
 }
 
-.luminosity-pills p {
-	display: block;
-	font-size: 0.95em;
-	width: 100px;
-}
+	.font-large .luminosity-pills,
+	.font-medium .luminosity-pills {
+		font-size: 11px;
+	}
 
 .luminosity-pills > .pills-group {
 	display: grid;
@@ -409,13 +544,6 @@ button:target {
 	grid-gap: 5px;
 	width: 100%;
 }
-	
-	/* Medium */
-	@media screen and (max-width: 320px) {
-		s.luminosity-pills > .pills-group {
-			grid-gap: 4px;
-		}
-	}
 	
 	/* Small */
 	@media screen and (max-width: 280px) {
@@ -458,12 +586,63 @@ button:target {
 	width: 75px;
 }
 
+	/* Medium */ 
+	@media screen and (max-width: 320px) { 
+		.luminosity-pills .all-pill .semi-restricted-room {
+			display: none;
+		}
+		
+		.luminosity-pills .all-pill {
+			width: 52px;
+		}
+		
+		body.font-large .luminosity-pills .all-pill,
+		body.font-medium .luminosity-pills .all-pill {
+			font-size: 0.9em;
+		}
+	}
+	
+	
 	/* Small */
 	@media screen and (max-width: 280px) {
-		.luminosity-pills .all-pill .very-restricted-room {
+		
+		body.font-medium .luminosity-pills .all-pill,
+		body.font-large .luminosity-pills .all-pill {
+			margin-right: 1px;
+			width: 44px;
+		}
+		
+		body.font-medium .luminosity-pills .all-pill {
+			width: 40px;
+		}
+		
+		body.font-medium .luminosity-pills .all-pill .restricted-room,
+		body.font-large .luminosity-pills .all-pill .restricted-room {
 			display: none;
 		}
 	}
+
+	/* X-Small */
+	@media screen and (max-width: 260px) {
+		
+		body.font-small .luminosity-pills .all-pill,
+		body.font-tiny .luminosity-pills .all-pill {
+			margin-right: 1px;
+		}
+	}
+
+	/* XX-Small */
+	@media screen and (max-width: 250px) {
+		
+		body.font-small .luminosity-pills .all-pill {
+			width: 40px;
+		}
+		
+		body.font-small .luminosity-pills .all-pill .restricted-room {
+			display: none;
+		}
+	}
+
 
 .luminosity-pills .del-pill {
 	padding: 0 2px 0;
@@ -476,24 +655,10 @@ button:target {
 	width: 16px;
 }
 
-	/* Medium */
-	@media screen and (max-width: 320px) {
-		.restricted-room {
-			display: none;
-		}
-		
-		.luminosity-pills .all-pill {
-			width: 52px;
-		}
-	}
+	
 	
 	/* Small */
 	@media screen and (max-width: 280px) {
-		.luminosity-pills .all-pill {
-			font-size: 0.95em;
-			margin-right: 1px;
-			width: 48px;
-		}
 		
 		.luminosity-pills .del-pill img {
 			width: 15px;
@@ -537,53 +702,6 @@ button:target {
 .luminosity-midtones button:nth-child(6) { background-color: rgb(120,120,120); color:rgba(255,255,255,0.7); }
 .luminosity-midtones button:nth-child(7) { background-color: rgb(112,112,112); color:rgba(255,255,255,0.8); }
 /*.luminosity-midtones > button:nth-child(8) { background-color: rgb(105,105,105); }*/
-
-
-
-
-					  
-/* TABS */
-ul.tabs {
-	background-color: rgba(0,0,0,0.2);
-	display: flex;
-	list-style: none;
-	margin: 0;
-}
-
-	/* light theme */
-	.light ul.tabs {
-		background-color: rgba(0,0,0,0.1);
-	}
-
-ul.tabs li, 
-ul.tabs li:hover {
-	cursor: pointer;
-}
-
-ul.tabs li {
-	padding: 9px 15px 8px 15px;
-}
-
-	ul.tabs li.current,
-	ul.tabs li:hover {
-		color: rgb(255,255,255);
-	}
-	
-	/* light theme */
-	.light ul.tabs li.current,
-	.light ul.tabs li:hover {
-		color: rgba(0,0,0,0.9);
-	}
-
-
-.tab-content {
-	display: none;
-}
-
-.tab-content.current {
-	display: inherit;
-}
-
 
 
 

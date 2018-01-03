@@ -250,7 +250,7 @@ btnDeleteLayerMask = function() {
 	if (hasLayerMask()) {
 		DeleteLayerMask();
 	} else {
-		alert('No layer mask to delete');
+		alert("No Layer Mask \r\nThe current layer has no layer mask to delete");
 	}
 };
 
@@ -294,3 +294,103 @@ hasLayerMask = function() {
 	}   
 	return hasLayerMask;   
 };
+
+
+focusStack = function() {
+	
+	var layers = getSelectedLayersIdx();  
+	
+	if (layers.length < 2) {  
+    	alert("Not Enough Layers\r\nYou need to select two or more layers to focus stack");  
+		return;  
+    } 
+	
+	focusStackAction();
+};
+
+
+
+//
+//==================== Focus Stacking 2 ==============
+//
+focusStackAction = function() {
+	app.activeDocument.suspendHistory("Focus Stack Images", "focusStackAction_hidden();" );
+};
+focusStackAction_hidden = function() {
+  // Align
+  function step1(enabled, withDialog) {
+    if (enabled != undefined && !enabled)
+      return;
+    var dialogMode = (withDialog ? DialogModes.ALL : DialogModes.NO);
+    var desc1 = new ActionDescriptor();
+    var ref1 = new ActionReference();
+    ref1.putEnumerated(cTID('Lyr '), cTID('Ordn'), cTID('Trgt'));
+    desc1.putReference(cTID('null'), ref1);
+    desc1.putEnumerated(cTID('Usng'), cTID('ADSt'), sTID("ADSContent"));
+    desc1.putEnumerated(cTID('Aply'), sTID("projection"), cTID('Auto'));
+    desc1.putBoolean(sTID("vignette"), false);
+    desc1.putBoolean(sTID("radialDistort"), false);
+    executeAction(cTID('Algn'), desc1, dialogMode);
+  };
+
+  // Auto-Blend Layers
+  function step2(enabled, withDialog) {
+    if (enabled != undefined && !enabled)
+      return;
+    var dialogMode = (withDialog ? DialogModes.ALL : DialogModes.NO);
+    var desc1 = new ActionDescriptor();
+    desc1.putEnumerated(cTID('Aply'), sTID("autoBlendType"), sTID("maxDOF"));
+    desc1.putBoolean(cTID('ClrC'), false);
+    desc1.putBoolean(sTID("autoTransparencyFill"), false);
+    executeAction(sTID('mergeAlignedLayers'), desc1, dialogMode);
+  };
+
+  step1();      // Align
+  step2();      // Auto-Blend Layers
+}
+
+
+
+//! Get selected layers
+function getSelectedLayersIdx(){   
+      var selectedLayers = new Array();   
+      var backGroundCounter = 1;  
+            if(activeDocument.artLayers.length > 0){  
+            backGroundCounter = activeDocument.artLayers[activeDocument.artLayers.length - 1].isBackgroundLayer ? 0 : 1;  
+            }  
+      var ref = new ActionReference();   
+      ref.putProperty(charIDToTypeID("Prpr"), stringIDToTypeID("targetLayers"));  
+      ref.putEnumerated( charIDToTypeID("Dcmn"), charIDToTypeID("Ordn"), charIDToTypeID("Trgt") );   
+      var desc = executeActionGet(ref);   
+      if( desc.hasKey( stringIDToTypeID( "targetLayers" ) ) ){   
+         desc = desc.getList( stringIDToTypeID( "targetLayers" ));   
+          var c = desc.count;   
+          var selectedLayers = new Array();   
+          for(var i=0;i<c;i++){   
+               selectedLayers.push(  desc.getReference( i ).getIndex() +backGroundCounter );   
+          }   
+      if(app.version.match(/^\d+/) > 15) return selectedLayers ;  
+       }else{   
+           if(app.version.match(/^\d+/) > 15) return selectedLayers ;  
+         var ref = new ActionReference();   
+         ref.putProperty( charIDToTypeID("Prpr") , charIDToTypeID( "ItmI" ));   
+         ref.putEnumerated( charIDToTypeID("Lyr "), charIDToTypeID("Ordn"), charIDToTypeID("Trgt") );   
+         if(!backGroundCounter){  
+            selectedLayers.push( executeActionGet(ref).getInteger(charIDToTypeID( "ItmI" )) -1);  
+            }else{  
+                selectedLayers.push( executeActionGet(ref).getInteger(charIDToTypeID( "ItmI" )));  
+                }  
+     var vis = app.activeDocument.activeLayer.visible;  
+        if(vis == true) app.activeDocument.activeLayer.visible = false;  
+        var desc9 = new ActionDescriptor();  
+    var list9 = new ActionList();  
+    var ref9 = new ActionReference();  
+    ref9.putEnumerated( charIDToTypeID("Lyr "), charIDToTypeID("Ordn"), charIDToTypeID("Trgt") );  
+    list9.putReference( ref9 );  
+    desc9.putList( charIDToTypeID("null"), list9 );  
+    executeAction( charIDToTypeID("Shw "), desc9, DialogModes.NO );  
+    if(app.activeDocument.activeLayer.visible == false) selectedLayers.shift();  
+        app.activeDocument.activeLayer.visible = vis;  
+      }   
+      return selectedLayers;   
+};  
