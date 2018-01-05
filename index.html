@@ -3,7 +3,6 @@
 <head>
 <meta charset="utf-8">
 <title>TheFella Panel</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <!-- Scripts -->
 <script src="./js/lib/CSInterface.js"></script>
@@ -24,12 +23,12 @@
 </head>
 <body style="display:none" class="dark" onload="onLoad()">
 <div id="panel">
-	
+
 	<nav  id="main-nav" role="navigation">
 		<ul id="tab-menu" class="tabs">
 			<!--<li class="tasb-link" onClick="window.location.reload()">R</li>-->
 			<li class="tab-link current" data-tab="tab-main">Main</li>
-			<li class="tab-link" data-tab="tab-more">More</li>
+			<li class="tab-link" data-tab="tab-more">Extra</li>
 			<li class="tab-link" data-tab="tab-enhance">Enhance</li>
 			<li class="tab-link" data-tab="tab-about">About</li>
 		</ul>
@@ -40,7 +39,7 @@
 		<section id="section-adjustment" class="adjustment-tools">
 			<h1 class="adjustments-header" data-js="adjustmentsHeader" title="Add an adjustment">Add an adjustment</h1>
 			
-			<div class="button-group">
+			<div class="button-group tools-section">
 				<button data-action="adjCurves" title="Curves"><img alt="Curves" class="dark-theme" src="img/tools/dark_theme/curves.png"><img alt="Curves" class="light-theme" src="img/tools/light_theme/curves.png"></button>
 				<button data-action="adjHueSaturation" title="Hue/Saturation"><img alt="Hue/Saturation" class="dark-theme" src="img/tools/dark_theme/hue-saturation.png"><img alt="Hue/Saturation" class="light-theme" src="img/tools/light_theme/hue-saturation.png"></button>
 				<button data-action="adjColorBalance" title="Color Balance"><img alt="Color Balance" class="dark-theme" src="img/tools/dark_theme/color-balance.png"><img alt="Color Balance" class="light-theme" src="img/tools/light_theme/color-balance.png"></button>
@@ -87,43 +86,43 @@
 			
 			<div class="group pills luminosity-pills luminosity-highlights">
 				<div class="pills-group">
-					<button class="word-pill all-pill" data-action="lumAllHighlights" data-js="tooltip" title="Add all highlights masks"><span class="restricted-room">All </span>Lights</button>
-					<button data-action="lumHighlights(1)">1</button>
-					<button data-action="lumHighlights(2)">2</button>
-					<button data-action="lumHighlights(3)">3</button>
-					<button data-action="lumHighlights(4)">4</button>
-					<button data-action="lumHighlights(5)">5</button>
-					<button data-action="lumHighlights(6)">6</button>
-					<button class="word-pill del-pill" data-action="lumDeleteHighlights" data-js="tooltip" data-tooltip-type="inside" title="Delete all highlights masks"><img alt="Delete" class="dark-theme" src="img/tools/dark_theme/bin.png"><img alt="Delete" class="light-theme" src="img/tools/light_theme/bin.png"></button>
+					<button class="create-range" data-action="lumAllHighlights" data-js="tooltip" title="Add all highlights masks"><span class="restricted-room">All </span>Lights</button>
+					<button class="number-pill" data-action="lumHighlights(1)">1</button>
+					<button class="number-pill" data-action="lumHighlights(2)">2</button>
+					<button class="number-pill" data-action="lumHighlights(3)">3</button>
+					<button class="number-pill" data-action="lumHighlights(4)">4</button>
+					<button class="number-pill" data-action="lumHighlights(5)">5</button>
+					<button class="number-pill" data-action="lumHighlights(6)">6</button>
+					<button class="delete-range" data-action="lumDeleteHighlights" data-js="tooltip" data-tooltip-type="inside" title="Delete all highlights masks"><img alt="Delete" class="dark-theme" src="img/tools/dark_theme/bin.png"><img alt="Delete" class="light-theme" src="img/tools/light_theme/bin.png"></button>
 				</div>
 			</div>
 			<div class="group pills luminosity-pills luminosity-midtones">
 				<div class="pills-group">
-					<button class="word-pill all-pill" data-action="lumAllMidtones" data-js="tooltip" title="Add all midtones masks"><span class="restricted-room">All </span>Mid<span class="semi-restricted-room">tone</span>s</button>
-					<button data-action="lumMidtones(1)">1</button>
-					<button data-action="lumMidtones(2)">2</button>
-					<button data-action="lumMidtones(3)">3</button>
-					<button data-action="lumMidtones(4)">4</button>
-					<button data-action="lumMidtones(5)">5</button>
-					<button data-action="lumMidtones(6)">6</button>
-					<button class="word-pill del-pill" data-action="lumDeleteMidtones" data-js="tooltip" data-tooltip-type="inside" title="Delete all midtones masks"><img alt="Delete" class="dark-theme" src="img/tools/dark_theme/bin.png"><img alt="Delete" class="light-theme" src="img/tools/light_theme/bin.png"></button>
+					<button class="create-range" data-action="lumAllMidtones" data-js="tooltip" title="Add all midtones masks"><span class="restricted-room">All </span>Mid<span class="srr">tone</span>s</button>
+					<button class="number-pill" data-action="lumMidtones(1)">1</button>
+					<button class="number-pill" data-action="lumMidtones(2)">2</button>
+					<button class="number-pill" data-action="lumMidtones(3)">3</button>
+					<button class="number-pill" data-action="lumMidtones(4)">4</button>
+					<button class="number-pill" data-action="lumMidtones(5)">5</button>
+					<button class="number-pill" data-action="lumMidtones(6)">6</button>
+					<button class="delete-range" data-action="lumDeleteMidtones" data-js="tooltip" data-tooltip-type="inside" title="Delete all midtones masks"><img alt="Delete" class="dark-theme" src="img/tools/dark_theme/bin.png"><img alt="Delete" class="light-theme" src="img/tools/light_theme/bin.png"></button>
 				</div>
 			</div>
 			<div class="group pills luminosity-pills luminosity-shadows">
 				<div class="pills-group">
-					<button class="word-pill all-pill" data-action="lumAllShadows" data-js="tooltip" title="Add all darks masks"><span class="restricted-room">All </span>Darks</button>
-					<button data-action="lumShadows(1)">1</button>
-					<button data-action="lumShadows(2)">2</button>
-					<button data-action="lumShadows(3)">3</button>
-					<button data-action="lumShadows(4)">4</button>
-					<button data-action="lumShadows(5)">5</button>
-					<button data-action="lumShadows(6)">6</button>
-					<button class="word-pill del-pill" data-action="lumDeleteShadows" data-js="tooltip" data-tooltip-type="inside" title="Delete all darks masks"><img alt="Delete" class="dark-theme" src="img/tools/dark_theme/bin.png"><img alt="Delete" class="light-theme" src="img/tools/light_theme/bin.png"></button>
+					<button class="create-range" data-action="lumAllShadows" data-js="tooltip" title="Add all darks masks"><span class="restricted-room">All </span>Darks</button>
+					<button class="number-pill" data-action="lumShadows(1)">1</button>
+					<button class="number-pill" data-action="lumShadows(2)">2</button>
+					<button class="number-pill" data-action="lumShadows(3)">3</button>
+					<button class="number-pill" data-action="lumShadows(4)">4</button>
+					<button class="number-pill" data-action="lumShadows(5)">5</button>
+					<button class="number-pill" data-action="lumShadows(6)">6</button>
+					<button class="delete-range" data-action="lumDeleteShadows" data-js="tooltip" data-tooltip-type="inside" title="Delete all darks masks"><img alt="Delete" class="dark-theme" src="img/tools/dark_theme/bin.png"><img alt="Delete" class="light-theme" src="img/tools/light_theme/bin.png"></button>
 				</div>
 			</div>
 			
 			<div class="button-group luminosity-delete-group right-group"> 
-				<button class="pill-del-all" data-action="lumDeleteAll" data-js="tooltip" data-tooltip-type="inside" title="Delete ALL luminosity masks">Delete All</button>
+				<button class="delete-all" data-action="lumDeleteAll" data-js="tooltip" data-tooltip-type="inside" title="Delete ALL luminosity masks">Delete All</button>
 			</div>
 		</section>
 		
@@ -136,7 +135,7 @@
 		<section id="section-more-adjustment" class="adjustment-tools">
 			<h1 class="adjustments-header" data-js="adjustmentsHeader" title="Add an adjustment">Add an adjustment</h1>
 			
-			<div class="button-group">
+			<div class="button-group tools-section">
 				<button data-action="adjBW" title="Black & White"><img alt="Black & White" class="dark-theme" src="img/tools/dark_theme/bw.png"><img alt="Black & White" class="light-theme" src="img/tools/light_theme/bw.png"></button>
 				<button data-action="adjPhotoFilter" title="Photo Filter"><img alt="Photo Filter" class="dark-theme" src="img/tools/dark_theme/photo-filter.png"><img alt="Photo Filter" class="light-theme" src="img/tools/light_theme/photo-filter.png"></button>
 				<button data-action="adjChannelMixer" title="Channel Mixer"><img alt="Channel Mixer" class="dark-theme" src="img/tools/dark_theme/channel-mixer.png"><img alt="Channel Mixer" class="light-theme" src="img/tools/light_theme/channel-mixer.png"></button>
@@ -231,16 +230,21 @@
 	
 	
 	
-	<div id="tab-about" class="tab-content">
+	<div id="tab-about" class="tab-content tab-about">
 		<section id="section-thefella">
 			<h1 class="tab-title">About TheFella Panel</h1>
-			<p class="copy">Conor MacNeill is a professional travel &amp; landscape photographer and former web developer.</p>
-			<p class="links thefella-links"><a class="external-link" href="https://thefella.com?ref=panel">Website</a> | <a class="external-link" href="https://f8workshops.com">Workshops</a> | <a class="external-link" href="https://www.instagram.com/thefella">Instagram</a> | <a class="external-link" href="https://twitter.com/thefella">Twitter</a></p>
+			<p>Conor MacNeill is a professional travel &amp; landscape photographer and former web developer.</p>
+			<p class="links"><a class="external-link" href="https://thefella.com?ref=panel">Website</a> | <a class="external-link" href="https://f8workshops.com">Workshops</a> | <a class="external-link" href="https://www.instagram.com/thefella">Instagram</a> | <a class="external-link" href="https://twitter.com/thefella">Twitter</a></p>
+		</section>
+		
+		<section id="section-options">
+			<h1>Options</h1>
+			<label for="tools-menu-checkbox">Show Tools Menu:</label> <input type="checkbox" id="tools-menu-checkbox" name="toolsMenu">
 		</section>
 		
 		<section id="section-tutorials">
 			<h1>Useful Tutorials</h1>
-			<ul class="external-links">
+			<ul class="display">
 				<li>Dave Morrow Photography: <a class="external-link" href="https://www.youtube.com/user/TheDmorrow32">YouTube</a></li>
 				<li>Jimmy McIntyre: <a class="external-link" href="https://www.youtube.com/user/TheJimmymac20">YouTube</a></li>
 			</ul>
@@ -255,11 +259,32 @@
 		
 		<section id="section-version" class="right-group end">
 			<h1 class="headless-group">Version</h1>
-			<p class="version-code">v1.0 beta</p>
+			<p class="version-code">v1.1 beta</p>
 		</section>
 		
 	</div><!-- End about tab -->
-
+	
+	<div id="tools">
+		<section id="section-tools" class="tools-section">
+			<ul id="tools-list">
+				<li><button id="zoomTool" data-action="selectTool('zoomTool')" data-js="tooltip" title="Zoom tool"><img alt="Zoom tool" class="dark-theme" src="img/tools/dark_theme/zoomTool.png"><img alt="Zoom tool" class="light-theme" src="img/tools/light_theme/zoomTool.png"></button></li>
+				<li><button id="paintbrushTool" data-action="selectTool('paintbrushTool')" data-js="tooltip" title="Brush tool"><img alt="Brush tool" class="dark-theme" src="img/tools/dark_theme/paintbrushTool.png"><img alt="Brush tool" class="light-theme" src="img/tools/light_theme/paintbrushTool.png"></button></li>
+				<li><button id="spotHealingBrushTool" data-action="selectTool('spotHealingBrushTool')" data-js="tooltip" title="Spot Headling Brush tool"><img alt="Spot Headling Brush tool" class="dark-theme" src="img/tools/dark_theme/spotHealingBrushTool.png"><img alt="Spot Headling Brush tool" class="light-theme" src="img/tools/light_theme/spotHealingBrushTool.png"></button></li>
+				<li><button id="cloneStampTool" data-action="selectTool('cloneStampTool')" data-js="tooltip" title="Clone Stamp tool"><img alt="Clone Stamp tool" class="dark-theme" src="img/tools/dark_theme/cloneStampTool.png"><img alt="Clone Stamp tool" class="light-theme" src="img/tools/light_theme/cloneStampTool.png"></button></li>
+				<li><button id="patchSelection" data-action="selectTool('patchSelection')" data-js="tooltip" title="Patch tool"><img alt="Patch tool" class="dark-theme" src="img/tools/dark_theme/patchSelection.png"><img alt="Patch tool" class="light-theme" src="img/tools/light_theme/patchSelection.png"></button></li>
+				<li><button id="dodgeTool" data-action="selectTool('dodgeTool')" data-js="tooltip" title="Dodge tool"><img alt="Dodge tool" class="dark-theme" src="img/tools/dark_theme/dodgeTool.png"><img alt="Dodge tool" class="light-theme" src="img/tools/light_theme/dodgeTool.png"></button></li>
+				<li><button id="burnInTool" data-action="selectTool('burnInTool')" data-js="tooltip" title="Burn tool"><img alt="Burn tool" class="dark-theme" src="img/tools/dark_theme/burnInTool.png"><img alt="Burn tool" class="light-theme" src="img/tools/light_theme/burnInTool.png"></button></li>
+				<li><button id="gradientTool" data-action="selectTool('gradientTool')" data-js="tooltip" title="Gradient tool"><img alt="Gradient tool" class="dark-theme" src="img/tools/dark_theme/gradientTool.png"><img alt="Gradient tool" class="light-theme" src="img/tools/light_theme/gradientTool.png"></button></li>
+				<li><button id="eyedropperTool" data-action="selectTool('eyedropperTool')" data-js="tooltip" title="Eyedropper tool"><img alt="Eyedropper tool" class="dark-theme" src="img/tools/dark_theme/eyedropperTool.png"><img alt="Eyedropper tool" class="light-theme" src="img/tools/light_theme/eyedropperTool.png"></button></li>
+				<li><button id="cropTool" data-action="selectTool('cropTool')" data-js="tooltip" title="Crop tool"><img alt="Crop tool" class="dark-theme" src="img/tools/dark_theme/cropTool.png"><img alt="Crop tool" class="light-theme" src="img/tools/light_theme/cropTool.png"></button></li>
+				<li><button id="magicWandTool" data-action="selectTool('magicWandTool')" data-js="tooltip" title="Magic Wand tool"><img alt="Magic Wand tool" class="dark-theme" src="img/tools/dark_theme/magicWandTool.png"><img alt="Magic Wand tool" class="light-theme" src="img/tools/light_theme/magicWandTool.png"></button></li>
+				<li><button id="lassoTool" data-action="selectTool('lassoTool')" data-js="tooltip" title="lasso tool"><img alt="lasso tool" class="dark-theme" src="img/tools/dark_theme/lassoTool.png"><img alt="lasso tool" class="light-theme" src="img/tools/light_theme/lassoTool.png"></button></li>
+				<li><button id="marqueeRectTool" data-action="selectTool('marqueeRectTool')" data-js="tooltip" title="Rectangular Marquee tool"><img alt="Rectangular Marquee tool" class="dark-theme" src="img/tools/dark_theme/marqueeRectTool.png"><img alt="Rectangular Marquee tool" class="light-theme" src="img/tools/light_theme/marqueeRectTool.png"></button></li>
+				<li><button id="marqueeEllipTool" data-action="selectTool('marqueeEllipTool')" data-js="tooltip" title="Elliptical Marquee tool"><img alt="Elliptical Marquee tool" class="dark-theme" src="img/tools/dark_theme/marqueeEllipTool.png"><img alt="Elliptical Marquee tool" class="light-theme" src="img/tools/light_theme/marqueeEllipTool.png"></button></li>
+				<li><button id="moveTool" data-action="selectTool('moveTool')" data-js="tooltip" title="Move tool"><img alt="Move tool" class="dark-theme" src="img/tools/dark_theme/moveTool.png"><img alt="Move tool" class="light-theme" src="img/tools/light_theme/moveTool.png"></button></li>
+			</ul>
+		</section>
+	</div>
 
 </div><!-- End panel container -->
 </body>

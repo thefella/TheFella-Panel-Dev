@@ -32,15 +32,15 @@
                     <Menu>TheFella Panel</Menu>
                     <Geometry>
                         <Size>
-                            <Height>480</Height>
+                            <Height>500</Height>
                             <Width>300</Width>
                         </Size>
                         <MinSize>
-                            <Height>444</Height>
+                            <Height>410</Height>
                             <Width>252</Width>
                         </MinSize>
                         <MaxSize>
-                            <Height>500</Height>
+                            <Height>550</Height>
                             <Width>350</Width>
                         </MaxSize>
                     </Geometry>

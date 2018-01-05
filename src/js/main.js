@@ -1,5 +1,3 @@
-"use strict";
-
 //! Panel loaded
 function onLoad() {
 
@@ -20,6 +18,9 @@ function onLoad() {
 	});
 
 	//deleteCookie('customButtons');
+	
+	//! Check cookies for tools menu
+	checkToolsMenuCookies();
 
 	//! Check cookies for custom names
 	checkButtonCookies();
@@ -29,8 +30,22 @@ function onLoad() {
     
     //! Stop context menu, e.g. View Source
     window.addEventListener("contextmenu", function(e) { e.preventDefault(); }, false);
-};
+    
+    //! Build the flyout menu
+    generateFlyoutMenu();
+    
+    // Listen for the flyout menu interaction
+	csInterface.addEventListener("com.adobe.csxs.events.flyoutMenuClicked", flyoutMenuClicked);
+
+	//! Get current tool	
+	csInterface.evalScript("getCurrentTool()", function(tool) {
+		selectTool(tool);
+	});
+}
 //! End onLoad();
+
+
+
 
 
 
@@ -54,7 +69,7 @@ function changeButton(data) {
 
 	//! Set cookie to store names
 	setCookie("customButtons", json_str);
-};
+}
 
 
 
@@ -72,7 +87,7 @@ function checkButtonCookies() {
 			$(this).html(cookieInfo[index]);
 		});	
 	}
-};
+}
 
 
 
@@ -81,7 +96,7 @@ function setCookie(key, value) {
     var expires = new Date();
     expires.setTime(expires.getTime() + (10 * 365 * 24 * 60 * 60));
     document.cookie = key + "=" + value + ";expires=" + expires.toUTCString();
-};
+}
 
 
 
@@ -89,7 +104,7 @@ function setCookie(key, value) {
 function getCookie(key) {
     var keyValue = document.cookie.match("(^|;) ?" + key + "=([^;]*)(;|$)");
     return keyValue ? keyValue[2] : null;
-};
+}
 
 
 
@@ -98,7 +113,7 @@ function deleteCookie(key) {
     var expires = new Date();
     expires.setTime(expires.getTime() - (10 * 365 * 24 * 60 * 60));
     document.cookie = key + "=" + null + ";expires=" + expires.toUTCString();
-};
+}
 
 
 
@@ -142,7 +157,7 @@ function setTheme(theme) {
 
 		//! Set the body theme
 		$(document.body).removeClass("light dark original light-grey medium-grey dark-grey").addClass(themeClass).addClass(themeName);
-		var style = $("<style rel=\"stylesheet\">html{ font-size:"+themeFontSize+";} body.test{ font-family:"+themeFontFamily+",-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif; } ul.tabs>li.current{ background-color:"+themeColor+" !important;}</style>");
+		var style = $("<style rel=\"stylesheet\">html{ font-size:"+themeFontSize+";} ul.tabs>li.current{ background-color:"+themeColor+" !important;}</style>");
 		$(document.head).append(style);
 		
 		//! Set class based on font-size
@@ -156,8 +171,8 @@ function setTheme(theme) {
 		} else if (theme.baseFontSize == 12) {
 			uiFontSize = "large";
 		}
-		$(document.body).addClass("font-"+uiFontSize);
-};
+		$(document.documentElement).addClass("font-"+uiFontSize);
+}
 
 
 
@@ -166,7 +181,7 @@ function setTheme(theme) {
 function changeTheme(event) {
     var skinInfo = JSON.parse(window.__adobe_cep__.getHostEnvironment()).appSkinInfo;
     setTheme(skinInfo);
-};
+}
 
 
 
@@ -175,7 +190,7 @@ function loadJSX() {
     var csInterface = new CSInterface();
     var extensionRoot = csInterface.getSystemPath(SystemPath.EXTENSION) + "/jsx/actions/";
     csInterface.evalScript("$._ext.evalFiles(\"" + extensionRoot + "\")");
-};
+}
 
 
 
@@ -195,18 +210,100 @@ $(document).on("click", "button", function(event) {
 
 
 
+//! Edit button
 function editButton(id) {
 	var csInterface = new CSInterface();
 	csInterface.evalScript("renameButton()");
-};
+}
+
+
+
+//! Select tool
+function selectTool(tool) {
+	$("#tools button").removeClass("selected");
+	$("#tools button#"+tool).addClass("selected");
+}
+
+
+//! Check cookies for tools menu
+function checkToolsMenuCookies() {
+	
+	//! If cookie exists
+	if (getCookie("toolsMenu")) {
+		toolsMenu("show");
+	} else {
+		toolsMenu("hide");
+	}
+}
+
+
+//! Show and hide tools menu
+function toolsMenu(mode) {
+	if (mode == "show") {
+		$(document.body).addClass("tools-menu");
+		setCookie("toolsMenu", true);
+		$("#tools-menu-checkbox").attr("checked", true);
+	} else {
+		$(document.body).removeClass("tools-menu");
+		deleteCookie("toolsMenu");
+		$("#tools-menu-checkbox").attr("checked", false);
+	}
+}
 
 
 
 //! jQuery document ready
 $(document).ready(function() {
 	
+	/*
+	//! Temp code to build tools buttons (laziness)
+	if ('content' in document.createElement('template')) {
+		
+		var tools = [
+			//{'tool': '', 'name': ''},
+			{'tool': 'zoomTool', 'name': 'Zoom tool'},
+			{'tool': 'paintbrushTool', 'name': 'Brush tool'},
+			{'tool': 'spotHealingBrushTool', 'name': 'Spot Headling Brush tool'},
+			{'tool': 'cloneStampTool', 'name': 'Clone Stamp tool'},
+			{'tool': 'patchSelection', 'name': 'Patch tool'},
+			{'tool': 'dodgeTool', 'name': 'Dodge tool'},
+			{'tool': 'burnInTool', 'name': 'Burn tool'},
+			{'tool': 'gradientTool', 'name': 'Gradient tool'},
+			{'tool': 'eyedropperTool', 'name': 'Eyedropper tool'},	
+			{'tool': 'cropTool', 'name': 'Crop tool'},	
+			{'tool': 'magicWandTool', 'name': 'Magic Wand tool'},
+			{'tool': 'lassoTool', 'name': 'lasso tool'},
+			{'tool': 'marqueeRectTool', 'name': 'Rectangular Marquee tool'},
+			{'tool': 'marqueeEllipTool', 'name': 'Elliptical Marquee tool'},
+			{'tool': 'moveTool', 'name': 'Move tool'}
+		];
+		
+		// Get a reference to the comments list in the main DOM.
+		var toolsSection = "";
+		
+		// Loop through each of the comments and add them to the comments list.
+		for (var i = 0; i < tools.length; i++) {
+			
+			var tool = tools[i];
+			toolsSection += "<li><button id=\""+tool.tool+"\" data-action=\"selectTool('"+tool.tool+"')\" data-js=\"tooltip\" title=\""+tool.name+"\"><img alt=\""+tool.name+"\" class=\"dark-theme\" src=\"img/more_tools/dark_theme/"+tool.tool+".png\"><img alt=\""+tool.name+"\" class=\"light-theme\" src=\"img/more_tools/light_theme/"+tool.tool+".png\"></button></li>";
+			//$("#tools-list").html(toolsSection);
+			console.log(toolsSection);
+		}
+	}*/
+	
+	
 	//! Fade in the body
 	$(document.body).hide().fadeIn("slow");
+
+	
+	$("#tools-menu-checkbox").change(function() {
+        if(this.checked) {
+            toolsMenu("show");
+        } else {
+	        toolsMenu("hide");
+        }
+    });
+
 
 	//! Tabs
 	$("#tab-menu > li").click(function() {
@@ -237,6 +334,13 @@ $(document).ready(function() {
 			
 		}
 	);
+	
+	
+	//! Update tools menu
+	$("#tools button").on("click", function() {
+		var tool = $(this).attr("id");
+		selectTool(tool);
+	});
 
 
 	//! Tooltip
@@ -273,3 +377,31 @@ $(document).ready(function() {
 	});
 
 });
+
+
+
+//! When flyout menu is clicked
+function flyoutMenuClicked(e) {
+	var action = e.data.menuId;
+
+	//! Do action
+	switch(action) {
+		case "reloadPanel": 
+			window.location.reload();
+			break;
+		default: 
+			console.log(action + " clicked!");
+	}
+}
+
+
+
+//! Build the flyout menu
+function generateFlyoutMenu() {
+
+	// Flyout menu XML string 
+	var flyoutXML = "<Menu><MenuItem Id=\"reloadPanel\" Label=\"Reload Panel\"/></Menu>";
+
+	// Uses the XML string to build the menu
+	csInterface.setPanelFlyoutMenu(flyoutXML);
+}

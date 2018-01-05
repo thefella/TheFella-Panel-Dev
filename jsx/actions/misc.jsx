@@ -394,3 +394,32 @@ function getSelectedLayersIdx(){
       }   
       return selectedLayers;   
 };  
+
+
+//! Select the tool
+//function s2t(s) { return app.stringIDToTypeID(s); }
+//function t2s(t) { return app.typeIDToStringID(t); }
+selectTool = function(stringID) {
+	//alert(stringID);
+	//alert(app.currentTool);
+	app.currentTool = stringID;
+	/*return;
+	
+	var d = new ActionDescriptor();
+	var r = new ActionReference();
+	r.putClass( s2t(stringID) );
+	d.putReference( s2t("target"), r);
+	d.putBoolean( s2t("dontRecord"), true );
+	d.putBoolean( s2t("forceNotify"), true );
+	executeAction( s2t("select"), d, DialogModes.NO );*/
+}
+
+
+//! Get the current tool
+getCurrentTool = function() {
+	//alert(app.currentTool);
+	return app.currentTool;
+}
+
+
+

@@ -124,7 +124,7 @@ gulp.task('clean', function () {
 
 //! Copy files to build folder
 gulp.task('copy', function() {
-    gulp.src(['css/*.css'])
+    gulp.src(['css/style.css'])
         .pipe(gulp.dest('build/css/'))
     gulp.src(['CSXS/*'])
         .pipe(gulp.dest('build/CSXS/'))
@@ -154,8 +154,8 @@ gulp.task('copy', function() {
 gulp.task('scripts', function() {
 	
 	var obfusOptions = {
-		seed: 1,
-	    target: 'browser'
+		seed: 4,
+	    target: 'extension'
 	};
 	
 	return gulp.src(['js/main.js'])
