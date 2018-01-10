@@ -309,15 +309,17 @@ p {
 		font-size: 0.9em;
 	}
 	
-	p.version-code {
-		font-size: 9px;
+	/*p.version-code {
+		font-size: 0.9rem !important;
 		font-style: italic;
-		opacity: 0.4;
+		margin: 1em 0 0;
+		opacity: 0.35;
+		text-align: right;
 	}
 	
 	p.links {
 		margin-bottom: 0;
-	}
+	}*/
 	
 	.font-tiny p,
 	.font-tiny p.links {
@@ -348,6 +350,11 @@ a {
 		text-align: right;
 	}
 
+	h1 .version-code {
+		margin-top: -0.15em;
+		opacity: 0.35;
+		position: relative;
+	}
 
 
 
@@ -374,16 +381,41 @@ ul {
 	list-style: none;
 }
 
-ul.display {
+.display {
 	line-height: 1.4;
 	opacity: 0.9;
 }
 
-	ul.display > li {
+	.display > li {
 		margin-bottom: 0.35em;
 	}
 
+#files > ol {
+	counter-reset: files;
+	list-style: none;
+	margin-left: 1.5em;
+	opacity: 0.8;
+}
 
+	#files > ol > li {
+		padding-bottom: 5px;
+	}
+	
+	#files > ol > li::before {
+		counter-increment: files;
+		content: counter(files) ")";
+		margin-left: -1.5em;
+		position: absolute;
+	}
+
+	#files > ol > li > a {
+		text-decoration: none;
+		opacity: 1;
+	}
+	
+	#files > ol > li > a:hover {
+		text-decoration: underline;
+	}
 
 
 
@@ -456,6 +488,9 @@ ul.tabs > li {
 	display: inherit;
 }
 
+.mini-tab-content {
+	padding-top: 0.7em;
+}
 
 
 

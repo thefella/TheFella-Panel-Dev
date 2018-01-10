@@ -347,7 +347,7 @@ focusStackAction_hidden = function() {
 
   step1();      // Align
   step2();      // Auto-Blend Layers
-}
+};
 
 
 
@@ -393,33 +393,98 @@ function getSelectedLayersIdx(){
         app.activeDocument.activeLayer.visible = vis;  
       }   
       return selectedLayers;   
-};  
+}
+
 
 
 //! Select the tool
-//function s2t(s) { return app.stringIDToTypeID(s); }
-//function t2s(t) { return app.typeIDToStringID(t); }
 selectTool = function(stringID) {
-	//alert(stringID);
-	//alert(app.currentTool);
 	app.currentTool = stringID;
-	/*return;
-	
-	var d = new ActionDescriptor();
-	var r = new ActionReference();
-	r.putClass( s2t(stringID) );
-	d.putReference( s2t("target"), r);
-	d.putBoolean( s2t("dontRecord"), true );
-	d.putBoolean( s2t("forceNotify"), true );
-	executeAction( s2t("select"), d, DialogModes.NO );*/
-}
+};
+
 
 
 //! Get the current tool
 getCurrentTool = function() {
-	//alert(app.currentTool);
 	return app.currentTool;
+};
+
+
+
+//! Get recently opened files
+getRecentFiles = function(numFiles) {
+
+	// the maximum number of recent files to display
+	var maxFiles = (numFiles) ? numFiles : 5;
+
+	// get only existing recent files
+	var recentItems = [];
+	var len = recentFiles.length;
+	for (var i = 0; i < len; i++) {
+		recentFile = recentFiles[i];
+		if (recentFile.exists) {
+			recentItems.push(recentFile);
+			if (recentItems.length == maxFiles) {
+				break;
+			}
+		}
+	}
+
+
+	// check for recent files
+	len = recentItems.length;
+	if (!len) {
+		alert('No recent files found.', 'No Recent Files', false);
+		return;
+	}
+
+
+	// update maxFiles
+	maxFiles = Math.min(maxFiles, len);
+
+
+	//! Build and return array
+	var recentFilesJSON = [];
+	for (var i = 0; i < maxFiles; i++) {
+	    rf = decodeURI(recentItems[i]);
+	    recentFilesJSON[i] = rf+"+"+getFileName(rf)+"."+getFileExtension(rf);
+	}
+
+	return recentFilesJSON;
+};
+
+
+
+//! Open a file
+openFile = function(file) {
+	try {
+		app.open(File(file));
+	}
+	catch(e) {
+		alert("Unable To Open File\r\nPlease check that "+ file +" exits.");
+	}
+};
+
+
+
+//! Get file name
+function getFileName(value) {
+	var path = value.toString();
+	var lastIndex = path.lastIndexOf("/");
+	var file = path.slice(lastIndex + 1);
+	var lastIndexPeriod = file.lastIndexOf(".");
+	return file.slice(0, lastIndexPeriod);
 }
 
 
+
+//! Get file extension
+function getFileExtension(name) {
+	var idx = name.lastIndexOf(".");
+	var ext = "";
+	if (idx > -1) {
+		ext = name.substr((idx + 1));
+	}
+	return ext;
+}
 
