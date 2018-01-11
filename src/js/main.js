@@ -41,6 +41,11 @@ function onLoad() {
 	csInterface.evalScript("getCurrentTool()", function(tool) {
 		selectTool(tool);
 	});
+	
+	//! Get recent files	
+	csInterface.evalScript("getRecentFiles(6)", function(recentFiles) {
+		showRecentFiles(recentFiles);
+	});
 }
 //! End onLoad();
 
@@ -252,6 +257,30 @@ function toolsMenu(mode) {
 
 
 
+//! Get recently opened files
+function showRecentFiles(recentFiles) {
+
+	var listItem = "";
+	var recentItems = recentFiles.split(",");
+	
+	for (var i = 0, len = recentItems.length; i < len; i++) {
+		fileInfo = recentItems[i].split("+");
+		listItem += "<li><a class=\"open-file\" href=\""+fileInfo[0]+"\">"+fileInfo[1]+"</a></li>\r\n";
+	}
+
+	$("#recent-files").html(listItem);
+}
+
+
+
+//! Open file
+function openFile(file) {
+	var csInterface = new CSInterface();
+	csInterface.evalScript("openFile('"+file+"')");
+}
+
+
+
 //! jQuery document ready
 $(document).ready(function() {
 	
@@ -306,11 +335,14 @@ $(document).ready(function() {
 
 
 	//! Tabs
-	$("#tab-menu > li").click(function() {
+	$(".tabs > li").click(function() {
 		var tab_id = $(this).attr("data-tab");
+		//alert(tab_id);
 
-		$("#tab-menu > li").removeClass("current");
-		$("#panel > div.tab-content").removeClass("current");
+		//$("#tab-menu > li").removeClass("current");
+		$(this).siblings().removeClass("current");
+		//$("#panel > div.tab-content").removeClass("current");
+		$(this).parents("[role='navigation']").siblings(".tab-content").removeClass("current");
 
 		$(this).addClass("current");
 		$("#"+tab_id).addClass("current");
@@ -342,6 +374,14 @@ $(document).ready(function() {
 		selectTool(tool);
 	});
 
+	
+	//! Open recent file
+	$("#recent-files").on("click", ".open-file", function(e) {
+		e.preventDefault();
+		var file = $(this).attr("href");
+		openFile(file);
+	});
+	
 
 	//! Tooltip
 	//! http://www.alessioatzeni.com/blog/simple-tooltip-with-jquery-only-text/
@@ -374,6 +414,12 @@ $(document).ready(function() {
 	        
 	        //! Add CSS
 	        $("p.tooltip").css({ top: mousey, left: mousex });
+	});
+	
+	
+	//! Version
+	$(".version-code").on("click", function() {
+		alert("About TheFella Panel","Designed and built by Conor MacNeill (@thefella). \r\n\r\nTesting done by Greg Annandale.", true);
 	});
 
 });
