@@ -388,7 +388,9 @@ ul {
 
 	.display > li {
 		margin-bottom: 0.35em;
+		padding-bottom: 0.65em;
 	}
+	
 
 #files > ol {
 	counter-reset: files;
@@ -396,10 +398,6 @@ ul {
 	margin-left: 1.5em;
 	opacity: 0.8;
 }
-
-	#files > ol > li {
-		padding-bottom: 5px;
-	}
 	
 	#files > ol > li::before {
 		counter-increment: files;
