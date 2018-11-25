@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ExtensionManifest Version="5.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ExtensionBundleId="com.thefella.devpanel" ExtensionBundleVersion="1.0" ExtensionBundleName="TheFella Panel Dev">
+<ExtensionManifest Version="5.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ExtensionBundleId="com.thefella.devpanel" ExtensionBundleVersion="1.2.1" ExtensionBundleName="TheFella Panel Dev">
 	<Author><![CDATA[Conor MacNeill]]></Author>
 	<Abstract><![CDATA[An Adobe Photoshop Panel to help photographers, especially landscape photographers, with their workflow.]]></Abstract>
     <ExtensionList>
-        <Extension Id="com.thefella.devpanel" Version="1.0" />
+        <Extension Id="com.thefella.devpanel" Version="1.2.1" />
     </ExtensionList>
     <ExecutionEnvironment>
         <HostList>

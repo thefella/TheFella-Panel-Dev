@@ -1,56 +1,76 @@
 //! Include gulp
-var gulp = require('gulp');
+const { series, parallel, src, dest } = require('gulp');
 
 
 //! Include plugins
-var runSequence = require('run-sequence');
-var concat 		= require('gulp-concat');
-var stripCode 	= require('gulp-strip-code');
-var uglify 		= require('gulp-uglify');
-var exec 		= require('child_process').exec;
-//var jsxbin 		= require('jsxbin');
-var gutil 		= require('gulp-util');
-var clean 		= require('gulp-clean');
-var jsObfus 	= require('gulp-javascript-obfuscator');
-var cleanCSS 	= require('gulp-clean-css');
-var htmlmin 	= require('gulp-htmlmin');
-var replace 	= require('gulp-replace');
-var removeCode 	= require('gulp-remove-code');
-var inlineImg 	= require('gulp-inline-images');
+const concat 		= require('gulp-concat');
+const stripCode 	= require('gulp-strip-code');
+const uglify 		= require('gulp-uglify');
+const exec 			= require('child_process').exec;
+const gutil 		= require('gulp-util');
+//const clean 		= require('gulp-clean');
+const jsObfus 		= require('gulp-javascript-obfuscator');
+const cleanCSS 		= require('gulp-clean-css');
+const htmlmin 		= require('gulp-htmlmin');
+//const replace 		= require('gulp-replace');
+const replace 		= require('gulp-string-replace');
+const removeCode 	= require('gulp-remove-code');
+const inlineImg 	= require('gulp-inline-images');
+const del 			= require('del');
+const runSequence 	= require('run-sequence');
 
 
-//! Clear out the src folder
-gulp.task('clean-src', function () {
-    return gulp.src('src', {read: false})
-        .pipe(clean());
-});
+
+//! Clean source folder
+function cleansrc(cb) {
+	
+	return del('src');
+	
+};
+exports.cleansrc = cleansrc;
+
+
 
 
 //! Copy files to src folder
-gulp.task('copy-src', function() {
-    gulp.src(['css/*.css'])
-        .pipe(gulp.dest('src/css/'))
-    gulp.src(['CSXS/*'])
-        .pipe(gulp.dest('src/CSXS/'))
-    gulp.src(['img/*.png'])
-        .pipe(gulp.dest('src/img/'))
-    gulp.src(['img/tools/**/'])
-        .pipe(gulp.dest('src/img/tools'))
-    gulp.src(['js/*.js'])
-        .pipe(gulp.dest('src/js/'))
-    gulp.src(['js/lib/*.js'])
-        .pipe(gulp.dest('src/js/lib/'))
-    gulp.src(['jsx/init.jsx'])
-        .pipe(gulp.dest('src/jsx/'))
-    gulp.src(['jsx/actions/*.jsx'])
-        .pipe(gulp.dest('src/jsx/actions/'))
-    gulp.src(['index.html', '*.p12', 'package.json', 'package-lock.json', 'ZXPSignCmd'])
-        .pipe(gulp.dest('src/'))
-});
+function copysrc(cb) {
+        
+    src(['index.html', '*.p12', 'package.json', 'package-lock.json', 'ZXPSignCmd'])
+		.pipe(dest('src/'));
+	
+	src('css/*.css')
+    	.pipe(dest('src/css/'));
+    
+    src(['CSXS/*'])
+    	.pipe(dest('src/CSXS/'));
+
+	src(['img/*.png'])
+		.pipe(dest('src/img/'));
+	
+	src(['img/tools/**/*'])
+		.pipe(dest('src/img/tools'));
+		
+	src(['js/*.js'])
+		.pipe(dest('src/js/'));
+		
+	src(['js/lib/*.js'])
+		.pipe(dest('src/js/lib/'));
+		
+	src(['jsx/init.jsx'])
+		.pipe(dest('src/jsx/'));
+		
+	src(['jsx/actions/*.jsx'])
+		.pipe(dest('src/jsx/actions/'));
+    
+	cb();
+};
+exports.copysrc = copysrc;
+
+
 
 
 //! Concatenate JSX Files
-gulp.task('jsx', function() {
+function jsx(cb) {
 	
 	/* File list
 		
@@ -78,24 +98,8 @@ gulp.task('jsx', function() {
 		end_comment: "end-dev-code"
 	};
 	
-	/*
-    gulp.src(['jsx/actions/misc.jsx', 'jsx/actions/custom.jsx', 'jsx/actions/frequency_separation.jsx', 'jsx/actions/adjustments.jsx'])
-		.pipe(concat('1.jsx'))
-		.pipe(stripCode(stripOptions))
-		.pipe(jsObfus(obfusOptions))
-		.pipe(gulp.dest('jsx/actions/'))
-	gulp.src(['jsx/actions/blending.jsx', 'jsx/actions/luminosity.jsx', 'jsx/actions/presets.jsx'])
-		.pipe(concat('2.jsx'))
-		.pipe(stripCode(stripOptions))
-		.pipe(jsObfus(obfusOptions))
-		.pipe(gulp.dest('jsx/actions/'))
-	gulp.src(['jsx/actions/orton.jsx', 'jsx/actions/sharpening.jsx', 'jsx/actions/vignette.jsx'])
-		.pipe(concat('3.jsx'))
-		.pipe(stripCode(stripOptions))
-		.pipe(jsObfus(obfusOptions))
-		.pipe(gulp.dest('jsx/actions/'))
-	*/
-	gulp.src([
+
+	src([
 		'jsx/actions/misc.jsx', 
 		'jsx/actions/custom.jsx', 
 		'jsx/actions/frequency_separation.jsx', 
@@ -110,172 +114,157 @@ gulp.task('jsx', function() {
 	.pipe(concat('ps.jsx'))
 		.pipe(stripCode(stripOptions))
 		.pipe(jsObfus(obfusOptions))
-		.pipe(gulp.dest('jsx/actions/'))
-});
+		.pipe(dest('jsx/actions/'));
+		
+	cb();
+};
+exports.jsx = jsx;
 
 
-//! Clear out the build folder
-gulp.task('clean', function () {
-    return gulp.src('build', {read: false})
-        .pipe(clean());
-});
+
+
+//! Generate a self-signed certificate
+function certificate(cb) {
+	exec('./ZXPSignCmd -selfSignedCert UK NI TheFella "Conor MacNeill" RC2FMCYSCwL4Py selfsigned.p12', function (err, stdout, stderr) {
+		console.log(stdout);
+		console.log(stderr);
+		cb(err);
+	});
+	
+	cb();
+};
+exports.certificate = certificate;
+
+
+
+
+//! Clean build folder
+function cleanbuild(cb) {
+	
+	return del('build');
+	
+};
+exports.cleanbuild = cleanbuild;
+
 
 
 
 //! Copy files to build folder
-gulp.task('copy', function() {
-    gulp.src(['css/style.css'])
-        .pipe(gulp.dest('build/css/'))
-    gulp.src(['CSXS/*'])
-        .pipe(gulp.dest('build/CSXS/'))
-    gulp.src(['img/*.png'])
-        .pipe(gulp.dest('build/img/'))
-    //gulp.src(['img/tools/**/'])
-    //    .pipe(gulp.dest('build/img/tools'))
-    gulp.src(['js/*.js'])
-        .pipe(gulp.dest('build/js/'))
-    gulp.src(['js/lib/*.js'])
-        .pipe(gulp.dest('build/js/lib/'))
-    gulp.src(['jsx/init.jsx'])
-        .pipe(gulp.dest('build/jsx/'))
-    gulp.src(['jsx/actions/ps.jsx'])
-        .pipe(gulp.dest('build/jsx/actions/'))
-    //gulp.src(['jsx/actions/1.jsx', 'jsx/actions/2.jsx', 'jsx/actions/3.jsx', 'jsx/actions/new_all_files.jsx'])
-    //    .pipe(gulp.dest('build/jsx/actions/'))
-    //gulp.src(['META-INF/*.xml'])
-    //    .pipe(gulp.dest('build/META-INF/'))
-    //gulp.src(['*.p12', 'mimetype'])
-    //    .pipe(gulp.dest('build/'))
-});
+function copybuild(cb) {
+        
+    src('css/style.css', {allowEmpty: true})
+        .pipe(dest('build/css/'));
+	
+	src(['CSXS/*'], {allowEmpty: true})
+        .pipe(dest('build/CSXS/'));
+	
+	src(['img/*.png'], {allowEmpty: true})
+        .pipe(dest('build/img/'));
+    
+    src(['js/*.js'], {allowEmpty: true})
+        .pipe(dest('build/js/'));
+        
+    src(['js/lib/*.js'], {allowEmpty: true})
+        .pipe(dest('build/js/lib/'));
+        
+    src(['jsx/init.jsx'], {allowEmpty: true})
+        .pipe(dest('build/jsx/'));
+    
+    src(['jsx/actions/ps.jsx'], {allowEmpty: true})
+        .pipe(dest('build/jsx/actions/'));
+        
+    //src(['*.p12', 'ZXPSignCmd'])
+	//	.pipe(dest('build'));
+
+	cb();
+};
+exports.copybuild = copybuild;
+
+
+
+
+//! Minify HTML files
+function minifyhtml(cb) {
+	
+	src('*.html')
+		.pipe(removeCode({ production: true }))
+		.pipe(htmlmin({collapseWhitespace:true, removeComments:true, minifyJS:true}))
+		.pipe(inlineImg({/* options */}))
+		.pipe(dest('build/'));
+		
+	cb();
+};
+exports.minifyhtml = minifyhtml;
+
 
 
 
 //! JS files
-gulp.task('scripts', function() {
+function scripts(cb) {
 	
 	var obfusOptions = {
 		seed: 4,
 	    target: 'extension'
 	};
 	
-	return gulp.src(['js/main.js'])
+	src(['js/main.js'])
     	.pipe(jsObfus(obfusOptions))
-		.pipe(gulp.dest('build/js/'));
-});
+		.pipe(dest('build/js/'));
+		
+	cb();
+};
+exports.scripts = scripts;
+
+
 
 
 //! CSS files
-gulp.task('minify-css', function() {
-	return gulp.src('css/styles.css')
+function minifycss(cb) {
+	src('css/styles.css')
 		.pipe(removeCode({ production: true }))
 	    .pipe( cleanCSS() )
-	    .pipe(gulp.dest('build/css/'));
-});
+	    .pipe(dest('build/css/'));
+	    
+	cb();
+};
+exports.minifycss = minifycss;
 
 
-//! HTML files
-gulp.task('html', function() {
-	
-	return gulp.src('*.html')
-		.pipe(removeCode({ production: true }))
-		.pipe(htmlmin({collapseWhitespace:true, removeComments:true, minifyJS:true}))
-		.pipe(inlineImg({/* options */}))
-		.pipe(gulp.dest('build/'));
-});
-
-
-//gulp.task('default', function () {
-//  gulp.src('src/**/*.html')
- //   .pipe(inlineimg('src'))  // takes in the directory to use as the root when looking for images
-//    .pipe(gulp.dest('dest/'));
-
-/*
-// Convert to JSXBIN file - NOT WORKING 
-gulp.task('jsxbin', function() {
-    //return jsxbin( './jsx/actions/all_files.jsx', './build/test/test.jsxbin')
-    jsxbin( './jsx/actions/all_files.jsx', './build/test/test.jsxbin' )
-    .then( outputfiles => {
-        console.log( 'Finished!' )
-    })
-    .catch( err => {
-        console.error( err )
-    });
-});*/
 
 
 //! Set manifest to production version
-gulp.task('manifest', function() {
-  var existingValues = ["com.thefella.devpanel", "TheFella Panel Dev"];
-  var newValues = ["com.thefella.panel", "TheFella Panel"];
+function manifest(cb) {
+	
+	var options = {
+		logs: {
+			enabled: false
+		}
+	};
 
-  var stream = gulp.src(['build/CSXS/manifest.xml']);
-  existingValues.forEach(function(values, i) {
-    stream = stream.pipe(replace(existingValues[i], newValues[i]));
-  });
-  return stream.pipe(gulp.dest('build/CSXS'));
-});
+	src('build/CSXS/manifest.xml', {allowEmpty: true})
+	    .pipe(replace('TheFella Panel Dev', 'TheFella Panel'))
+	    .pipe(replace('com.thefella.devpanel', 'com.thefella.panel'))
+	    .pipe(dest('build/CSXS'));
+    
+    cb();
+};
+exports.manifest = manifest;
 
 
-//! Generate a self-signed certificate
-gulp.task('certificate', function (cb) {
-	exec('./ZXPSignCmd -selfSignedCert UK NI TheFella "Conor MacNeill" RC2FMCYSCwL4Py selfsigned.p12', function (err, stdout, stderr) {
-		console.log(stdout);
-		console.log(stderr);
-		cb(err);
-	});
-});
+
+
+//! Default
+exports.default = series(cleansrc, copysrc, jsx, cleanbuild, copybuild, parallel(minifyhtml, scripts, minifycss));
+
+
 
 
 //! Pack the panel into a ZXP file
-gulp.task('pack-extension', function () {
-	exec('./ZXPSignCmd -sign build build/TheFellaPanel.zxp selfsigned.p12 RC2FMCYSCwL4Py -tsa http://sha256timestamp.ws.symantec.com/sha256/timestamp')
-});
-
-/*
-//! Copy files to build folder
-gulp.task('copy-extension', function() {
-    gulp.src(['META-INF/*.xml'])
-        .pipe(gulp.dest('build/META-INF/'))
-    gulp.src(['*.zxp', 'mimetype'])
-        .pipe(gulp.dest('build/'))
-});
-*/
-
-
-//! Default Task
-gulp.task('default', function(){
-	return runSequence('clean-src', 'copy-src', 'jsx', 'certificate', 'clean', 'copy', ['scripts', 'minify-css', 'html'], 'manifest');
-});
-
-
-/*
-//! Default Task
-gulp.task('make-extension', function(){
-	return runSequence('pack-extension', 'copy-extension');
-});
-*/
-
-
-/*
-gulp.task('jsxbin', function() {
-  // In gulp 4, you can return a child process to signal task completion
-  //return cp.execFile('/Applications/Adobe ExtendScript Toolkit CC/ExtendScript Toolkit.app/Contents/MacOS/ExtendScript Toolkit \-run /Library/Application Support/Adobe/CEP/extensions/TheFella Panel/compile_jsxbin.jsx');
-  return cp.execFile('/Applications/Adobe ExtendScript Toolkit CC/ExtendScript Toolkit.app/Contents/MacOS/ExtendScript Toolkit -cmd /Volumes/Macintosh HD/Library/Application Support/Adobe/CEP/extensions/TheFella Panel/compile_jsxbin.jsx');
-});
-
-ZXPSignCmd -selfSignedCert <countryCode> <stateOrProvince> <organization> <commonName> <password> <outputPath.p12>
-ZXPSignCmd -sign <inputDirectory> <outputZxp> <p12> <p12Password> -tsa <timestampURL>
-
-
-/Applications/Adobe\ ExtendScript\ Toolkit\ CC/ExtendScript\ Toolkit.app/Contents/MacOS/ExtendScript\ Toolkit -cmd /Volumes/Macintosh\ HD/Library/Application\ Support/Adobe/CEP/extensions/TheFella\ Panel/auto_jsxbin.jsx
-
-jsxbin -i /Volumes/Macintosh\ HD/Library/Application\ Support/Adobe/CEP/extensions/TheFella\ Panel/jsx/actions/all_files.jsx -o all_files_binary.jsxbin
-
-///Volumes/Macintosh HD/Library/Application Support/Adobe/CEP/extensions/TheFella Panel/compile_jsxbin.jsx
-*/
-
-
-
+function pack(cb) {
+	exec('./ZXPSignCmd -sign build build/TheFellaPanel.zxp selfsigned.p12 RC2FMCYSCwL4Py -tsa http://sha256timestamp.ws.symantec.com/sha256/timestamp');
+	cb();
+};
+exports.pack = pack;
 
 
 

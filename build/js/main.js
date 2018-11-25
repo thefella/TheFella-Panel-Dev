@@ -1,1 +1,464 @@
-var _0x16dd=['slow','change','hide','.tabs\x20>\x20li','data-tab','siblings','current','parents','[role=\x27navigation\x27]','.tab-content','a.external-link','href','util','openURLInDefaultBrowser','[data-js=\x27adjustmentsHeader\x27]','text','title','#tools\x20button','[data-js=\x27tooltip\x27]','<p\x20data-type=\x22','delay','appendTo','dequeue','p.tooltip','remove','mousemove','data-type','inside','pageX','pageY','css','.version-code','About\x20TheFella\x20Panel','Designed\x20and\x20built\x20by\x20Conor\x20MacNeill\x20(@thefella).\x20\x0d\x0a\x0d\x0aTesting\x20done\x20by\x20Greg\x20Annandale.','menuId','reloadPanel','location','reload','log','<Menu><MenuItem\x20Id=\x22reloadPanel\x22\x20Label=\x22Reload\x20Panel\x22/></Menu>','setPanelFlyoutMenu','getExtensionID','hostEnvironment','appSkinInfo','THEME_COLOR_CHANGED_EVENT','com.adobe.PhotoshopPersistent','APPLICATION','extensionId','dispatchEvent','addEventListener','dialogEvent','data','contextmenu','preventDefault','com.adobe.csxs.events.flyoutMenuClicked','evalScript','getCurrentTool()','getRecentFiles(6)','split','#customButton','html','#custom-buttons-group\x20>\x20button.custom-button','each','stringify','customButtons','parse','getTime',';expires=','cookie','(^|;)\x20?','=([^;]*)(;|$)','setTime','rgb(','panelBackgroundColor','color','red','blue','baseFontSize','documentElement','backgroundColor','body','style','dark','dark-grey','light-grey','original','unknown-theme','removeClass','light\x20dark\x20original\x20light-grey\x20medium-grey\x20dark-grey','<style\x20rel=\x22stylesheet\x22>html{\x20font-size:',';}\x20ul.tabs>li.current{\x20background-color:','\x20!important;}</style>','append','tiny','small','medium','addClass','font-','__adobe_cep__','getHostEnvironment','getSystemPath','EXTENSION','$._ext.evalFiles(\x22','click','button','shiftKey','attr','data-action2','data-action','renameButton()','#tools\x20button#','toolsMenu','show','tools-menu','#tools-menu-checkbox','checked','<li><a\x20class=\x22open-file\x22\x20href=\x22','</a></li>\x0d\x0a','#recent-files','openFile(\x27','ready','fadeIn'];(function(_0x5f5648,_0x3f633f){var _0x2e9b73=function(_0x1beda9){while(--_0x1beda9){_0x5f5648['push'](_0x5f5648['shift']());}};_0x2e9b73(++_0x3f633f);}(_0x16dd,0x11d));var _0x5cbc=function(_0x22a1e0,_0x297993){_0x22a1e0=_0x22a1e0-0x0;var _0x174100=_0x16dd[_0x22a1e0];return _0x174100;};function onLoad(){var _0x20c2f9=new CSInterface();var _0x2d95c4=_0x20c2f9[_0x5cbc('0x0')]();setTheme(_0x20c2f9[_0x5cbc('0x1')][_0x5cbc('0x2')]);_0x20c2f9['addEventListener'](CSInterface[_0x5cbc('0x3')],changeTheme);var _0x57ec45=new CSEvent(_0x5cbc('0x4'),_0x5cbc('0x5'));_0x57ec45[_0x5cbc('0x6')]=_0x2d95c4;_0x20c2f9[_0x5cbc('0x7')](_0x57ec45);_0x20c2f9[_0x5cbc('0x8')](_0x5cbc('0x9'),function(_0x2c3b31){changeButton(_0x2c3b31[_0x5cbc('0xa')]);});checkToolsMenuCookies();checkButtonCookies();loadJSX();window[_0x5cbc('0x8')](_0x5cbc('0xb'),function(_0x5f5b01){_0x5f5b01[_0x5cbc('0xc')]();},![]);generateFlyoutMenu();_0x20c2f9[_0x5cbc('0x8')](_0x5cbc('0xd'),flyoutMenuClicked);_0x20c2f9[_0x5cbc('0xe')](_0x5cbc('0xf'),function(_0x77221b){selectTool(_0x77221b);});_0x20c2f9[_0x5cbc('0xe')](_0x5cbc('0x10'),function(_0x4bd7f3){showRecentFiles(_0x4bd7f3);});}function changeButton(_0x41f4f7){var _0x528c3a=_0x41f4f7[_0x5cbc('0x11')](',');var _0x3ca4ca=_0x528c3a[0x0];var _0x5ddf7d=_0x528c3a[0x1];var _0xb8816e=$(_0x5cbc('0x12')+_0x3ca4ca)[_0x5cbc('0x13')](_0x5ddf7d);var _0x506ea5=[];$(_0x5cbc('0x14'))[_0x5cbc('0x15')](function(_0x172b2){_0x506ea5[_0x172b2]=$(this)[_0x5cbc('0x13')]();});var _0x5ca4a2=JSON[_0x5cbc('0x16')](_0x506ea5);setCookie('customButtons',_0x5ca4a2);}function checkButtonCookies(){if(getCookie(_0x5cbc('0x17'))){var _0x2ad825=JSON[_0x5cbc('0x18')](getCookie(_0x5cbc('0x17')));$('#custom-buttons-group\x20>\x20button.custom-button')[_0x5cbc('0x15')](function(_0xb38ee6){$(this)[_0x5cbc('0x13')](_0x2ad825[_0xb38ee6]);});}}function setCookie(_0x19ddbc,_0x575223){var _0x59b956=new Date();_0x59b956['setTime'](_0x59b956[_0x5cbc('0x19')]()+0xa*0x16d*0x18*0x3c*0x3c);document['cookie']=_0x19ddbc+'='+_0x575223+_0x5cbc('0x1a')+_0x59b956['toUTCString']();}function getCookie(_0x1c7e01){var _0x2aa118=document[_0x5cbc('0x1b')]['match'](_0x5cbc('0x1c')+_0x1c7e01+_0x5cbc('0x1d'));return _0x2aa118?_0x2aa118[0x2]:null;}function deleteCookie(_0x1fd730){var _0x573e7d=new Date();_0x573e7d[_0x5cbc('0x1e')](_0x573e7d[_0x5cbc('0x19')]()-0xa*0x16d*0x18*0x3c*0x3c);document[_0x5cbc('0x1b')]=_0x1fd730+'='+null+_0x5cbc('0x1a')+_0x573e7d['toUTCString']();}function setTheme(_0x16f7de){var _0x130cc4;var _0x1afb53;var _0x3af704=_0x5cbc('0x1f')+_0x16f7de[_0x5cbc('0x20')][_0x5cbc('0x21')][_0x5cbc('0x22')]+','+_0x16f7de[_0x5cbc('0x20')]['color']['green']+','+_0x16f7de[_0x5cbc('0x20')][_0x5cbc('0x21')][_0x5cbc('0x23')]+')';var _0x40a412=_0x16f7de[_0x5cbc('0x24')]+'px';var _0x122c68=_0x16f7de['baseFontFamily'];document[_0x5cbc('0x25')]['style'][_0x5cbc('0x26')]=_0x3af704;document[_0x5cbc('0x27')][_0x5cbc('0x28')]['backgroundColor']=_0x3af704;if(_0x16f7de['panelBackgroundColor'][_0x5cbc('0x21')][_0x5cbc('0x22')]>0x7a){_0x130cc4='light';}else{_0x130cc4=_0x5cbc('0x29');}switch(_0x16f7de['panelBackgroundColor'][_0x5cbc('0x21')]['red']){case 0x32:_0x1afb53=_0x5cbc('0x2a');break;case 0x53:_0x1afb53='medium-grey';break;case 0xb8:_0x1afb53=_0x5cbc('0x2b');break;case 0xf0:_0x1afb53=_0x5cbc('0x2c');break;default:_0x1afb53=_0x5cbc('0x2d');}$(document['body'])[_0x5cbc('0x2e')](_0x5cbc('0x2f'))['addClass'](_0x130cc4)['addClass'](_0x1afb53);var _0x39bd5d=$(_0x5cbc('0x30')+_0x40a412+_0x5cbc('0x31')+_0x3af704+_0x5cbc('0x32'));$(document['head'])[_0x5cbc('0x33')](_0x39bd5d);var _0x207d39='font-unknown';if(_0x16f7de['baseFontSize']==0x9){_0x207d39=_0x5cbc('0x34');}else if(_0x16f7de[_0x5cbc('0x24')]==0xa){_0x207d39=_0x5cbc('0x35');}else if(_0x16f7de[_0x5cbc('0x24')]==0xb){_0x207d39=_0x5cbc('0x36');}else if(_0x16f7de[_0x5cbc('0x24')]==0xc){_0x207d39='large';}$(document[_0x5cbc('0x25')])[_0x5cbc('0x37')](_0x5cbc('0x38')+_0x207d39);}function changeTheme(_0x4893b4){var _0x320fd7=JSON[_0x5cbc('0x18')](window[_0x5cbc('0x39')][_0x5cbc('0x3a')]())['appSkinInfo'];setTheme(_0x320fd7);}function loadJSX(){var _0x42814a=new CSInterface();var _0xd9f561=_0x42814a[_0x5cbc('0x3b')](SystemPath[_0x5cbc('0x3c')])+'/jsx/actions/';_0x42814a[_0x5cbc('0xe')](_0x5cbc('0x3d')+_0xd9f561+'\x22)');}$(document)['on'](_0x5cbc('0x3e'),_0x5cbc('0x3f'),function(_0x1c0fc4){if($(this)['hasClass']('custom-button')&&_0x1c0fc4[_0x5cbc('0x40')]){_0x1c0fc4[_0x5cbc('0xc')]();var _0x3334d0=new CSInterface();_0x3334d0[_0x5cbc('0xe')]($(this)[_0x5cbc('0x41')](_0x5cbc('0x42'))+'()');}else{var _0x3334d0=new CSInterface();_0x3334d0['evalScript']($(this)[_0x5cbc('0x41')](_0x5cbc('0x43'))+'()');}});function editButton(_0xb2575a){var _0x13b803=new CSInterface();_0x13b803[_0x5cbc('0xe')](_0x5cbc('0x44'));}function selectTool(_0x2749be){$('#tools\x20button')['removeClass']('selected');$(_0x5cbc('0x45')+_0x2749be)[_0x5cbc('0x37')]('selected');}function checkToolsMenuCookies(){if(getCookie(_0x5cbc('0x46'))){toolsMenu(_0x5cbc('0x47'));}else{toolsMenu('hide');}}function toolsMenu(_0x3adacf){if(_0x3adacf==_0x5cbc('0x47')){$(document[_0x5cbc('0x27')])[_0x5cbc('0x37')](_0x5cbc('0x48'));setCookie('toolsMenu',!![]);$('#tools-menu-checkbox')[_0x5cbc('0x41')]('checked',!![]);}else{$(document[_0x5cbc('0x27')])['removeClass'](_0x5cbc('0x48'));deleteCookie(_0x5cbc('0x46'));$(_0x5cbc('0x49'))[_0x5cbc('0x41')](_0x5cbc('0x4a'),![]);}}function showRecentFiles(_0x5a90a0){var _0x125eb4='';var _0x22acd0=_0x5a90a0[_0x5cbc('0x11')](',');for(var _0x105f1f=0x0,_0x1eea3b=_0x22acd0['length'];_0x105f1f<_0x1eea3b;_0x105f1f++){fileInfo=_0x22acd0[_0x105f1f][_0x5cbc('0x11')]('+');_0x125eb4+=_0x5cbc('0x4b')+fileInfo[0x0]+'\x22>'+fileInfo[0x1]+_0x5cbc('0x4c');}$(_0x5cbc('0x4d'))[_0x5cbc('0x13')](_0x125eb4);}function openFile(_0x3a6f0e){var _0x185edb=new CSInterface();_0x185edb[_0x5cbc('0xe')](_0x5cbc('0x4e')+_0x3a6f0e+'\x27)');}$(document)[_0x5cbc('0x4f')](function(){$(document[_0x5cbc('0x27')])['hide']()[_0x5cbc('0x50')](_0x5cbc('0x51'));$(_0x5cbc('0x49'))[_0x5cbc('0x52')](function(){if(this[_0x5cbc('0x4a')]){toolsMenu('show');}else{toolsMenu(_0x5cbc('0x53'));}});$(_0x5cbc('0x54'))['click'](function(){var _0x516ae4=$(this)['attr'](_0x5cbc('0x55'));$(this)[_0x5cbc('0x56')]()['removeClass'](_0x5cbc('0x57'));$(this)[_0x5cbc('0x58')](_0x5cbc('0x59'))['siblings'](_0x5cbc('0x5a'))[_0x5cbc('0x2e')](_0x5cbc('0x57'));$(this)[_0x5cbc('0x37')](_0x5cbc('0x57'));$('#'+_0x516ae4)[_0x5cbc('0x37')](_0x5cbc('0x57'));});$(_0x5cbc('0x5b'))[_0x5cbc('0x3e')](function(_0x38efd1){_0x38efd1[_0x5cbc('0xc')]();var _0x4ebdee=$(this)['attr'](_0x5cbc('0x5c'));window['cep'][_0x5cbc('0x5d')][_0x5cbc('0x5e')](_0x4ebdee);});$('section.adjustment-tools\x20>\x20div.button-group>button')['hover'](function adjHoverOver(){$(_0x5cbc('0x5f'))[_0x5cbc('0x60')]($(this)[_0x5cbc('0x41')](_0x5cbc('0x61')));},function adjHoverOut(){$(_0x5cbc('0x5f'))[_0x5cbc('0x60')]($(_0x5cbc('0x5f'))[_0x5cbc('0x41')](_0x5cbc('0x61')));});$(_0x5cbc('0x62'))['on'](_0x5cbc('0x3e'),function(){var _0x55f05b=$(this)[_0x5cbc('0x41')]('id');selectTool(_0x55f05b);});$(_0x5cbc('0x4d'))['on']('click','.open-file',function(_0x50c525){_0x50c525[_0x5cbc('0xc')]();var _0x304e50=$(this)['attr']('href');openFile(_0x304e50);});$(_0x5cbc('0x63'))['hover'](function toolTipHover(){var _0x2c7a3b=$(this)['attr'](_0x5cbc('0x61'));var _0x8167ff=$(this)[_0x5cbc('0x41')]('data-tooltip-type');$(_0x5cbc('0x64')+_0x8167ff+'\x22\x20class=\x22tooltip\x20'+_0x8167ff+'\x22></p>')[_0x5cbc('0x65')](0x5dc)[_0x5cbc('0x60')](_0x2c7a3b)[_0x5cbc('0x66')]('body')[_0x5cbc('0x53')]()[_0x5cbc('0x50')](0x64);$(this)[_0x5cbc('0x67')]();},function(){$(_0x5cbc('0x68'))[_0x5cbc('0x69')]();})[_0x5cbc('0x6a')](function(_0x441b7c){var _0x3cd595=$('p.tooltip')['width']();var _0x4bda10=$(_0x5cbc('0x68'))[_0x5cbc('0x41')](_0x5cbc('0x6b'));if(_0x4bda10==_0x5cbc('0x6c')){var _0xb737de=_0x441b7c['pageX']-0x2-_0x3cd595;var _0x37aa19=_0x441b7c['pageY']+0xc;}else{var _0xb737de=_0x441b7c[_0x5cbc('0x6d')]-0x6;var _0x37aa19=_0x441b7c[_0x5cbc('0x6e')]+0xc;}$(_0x5cbc('0x68'))[_0x5cbc('0x6f')]({'top':_0x37aa19,'left':_0xb737de});});$(_0x5cbc('0x70'))['on'](_0x5cbc('0x3e'),function(){alert(_0x5cbc('0x71'),_0x5cbc('0x72'),!![]);});});function flyoutMenuClicked(_0x90f419){var _0x4b1324=_0x90f419['data'][_0x5cbc('0x73')];switch(_0x4b1324){case _0x5cbc('0x74'):window[_0x5cbc('0x75')][_0x5cbc('0x76')]();break;default:console[_0x5cbc('0x77')](_0x4b1324+'\x20clicked!');}}function generateFlyoutMenu(){var _0x312632=_0x5cbc('0x78');csInterface[_0x5cbc('0x79')](_0x312632);}
+//! Panel loaded
+function onLoad() {
+
+	//! Basic variables and themes
+	var csInterface = new CSInterface();
+	var extId = csInterface.getExtensionID();
+	setTheme(csInterface.hostEnvironment.appSkinInfo);
+	csInterface.addEventListener(CSInterface.THEME_COLOR_CHANGED_EVENT, changeTheme);
+	
+	//! Make panel persistent     
+    var event = new CSEvent("com.adobe.PhotoshopPersistent", "APPLICATION");   
+    event.extensionId = extId;  
+    csInterface.dispatchEvent(event); 
+
+    //! Listen for dialog events
+	csInterface.addEventListener("dialogEvent", function(evt) {
+	    changeButton(evt.data);
+	});
+
+	//deleteCookie('customButtons');
+	
+	//! Check cookies for tools menu
+	checkToolsMenuCookies();
+
+	//! Check cookies for custom names
+	checkButtonCookies();
+
+	//! Load external JSX files
+    loadJSX();
+    
+    //! Stop context menu, e.g. View Source
+    window.addEventListener("contextmenu", function(e) { e.preventDefault(); }, false);
+    
+    //! Build the flyout menu
+    generateFlyoutMenu();
+    
+    // Listen for the flyout menu interaction
+	csInterface.addEventListener("com.adobe.csxs.events.flyoutMenuClicked", flyoutMenuClicked);
+
+	//! Get current tool	
+	csInterface.evalScript("getCurrentTool()", function(tool) {
+		selectTool(tool);
+	});
+	
+	//! Get recent files	
+	csInterface.evalScript("getRecentFiles(6)", function(recentFiles) {
+		showRecentFiles(recentFiles);
+	});
+}
+//! End onLoad();
+
+
+
+
+
+
+//! Change name of custom buttons
+function changeButton(data) {
+	
+	//! Get and set variables
+	var buttonDetails = data.split(",");
+	var buttonId = buttonDetails[0];
+	var buttonName = buttonDetails[1];
+	var button = $("#customButton"+buttonId).html(buttonName);
+	var allButtons = [];
+	
+	//! Loop through buttons and get name
+	$("#custom-buttons-group > button.custom-button").each(function(index) {
+		allButtons[index] = $(this).html();
+	});
+	
+	//! Get JSON string to store data
+	var json_str = JSON.stringify(allButtons);
+
+	//! Set cookie to store names
+	setCookie("customButtons", json_str);
+}
+
+
+
+//! Check cookies for custom button names
+function checkButtonCookies() {
+	
+	//! If cookie exists
+	if (getCookie("customButtons")) {
+		
+		//! Get details
+		var cookieInfo = JSON.parse(getCookie("customButtons"));
+		
+		//! Loop through buttons and set name
+		$("#custom-buttons-group > button.custom-button").each(function(index) {
+			$(this).html(cookieInfo[index]);
+		});	
+	}
+}
+
+
+
+//! Set cookie
+function setCookie(key, value) {
+    var expires = new Date();
+    expires.setTime(expires.getTime() + (10 * 365 * 24 * 60 * 60));
+    document.cookie = key + "=" + value + ";expires=" + expires.toUTCString();
+}
+
+
+
+//! Get cookie
+function getCookie(key) {
+    var keyValue = document.cookie.match("(^|;) ?" + key + "=([^;]*)(;|$)");
+    return keyValue ? keyValue[2] : null;
+}
+
+
+
+//! Delete cookie
+function deleteCookie(key) {
+    var expires = new Date();
+    expires.setTime(expires.getTime() - (10 * 365 * 24 * 60 * 60));
+    document.cookie = key + "=" + null + ";expires=" + expires.toUTCString();
+}
+
+
+
+//! Set the panel theme based on the Photoshop theme
+function setTheme(theme) {
+
+		var themeClass;
+		var themeName;
+		var themeColor = "rgb("+theme.panelBackgroundColor.color.red+","+theme.panelBackgroundColor.color.green+","+theme.panelBackgroundColor.color.blue+")";
+		var themeFontSize = theme.baseFontSize + "px";
+		var themeFontFamily = theme.baseFontFamily;		
+		
+		//! Set background color asap
+		document.documentElement.style.backgroundColor = themeColor;
+		document.body.style.backgroundColor = themeColor;
+		
+		//! Find out if light or dark theme
+        if (theme.panelBackgroundColor.color.red > 122) {
+            themeClass = "light";
+        } else {
+	        themeClass = "dark";
+        }
+        
+        //! Find out which theme is being used and give it a name (based on uiBrightnessLevel names)        
+        switch (theme.panelBackgroundColor.color.red) {
+		    case 50:
+		        themeName = "dark-grey";
+		        break;
+		    case 83:
+		        themeName = "medium-grey";
+		        break;
+		    case 184:
+		        themeName = "light-grey";
+		        break;
+		    case 240:
+		        themeName = "original";
+		        break;
+		    default:
+		        themeName = "unknown-theme";
+		}
+
+		//! Set the body theme
+		$(document.body).removeClass("light dark original light-grey medium-grey dark-grey").addClass(themeClass).addClass(themeName);
+		var style = $("<style rel=\"stylesheet\">html{ font-size:"+themeFontSize+";} ul.tabs>li.current{ background-color:"+themeColor+" !important;}</style>");
+		$(document.head).append(style);
+		
+		//! Set class based on font-size
+		var uiFontSize = "font-unknown";
+		if (theme.baseFontSize == 9) {
+			uiFontSize = "tiny"; 
+		} else if (theme.baseFontSize == 10) {
+			uiFontSize = "small";
+		} else if (theme.baseFontSize == 11) {
+			uiFontSize = "medium";
+		} else if (theme.baseFontSize == 12) {
+			uiFontSize = "large";
+		}
+		$(document.documentElement).addClass("font-"+uiFontSize);
+}
+
+
+
+//! If the Photoshop theme is changed, update the panel theme 
+//! From davidebarranca.com
+function changeTheme(event) {
+    var skinInfo = JSON.parse(window.__adobe_cep__.getHostEnvironment()).appSkinInfo;
+    setTheme(skinInfo);
+}
+
+
+
+//! Load external JSX files
+function loadJSX() {
+    var csInterface = new CSInterface();
+    var extensionRoot = csInterface.getSystemPath(SystemPath.EXTENSION) + "/jsx/actions/";
+    csInterface.evalScript("$._ext.evalFiles(\"" + extensionRoot + "\")");
+}
+
+
+
+//! Use the button ID to trigger the right script
+$(document).on("click", "button", function(event) {
+	
+	//! If a shift click / also can have ctrlKey and altKey
+	if ( $(this).hasClass("custom-button") && event.shiftKey ) {
+			event.preventDefault();
+			var csInterface = new CSInterface(); 
+			csInterface.evalScript($(this).attr("data-action2") + "()"); 
+	} else {
+    	var csInterface = new CSInterface();
+		csInterface.evalScript($(this).attr("data-action") + "()"); 
+    } 
+});
+
+
+
+//! Edit button
+function editButton(id) {
+	var csInterface = new CSInterface();
+	csInterface.evalScript("renameButton()");
+}
+
+
+
+//! Select tool
+function selectTool(tool) {
+	$("#tools button").removeClass("selected");
+	$("#tools button#"+tool).addClass("selected");
+}
+
+
+//! Check cookies for tools menu
+function checkToolsMenuCookies() {
+	
+	//! If cookie exists
+	if (getCookie("toolsMenu")) {
+		toolsMenu("show");
+	} else {
+		toolsMenu("hide");
+	}
+}
+
+
+//! Show and hide tools menu
+function toolsMenu(mode) {
+	if (mode == "show") {
+		$(document.body).addClass("tools-menu");
+		setCookie("toolsMenu", true);
+		$("#tools-menu-checkbox").attr("checked", true);
+	} else {
+		$(document.body).removeClass("tools-menu");
+		deleteCookie("toolsMenu");
+		$("#tools-menu-checkbox").attr("checked", false);
+	}
+}
+
+
+
+//! Get recently opened files
+function showRecentFiles(recentFiles) {
+
+	var listItem = "";
+	var recentItems = recentFiles.split(",");
+	
+
+	//! Check for recent files
+	if (recentFiles == 'undefined') 
+	{
+		$("#files").html('<p>No recent files yet.</p>');
+	}
+	else 
+	{
+	
+		for (var i = 0, len = recentItems.length; i < len; i++) {
+			fileInfo = recentItems[i].split("+");
+			listItem += "<li><a class=\"open-file\" href=\""+fileInfo[0]+"\">"+fileInfo[1]+"</a></li>\r\n";
+		}
+	
+		$("#recent-files").html(listItem);
+	}
+	
+}
+
+
+
+//! Open file
+function openFile(file) {
+	var csInterface = new CSInterface();
+	csInterface.evalScript("openFile('"+file+"')");
+}
+
+
+
+//! jQuery document ready
+$(document).ready(function() {
+	
+	/*
+	//! Temp code to build tools buttons (laziness)
+	if ('content' in document.createElement('template')) {
+		
+		var tools = [
+			//{'tool': '', 'name': ''},
+			{'tool': 'zoomTool', 'name': 'Zoom tool'},
+			{'tool': 'paintbrushTool', 'name': 'Brush tool'},
+			{'tool': 'spotHealingBrushTool', 'name': 'Spot Headling Brush tool'},
+			{'tool': 'cloneStampTool', 'name': 'Clone Stamp tool'},
+			{'tool': 'patchSelection', 'name': 'Patch tool'},
+			{'tool': 'dodgeTool', 'name': 'Dodge tool'},
+			{'tool': 'burnInTool', 'name': 'Burn tool'},
+			{'tool': 'gradientTool', 'name': 'Gradient tool'},
+			{'tool': 'eyedropperTool', 'name': 'Eyedropper tool'},	
+			{'tool': 'cropTool', 'name': 'Crop tool'},	
+			{'tool': 'magicWandTool', 'name': 'Magic Wand tool'},
+			{'tool': 'lassoTool', 'name': 'lasso tool'},
+			{'tool': 'marqueeRectTool', 'name': 'Rectangular Marquee tool'},
+			{'tool': 'marqueeEllipTool', 'name': 'Elliptical Marquee tool'},
+			{'tool': 'moveTool', 'name': 'Move tool'}
+		];
+		
+		// Get a reference to the comments list in the main DOM.
+		var toolsSection = "";
+		
+		// Loop through each of the comments and add them to the comments list.
+		for (var i = 0; i < tools.length; i++) {
+			
+			var tool = tools[i];
+			toolsSection += "<li><button id=\""+tool.tool+"\" data-action=\"selectTool('"+tool.tool+"')\" data-js=\"tooltip\" title=\""+tool.name+"\"><img alt=\""+tool.name+"\" class=\"dark-theme\" src=\"img/more_tools/dark_theme/"+tool.tool+".png\"><img alt=\""+tool.name+"\" class=\"light-theme\" src=\"img/more_tools/light_theme/"+tool.tool+".png\"></button></li>";
+			//$("#tools-list").html(toolsSection);
+			console.log(toolsSection);
+		}
+	}*/
+	
+	
+	//! Fade in the body
+	$(document.body).hide().fadeIn("slow");
+
+	
+	$("#tools-menu-checkbox").change(function() {
+        if(this.checked) {
+            toolsMenu("show");
+        } else {
+	        toolsMenu("hide");
+        }
+    });
+
+
+	//! Tabs
+	$(".tabs > li").click(function() {
+		var tab_id = $(this).attr("data-tab");
+		//alert(tab_id);
+
+		//$("#tab-menu > li").removeClass("current");
+		$(this).siblings().removeClass("current");
+		//$("#panel > div.tab-content").removeClass("current");
+		$(this).parents("[role='navigation']").siblings(".tab-content").removeClass("current");
+
+		$(this).addClass("current");
+		$("#"+tab_id).addClass("current");
+	});
+	
+	
+	//! Handle web links
+	$("a.external-link").click(function(e) {
+		e.preventDefault();
+		var link = $(this).attr("href");
+		window.cep.util.openURLInDefaultBrowser(link);
+	});
+
+
+	//! Change title in adjustment brush section
+	$("section.adjustment-tools > div.button-group>button").hover(
+		function adjHoverOver() {
+			$("[data-js='adjustmentsHeader']").text( $(this).attr("title") );
+		}, function adjHoverOut() {
+			$("[data-js='adjustmentsHeader']").text( $("[data-js='adjustmentsHeader']").attr("title") );
+			
+		}
+	);
+	
+	
+	//! Update tools menu
+	$("#tools button").on("click", function() {
+		var tool = $(this).attr("id");
+		selectTool(tool);
+	});
+
+	
+	//! Open recent file
+	$("#recent-files").on("click", ".open-file", function(e) {
+		e.preventDefault();
+		var file = $(this).attr("href");
+		openFile(file);
+	});
+	
+
+	//! Tooltip
+	//! http://www.alessioatzeni.com/blog/simple-tooltip-with-jquery-only-text/
+	$("[data-js='tooltip']").hover(function toolTipHover() {
+		
+	        //! Hover over code
+	        var title = $(this).attr("title");
+	        var type = $(this).attr("data-tooltip-type");
+	        $("<p data-type=\""+ type +"\" class=\"tooltip "+ type +"\"></p>").delay(1500)
+	        .text(title)
+	        .appendTo("body")
+	        .hide()
+	        .fadeIn(100);
+	        $(this).dequeue();
+	}, function() {
+	        //! Hover out code
+	        $("p.tooltip").remove();
+	}).mousemove(function(e) {
+			var tooltipWidth = $("p.tooltip").width();
+			var type = $("p.tooltip").attr("data-type");
+			
+			//! Change position depending on type
+			if (type == "inside") {
+				var mousex = e.pageX - 2 - tooltipWidth; //Get X coordinates
+				var mousey = e.pageY + 12; //Get Y coordinates
+			} else {
+				var mousex = e.pageX - 6; //Get X coordinates
+				var mousey = e.pageY + 12; //Get Y coordinates
+			}
+	        
+	        //! Add CSS
+	        $("p.tooltip").css({ top: mousey, left: mousex });
+	});
+	
+	
+	//! Version
+	$(".version-code").on("click", function() {
+		alert("About TheFella Panel","Designed and built by Conor MacNeill (@thefella). \r\n\r\nTesting done by Greg Annandale.", true);
+	});
+
+});
+
+
+
+//! When flyout menu is clicked
+function flyoutMenuClicked(e) {
+	var action = e.data.menuId;
+
+	//! Do action
+	switch(action) {
+		case "reloadPanel": 
+			window.location.reload();
+			break;
+		default: 
+			console.log(action + " clicked!");
+	}
+}
+
+
+
+//! Build the flyout menu
+function generateFlyoutMenu() {
+
+	// Flyout menu XML string 
+	var flyoutXML = "<Menu><MenuItem Id=\"reloadPanel\" Label=\"Reload Panel\"/></Menu>";
+
+	// Uses the XML string to build the menu
+	csInterface.setPanelFlyoutMenu(flyoutXML);
+}

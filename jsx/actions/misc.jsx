@@ -434,7 +434,7 @@ getRecentFiles = function(numFiles) {
 	// check for recent files
 	len = recentItems.length;
 	if (!len) {
-		alert('No recent files found.', 'No Recent Files', false);
+		//alert('No recent files found.', 'No Recent Files', false);
 		return;
 	}
 

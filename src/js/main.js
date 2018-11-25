@@ -263,12 +263,23 @@ function showRecentFiles(recentFiles) {
 	var listItem = "";
 	var recentItems = recentFiles.split(",");
 	
-	for (var i = 0, len = recentItems.length; i < len; i++) {
-		fileInfo = recentItems[i].split("+");
-		listItem += "<li><a class=\"open-file\" href=\""+fileInfo[0]+"\">"+fileInfo[1]+"</a></li>\r\n";
-	}
 
-	$("#recent-files").html(listItem);
+	//! Check for recent files
+	if (recentFiles == 'undefined') 
+	{
+		$("#files").html('<p>No recent files yet.</p>');
+	}
+	else 
+	{
+	
+		for (var i = 0, len = recentItems.length; i < len; i++) {
+			fileInfo = recentItems[i].split("+");
+			listItem += "<li><a class=\"open-file\" href=\""+fileInfo[0]+"\">"+fileInfo[1]+"</a></li>\r\n";
+		}
+	
+		$("#recent-files").html(listItem);
+	}
+	
 }
 
 
